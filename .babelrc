@@ -7,8 +7,7 @@
   ],
   "env": {
     "test": {
-      "sourceMaps": "inline",
-      "plugins": ["babel-plugin-rewire"]
+      "sourceMaps": "inline"
     }
   }
 }
