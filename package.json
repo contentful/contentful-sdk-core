@@ -29,6 +29,7 @@
   },
   "files": [
     "*.js",
+    "mixins",
     "vendor-*"
   ],
   "dependencies": {
