@@ -10,7 +10,7 @@
   "author": "Contentful <opensource@contentful.com>",
   "license": "MIT",
   "scripts": {
-    "clean": "rimraf *.js && rimraf coverage && rimraf src/vendor-* && rimraf vendor-* && rimraf src/package.json",
+    "clean": "rimraf *.js && rimraf coverage && rimraf src/vendor-* && rimraf mixins && rimraf vendor-* && rimraf src/package.json",
     "build": "npm run clean && npm run vendor && cp -r src/vendor-* . && npm run build:dist",
     "build:dist": "babel src --out-dir .",
     "test:ci": "npm run test:cover",
