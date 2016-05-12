@@ -1,10 +1,12 @@
 import qs from 'qs'
+import {cloneDeep} from 'lodash/lang'
+import {assign} from 'lodash/object'
 
 /**
  * Create pre configured axios instance
  * @private
  * @param {Object} axios - Axios library
- * @param {Object} HTTPClientParams - Initialization parameters for the HTTP client
+ * @param {Object} httpClientParams - Initialization parameters for the HTTP client
  * @prop {string} space - Space ID
  * @prop {string} accessToken - Access Token
  * @prop {boolean=} insecure - If we should use http instead
@@ -13,21 +15,46 @@ import qs from 'qs'
  * @prop {Object=} headers - Additional headers
  * @return {Object} Initialized axios instance
  */
-export default function createHttpClient (axios, {space, accessToken, insecure, host, defaultHostname, agent, headers}) {
+export default function createHttpClient (axios, httpClientParams) {
+  const {space, accessToken, insecure, host, defaultHostname, agent} = httpClientParams
+  let {headers} = httpClientParams
   let [hostname, port] = (host && host.split(':')) || []
   hostname = hostname || defaultHostname
   port = port || (insecure ? 80 : 443)
+  let baseURL = `${insecure ? 'http' : 'https'}://${hostname}:${port}/spaces/`
+  if (space) {
+    baseURL += space + '/'
+  }
   headers = headers || {}
   headers['Authorization'] = 'Bearer ' + accessToken
 
+  // Set the user agent only for node because browsers don't like it when you
+  // override user-agent. The SDKs should set their own X-Contentful-User-Agent
   if (process && process.release && process.release.name === 'node') {
     headers['user-agent'] = 'node.js/' + process.version
   }
 
-  return axios.create({
-    baseURL: `${insecure ? 'http' : 'https'}://${hostname}:${port}/spaces/${space}/`,
+  const instance = axios.create({
+    baseURL: baseURL,
     headers: headers,
     agent: agent,
     paramsSerializer: qs.stringify
   })
+  instance.httpClientParams = httpClientParams
+
+  /**
+   * Creates a new axios instance with the same default base parameters as the
+   * current one, and with any overrides passed to the newParams object
+   * This is useful as the SDKs use dependency injection to get the axios library
+   * and the version of the library comes from different places depending
+   * on whether it's a browser build or a node.js build.
+   * @private
+   * @param {Object} httpClientParams - Initialization parameters for the HTTP client
+   * @return {Object} Initialized axios instance
+   */
+  instance.cloneWithNewParams = function (newParams) {
+    return createHttpClient(axios, assign(cloneDeep(httpClientParams), newParams))
+  }
+
+  return instance
 }

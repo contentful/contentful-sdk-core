@@ -5,7 +5,7 @@ import createHttpClient from '../../src/create-http-client'
 
 test('Calls axios with expected URL', t => {
   const axios = {
-    create: sinon.stub()
+    create: sinon.stub().returns({})
   }
 
   createHttpClient(axios, {
