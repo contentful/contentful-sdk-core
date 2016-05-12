@@ -2,7 +2,7 @@ import test from 'tape'
 
 import freezeSys from '../../src/freeze-sys'
 
-test.only('Freezes sys and child objects', t => {
+test('Freezes sys and child objects', t => {
   t.plan(2)
   const obj = {
     sys: {
