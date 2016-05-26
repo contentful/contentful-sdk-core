@@ -1,4 +1,4 @@
-import {has} from 'lodash/object'
+import has from 'lodash/has'
 
 export default function enforceObjPath (obj, path) {
   if (!has(obj, path)) {

@@ -1,5 +1,5 @@
-import {each} from 'lodash/collection'
-import {isPlainObject} from 'lodash/lang'
+import each from 'lodash/each'
+import isPlainObject from 'lodash/isPlainObject'
 
 function freezeObjectDeep (obj) {
   each(obj, (value, key) => {

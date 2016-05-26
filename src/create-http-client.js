@@ -1,6 +1,6 @@
 import qs from 'qs'
-import {cloneDeep} from 'lodash/lang'
-import {assign} from 'lodash/object'
+import cloneDeep from 'lodash/cloneDeep'
+import assign from 'lodash/assign'
 
 /**
  * Create pre configured axios instance
