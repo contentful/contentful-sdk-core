@@ -27,12 +27,13 @@ export default function createHttpClient (axios, httpClientParams) {
   }
   headers = headers || {}
   headers['Authorization'] = 'Bearer ' + accessToken
-  headers['Accept-Encoding'] = 'gzip'
 
-  // Set the user agent only for node because browsers don't like it when you
-  // override user-agent. The SDKs should set their own X-Contentful-User-Agent
+  // Set these headers only for node because browsers don't like it when you
+  // override user-agent or accept-encoding.
+  // The SDKs should set their own X-Contentful-User-Agent.
   if (process && process.release && process.release.name === 'node') {
     headers['user-agent'] = 'node.js/' + process.version
+    headers['Accept-Encoding'] = 'gzip'
   }
 
   const instance = axios.create({
