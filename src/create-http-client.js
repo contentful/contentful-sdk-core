@@ -27,7 +27,6 @@ export default function createHttpClient (axios, httpClientParams) {
   }
   headers = headers || {}
   headers['Authorization'] = 'Bearer ' + accessToken
-  headers['Accept-Encoding'] = 'gzip'
 
   // Set the user agent only for node because browsers don't like it when you
   // override user-agent. The SDKs should set their own X-Contentful-User-Agent
