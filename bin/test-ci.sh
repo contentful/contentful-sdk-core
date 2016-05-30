@@ -1,4 +1,5 @@
 #!/bin/bash
+set -e
 
 #
 # Build script used by the SDKs to run all the necessary tasks for the CI build
