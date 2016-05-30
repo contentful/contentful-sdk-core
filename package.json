@@ -30,7 +30,8 @@
   "files": [
     "*.js",
     "mixins",
-    "vendor-*"
+    "vendor-*",
+    "bin"
   ],
   "dependencies": {
     "babel-runtime": "^6.3.19",
