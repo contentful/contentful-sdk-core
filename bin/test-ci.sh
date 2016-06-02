@@ -12,7 +12,7 @@ npm run test:cover
 npm run build
 
 # Run the node integration tests. Running them on only one version should be enough.
-if ./node_modules/contentful-sdk-core/bin/run-if-node-version.js ; then
+if ./node_modules/contentful-sdk-core/bin/run-if-node-version.js  && [ ! $SKIP_INTEGRATION_TESTS ] ; then
   npm run test:integration
 fi
 
