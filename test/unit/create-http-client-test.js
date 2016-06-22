@@ -1,7 +1,7 @@
 import test from 'tape'
 import sinon from 'sinon'
 
-import createHttpClient from '../../src/create-http-client'
+import createHttpClient from '../../lib/create-http-client'
 
 test('Calls axios with expected URL', t => {
   const axios = {

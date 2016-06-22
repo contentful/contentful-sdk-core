@@ -1,6 +1,6 @@
 import test from 'tape'
 
-import createRequestConfig from '../../src/create-request-config'
+import createRequestConfig from '../../lib/create-request-config'
 
 test('Create request config', t => {
   const config = createRequestConfig({

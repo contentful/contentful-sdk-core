@@ -1,6 +1,6 @@
 import test from 'tape'
 
-import freezeSys from '../../src/freeze-sys'
+import freezeSys from '../../lib/freeze-sys'
 
 test('Freezes sys and child objects', t => {
   t.plan(2)
