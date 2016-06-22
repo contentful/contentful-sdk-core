@@ -1,5 +1,6 @@
 {
   "name": "contentful-sdk-core",
+  "version": "1.0.0-determined-by-semantic-release",
   "description": "Core modules for the Contentful JS SDKs",
   "homepage": "https://www.contentful.com/developers/docs/javascript/",
   "main": "index.js",
@@ -34,6 +35,7 @@
     "bin"
   ],
   "dependencies": {
+    "babel-plugin-rewire": "^1.0.0-rc-3",
     "babel-runtime": "^6.3.19",
     "follow-redirects": "0.0.7",
     "lodash": "^4.2.0",
