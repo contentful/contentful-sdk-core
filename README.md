@@ -15,3 +15,13 @@ The browser vendored version runs on top of the standalone Axios browser version
 Because of this, the follow-redirects dependency of axios needs to be a dependency on this package as well, otherwise it won't be installed.
 
 The additional `npm run vendor:version` task is unrelated to axios vendoring and is used to build the library version into the code, to avoid having to bundle code for reading a json file in the browser build.
+
+## Future incompatibility between lodash and core-js
+
+According to this [issue](https://github.com/lodash/lodash/commit/e156459176c1f35964fc443b39f04c4cb0a96763#commitcomment-17483355) in the future lodash and core-js will be incompatible.
+
+This means one of two things:
+- this package will have to stay on a certain version of lodash
+- stop vendoring axios and remove babel-runtime, along with support for node.js 0.10
+
+Given that by the time lodash becomes incompatible with core-js node.js 0.10 will already be officially unsupported, the second approach might be the correct one.
