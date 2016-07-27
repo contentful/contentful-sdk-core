@@ -9,3 +9,5 @@ gh-pages
 src/vendor-*
 vendor-*
 src/package.json
+*.swp
+
