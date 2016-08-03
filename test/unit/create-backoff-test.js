@@ -27,6 +27,7 @@ test('backoff on first 2 attempts', (t) => {
   }
 
   return attempt().then(function (response) {
+    t.looseEquals(requestedWaits, [1000, 2000])
     t.equals(response, 'response', 'returns expected response')
     t.end()
     teardown()
@@ -46,6 +47,7 @@ test('backoff until request totally fails', (t) => {
   return attempt().then(function () {
     throw new Error('should not succeed')
   }).catch(function (error) {
+    t.looseEquals(requestedWaits, [1000, 2000, 4000], 'wait periods for 3 attempts')
     t.equals(error.message, 'thrown after 3 tries', 'throws expected error')
     t.end()
     teardown()
