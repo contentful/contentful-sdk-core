@@ -77,3 +77,41 @@ test('Call gets backed off until maxRetries is reached', (t) => {
     }
   )
 })
+
+test('Call gets 5xx error first time but then succeeds', (t) => {
+  const httpMock = createHttpMock()
+  httpMock.get.onCall(0).returns(Promise.reject({status: 500}))
+  httpMock.get.onCall(1).returns(Promise.resolve(''))
+  const http = wrapHttpClient(httpMock, {
+    concurrency: 6,
+    delay: 1000,
+    maxRetries: 4,
+    retryOnTooManyRequests: true
+  })
+
+  http.get()
+  .then(() => {
+    t.ok(httpMock.get.calledTwice, 'http get is called twice')
+    t.end()
+  })
+})
+
+test('Call gets 5xx error until maxRetries is reached', (t) => {
+  const httpMock = createHttpMock()
+  httpMock.get.returns(Promise.reject({status: 500}))
+  const http = wrapHttpClient(httpMock, {
+    concurrency: 6,
+    delay: 1000,
+    maxRetries: 2,
+    retryOnTooManyRequests: true
+  })
+
+  http.get()
+  .then(
+    () => {},
+    () => {
+      t.ok(httpMock.get.calledThrice, 'http get is called three times')
+      t.end()
+    }
+  )
+})
