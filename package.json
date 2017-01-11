@@ -13,17 +13,13 @@
   "scripts": {
     "clean": "rimraf *.js && rimraf coverage && rimraf lib/vendor-* && rimraf mixins && rimraf vendor-* && rimraf lib/package.json",
     "build": "npm run clean && npm run vendor && cp -r lib/vendor-* . && npm run build:dist",
-    "build:dist": "babel lib --out-dir .",
+    "build:dist": "NODE_ENV=production webpack -p",
     "test:ci": "npm run test:cover",
     "test:cover": "BABEL_ENV=test babel-node ./node_modules/istanbul/lib/cli.js cover test/runner",
     "test:only": "BABEL_ENV=test babel-node ./test/runner",
     "test:debug": "BABEL_ENV=test babel-node debug ./test/runner",
-    "vendor": "npm run vendor:node && npm run vendor:browser && npm run vendor:axiospackage",
-    "vendor:axiospackage": "cp node_modules/axios/package.json lib/",
-    "vendor:node": "rimraf lib/vendor-node && mkdirp lib/vendor-node && babel node_modules/axios/lib/ --out-dir lib/vendor-node/",
-    "vendor:browser": "rimraf lib/vendor-browser && mkdirp lib/vendor-browser && babel node_modules/axios/dist/axios.js --out-file lib/vendor-browser/axios.js",
     "browser-coverage": "npm run test:cover && opener coverage/lcov-report/index.html",
-    "prepublish": "in-publish && npm run build || not-in-publish && npm run vendor",
+    "prepublish": "in-publish && npm run build || not-in-publish",
     "pretest": "standard lib/*.js",
     "test": "npm run test:cover",
     "semantic-release": "semantic-release pre && npm publish && semantic-release post"
@@ -35,13 +31,13 @@
     "bin"
   ],
   "dependencies": {
-    "babel-runtime": "^6.3.19",
-    "follow-redirects": "0.0.7",
+    "axios": "^0.15.3",
+    "babel-loader": "^6.2.10",
     "lodash": "^4.2.0",
-    "qs": "^6.1.0"
+    "qs": "^6.1.0",
+    "webpack": "^1.14.0"
   },
   "devDependencies": {
-    "axios": "^0.9.1",
     "babel-cli": "^6.4.5",
     "babel-eslint": "^5.0.0-beta8",
     "babel-plugin-rewire": "^1.0.0-rc-3",
