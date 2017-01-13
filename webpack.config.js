@@ -25,7 +25,7 @@ module.exports = {
   context: path.join(__dirname, 'lib'),
   entry: {
     'create-backoff': './create-backoff.js',
-    'rate-limit': ['./rate-limit.js'],
+    'rate-limit': ['./rate-limit.js'], // why? 👉 https://github.com/webpack/webpack/issues/300
     'create-request-config': './create-request-config.js',
     'enforce-obj-path': './enforce-obj-path.js',
     'freeze-sys': ['./freeze-sys.js'],
