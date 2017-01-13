@@ -4,6 +4,7 @@ before_install:
   - npm set progress=false
 language: node_js
 node_js:
+  - "6"
   - "5.7"
   - "4.3"
   - "3.3"
