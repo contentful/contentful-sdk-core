@@ -30,6 +30,9 @@
     "vendor-*",
     "bin"
   ],
+  "engines": {
+    "node": ">=3.3"
+  },
   "dependencies": {
     "axios": "^0.15.3",
     "babel-loader": "^6.2.10",
