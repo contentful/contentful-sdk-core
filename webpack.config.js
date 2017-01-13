@@ -42,6 +42,7 @@ module.exports = {
   },
   output: {
     library: 'contentful-sdk-core',
+    filename: '[name].js',
     libraryTarget: 'umd'
   },
   plugins: plugins,
