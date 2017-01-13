@@ -11,8 +11,8 @@
   "author": "Contentful <opensource@contentful.com>",
   "license": "MIT",
   "scripts": {
-    "clean": "rimraf *.js && rimraf coverage && rimraf lib/vendor-* && rimraf mixins && rimraf vendor-* && rimraf lib/package.json",
-    "build": "npm run clean && npm run vendor && cp -r lib/vendor-* . && npm run build:dist",
+    "clean": "rimraf coverage && rimraf lib/vendor-* && rimraf mixins && rimraf vendor-* && rimraf lib/package.json",
+    "build": "npm run build:dist",
     "build:dist": "NODE_ENV=production webpack -p",
     "test:ci": "npm run test:cover",
     "test:cover": "BABEL_ENV=test babel-node ./node_modules/istanbul/lib/cli.js cover test/runner",
@@ -36,8 +36,8 @@
   "dependencies": {
     "axios": "^0.15.3",
     "babel-loader": "^6.2.10",
-    "lodash": "^4.2.0",
-    "qs": "^6.1.0",
+    "lodash": "^4.17.4",
+    "qs": "^6.1.0"
   },
   "devDependencies": {
     "babel-cli": "^6.4.5",
@@ -54,6 +54,7 @@
     "ghooks": "^1.3.2",
     "in-publish": "^2.0.0",
     "istanbul": "^1.0.0-alpha.2",
+    "lodash-webpack-plugin": "^0.10.7",
     "mkdirp": "^0.5.1",
     "opener": "^1.4.1",
     "require-all": "^2.0.0",
