@@ -28,10 +28,11 @@ module.exports = {
     'rate-limit': ['./rate-limit.js'],
     'create-request-config': './create-request-config.js',
     'enforce-obj-path': './enforce-obj-path.js',
-    'freeze-sys': ['freeze-sys.js'],
+    'freeze-sys': ['./freeze-sys.js'],
     'promised-wait': ['./promised-wait.js'],
-    'wrap-http-client': './wrap-http-config.js',
-    'create-http-client': './create-http-client.js'
+    'wrap-http-client': './wrap-http-client.js',
+    'create-http-client': './create-http-client.js',
+    'mixins/to-plain-object': ['./mixins/to-plain-object.js']
   },
   module: {
     loaders: [{
