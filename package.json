@@ -13,7 +13,7 @@
   "scripts": {
     "clean": "rimraf *.js && rimraf coverage && rimraf lib/vendor-* && rimraf mixins && rimraf vendor-* && rimraf lib/package.json",
     "build": "npm run clean && npm run vendor && cp -r lib/vendor-* . && npm run build:dist",
-    "build:dist": "babel lib --out-dir .",
+    "build:dist": "NODE_ENV=production webpack -p",
     "test:ci": "npm run test:cover",
     "test:cover": "BABEL_ENV=test babel-node ./node_modules/istanbul/lib/cli.js cover test/runner",
     "test:only": "BABEL_ENV=test babel-node ./test/runner",
