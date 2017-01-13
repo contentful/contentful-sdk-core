@@ -2,8 +2,9 @@
 
 var webpack = require('webpack')
 var path = require('path')
-
+var LodashModuleReplacementPlugin = require('lodash-webpack-plugin')
 var plugins = [
+  new LodashModuleReplacementPlugin(),
   new webpack.optimize.OccurenceOrderPlugin(),
   new webpack.DefinePlugin({
     'process.env.NODE_ENV': JSON.stringify(process.env.NODE_ENV)
@@ -24,7 +25,7 @@ if (process.env.NODE_ENV === 'production') {
 module.exports = {
   context: path.join(__dirname, 'lib'),
   entry: {
-    'create-backoff': './create-backoff.js',
+    'create-backoff': ['./create-backoff.js'],
     'rate-limit': ['./rate-limit.js'], // why? 👉 https://github.com/webpack/webpack/issues/300
     'create-request-config': './create-request-config.js',
     'enforce-obj-path': './enforce-obj-path.js',
