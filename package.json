@@ -32,8 +32,10 @@
   ],
   "dependencies": {
     "axios": "^0.15.3",
+    "babel-loader": "^6.2.10",
     "lodash": "^4.2.0",
-    "qs": "^6.1.0"
+    "qs": "^6.1.0",
+    "webpack": "^1.14.0"
   },
   "devDependencies": {
     "babel-cli": "^6.4.5",
