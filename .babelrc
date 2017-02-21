@@ -1,11 +1,51 @@
 {
-  "presets": [
-    "es2015"
-  ],
   "env": {
     "test": {
-      "sourceMaps": "inline",
-      "plugins": ["babel-plugin-rewire"]
-    }
+      "presets": [
+        ["env", {
+          "debug": true,
+            "targets":{
+              "node": 6,
+              "browsers": [
+                "last 3 versions",
+                "ie >= 11"
+              ]
+            }
+        }]
+      ],
+      "plugins": ["rewire"],
+      "sourceMaps": "inline"
+    },
+      "es5": {
+        "presets": [
+          ["env", {
+            "debug": true,
+            "targets":{
+              "node": 6,
+              "browsers": [
+                "last 3 versions",
+                "ie >= 11"
+              ]
+            }
+          }]
+        ],
+        "plugins": [
+          "add-module-exports"
+        ]
+      },
+      "es-modules": {
+        "presets": [
+          ["env", {
+            "debug": true,
+            "targets":{
+              "node": 6,
+              "browsers": [
+                "last 3 versions",
+                "ie >= 11"
+              ]
+            }
+          }]
+        ]
+      }
   }
 }

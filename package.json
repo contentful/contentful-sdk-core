@@ -1,9 +1,11 @@
 {
   "name": "contentful-sdk-core",
-  "version": "1.0.0-determined-by-semantic-release",
+  "version": "3.5.2",
   "description": "Core modules for the Contentful JS SDKs",
   "homepage": "https://www.contentful.com/developers/docs/javascript/",
   "main": "index.js",
+  "modules": "index.es-modules.js",
+  "jsnext:main": "index.es-modules.js",
   "repository": {
     "type": "git",
     "url": "https://github.com/contentful/contentful-sdk-core.git"
@@ -11,9 +13,10 @@
   "author": "Contentful <opensource@contentful.com>",
   "license": "MIT",
   "scripts": {
-    "clean": "rimraf coverage && rimraf lib/vendor-* && rimraf mixins && rimraf vendor-* && rimraf lib/package.json",
-    "build": "npm run build:dist",
-    "build:dist": "NODE_ENV=production webpack -p",
+    "clean": "rimraf coverage && rimraf dist",
+    "build": "npm run clean && npm run build:es5 && npm run build:es-modules",
+    "build:es5": "BABEL_ENV=es5 babel lib -d dist/es5",
+    "build:es-modules": "BABEL_ENV=es-modules babel lib -d dist/es-modules",
     "test:ci": "npm run test:cover",
     "test:cover": "BABEL_ENV=test babel-node ./node_modules/istanbul/lib/cli.js cover test/runner",
     "test:only": "BABEL_ENV=test babel-node ./test/runner",
@@ -25,27 +28,27 @@
     "semantic-release": "semantic-release pre && npm publish && semantic-release post"
   },
   "files": [
-    "*.js",
-    "mixins",
-    "vendor-*",
+    "dist",
+    "index.js",
     "bin"
   ],
   "engines": {
-    "node": ">=3.3"
+    "node": ">=4.7"
   },
   "dependencies": {
     "axios": "^0.15.3",
-    "babel-loader": "^6.2.10",
     "lodash": "^4.17.4",
     "qs": "^6.1.0"
   },
   "devDependencies": {
     "babel-cli": "^6.4.5",
+    "babel-core": "^6.23.1",
     "babel-eslint": "^5.0.0-beta8",
     "babel-loader": "^6.2.10",
-    "babel-plugin-lodash": "^3.2.11",
+    "babel-plugin-add-module-exports": "^0.2.1",
     "babel-plugin-rewire": "^1.0.0-rc-3",
     "babel-plugin-transform-runtime": "^6.4.3",
+    "babel-preset-env": "^1.1.8",
     "babel-preset-es2015": "^6.3.13",
     "babel-register": "^6.4.3",
     "blue-tape": "^0.2.0",
@@ -54,7 +57,6 @@
     "ghooks": "^1.3.2",
     "in-publish": "^2.0.0",
     "istanbul": "^1.0.0-alpha.2",
-    "lodash-webpack-plugin": "^0.10.7",
     "mkdirp": "^0.5.1",
     "opener": "^1.4.1",
     "require-all": "^2.0.0",
