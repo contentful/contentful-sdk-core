@@ -4,10 +4,9 @@ before_install:
   - npm set progress=false
 language: node_js
 node_js:
-  - "6"
-  - "5.7"
-  - "4.3"
-  - "3.3"
+  - "7.5"
+  - "6.9"
+  - "4.7"
 after_success:
   - curl -Lo travis_after_all.py https://raw.githubusercontent.com/contentful/travis_after_all/master/travis_after_all.py
   - python travis_after_all.py
