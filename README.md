@@ -1,27 +1,77 @@
 # contentful-sdk-core
 
+[![Build Status](https://travis-ci.org/contentful/contentful-sdk-core.svg?branch=master)](https://travis-ci.org/contentful/contentful-sdk-core)
+[![Coverage Status](https://coveralls.io/repos/github/contentful/contentful-sdk-core/badge.svg?branch=master)](https://coveralls.io/github/contentful/contentful-sdk-core?branch=master)
+![David](https://img.shields.io/david/contentful/contentful-sdk-core.svg)
+![David](https://img.shields.io/david/dev/contentful/contentful-sdk-core.svg)
+
+![MIT License](https://img.shields.io/badge/license-MIT-blue.svg)
+[![NPM Version](https://img.shields.io/npm/v/contentful-sdk-core.svg)](https://www.npmjs.com/package/contentful-sdk-core)
+[![npm downloads](https://img.shields.io/npm/dm/contentful-management.svg)](http://npm-stat.com/charts.html?package=contentful-management)
+[![js-standard-style](https://img.shields.io/badge/code%20style-standard-brightgreen.svg?style=flat)](https://github.com/feross/standard)
+[![semantic-release](https://img.shields.io/badge/%F0%9F%93%A6%F0%9F%9A%80-semantic--release-e10079.svg)](https://github.com/semantic-release/semantic-release)
+[![Commitizen friendly](https://img.shields.io/badge/commitizen-friendly-brightgreen.svg)](http://commitizen.github.io/cz-cli/)
+
+> This package contains some core modules and utilities used by both the [contentful.js](https://github.com/contentful/contentful.js) and [contentful-management.js](https://github.com/contentful/contentful-management.js) SDKs.
+
+
+## About
+
+[Contentful](https://www.contentful.com) is a content management platform for web applications, mobile apps and connected devices. It allows you to create, edit & manage content in the cloud and publish it anywhere via a powerful API. Contentful offers tools for managing editorial teams and enabling cooperation between organizations.
+
+## Pre-requisites
+
+* Make sure you use at least Node 4
+
+## Installation
+
+```
+npm install --saveDev contentful-sdk-core
+```
+
+## Use case
+
 This package contains some core modules and utilities used by both the [contentful.js](https://github.com/contentful/contentful.js) and [contentful-management.js](https://github.com/contentful/contentful-management.js) SDKs.
 
-## Vendored axios
+## Support
 
-The `vendor-browser` and `vendor-node` directories contain a vendored build of [axios](https://github.com/mzabriskie/axios) which are used respectively on the standalone browser build and on the published npm package.
+We support all current browsers in their last 3 versions including IE 11. The minimal node version is 4.
 
-Axios is vendored because it expects a native or polyfilled implementation of promises. In this particular case, we vendor axios using babel, which uses the babel-plugin-transform-runtime to transform any usage of promises to requires to `babel-runtime/core-js/promise`.
+### ES2015 modules version
 
-Axios can be vendored with `npm run vendor:browser` and `npm run vendor:node`.
+For bundlers like webpack2 and rollup we support the `module` &
+`jsnext:main` entry in the package.json
 
-The browser vendored version runs on top of the standalone Axios browser version which is already optimized for this use case (it's not a good idea to try and run babel on top of the normal axios commonjs package as it produces an unnecessarily large file)
+## Development
 
-Because of this, the follow-redirects dependency of axios needs to be a dependency on this package as well, otherwise it won't be installed.
+### Create the default and the es-modules build:
+```
+npm run build
+```
 
-The additional `npm run vendor:version` task is unrelated to axios vendoring and is used to build the library version into the code, to avoid having to bundle code for reading a json file in the browser build.
+### Run Tests:
 
-## Future incompatibility between lodash and core-js
+Run only the unit tests:
+```
+npm run test:only
+```
 
-According to this [issue](https://github.com/lodash/lodash/commit/e156459176c1f35964fc443b39f04c4cb0a96763#commitcomment-17483355) in the future lodash and core-js will be incompatible.
+Run unit tests including coverage report:
+```
+npm run test:cover
+```
 
-This means one of two things:
-- this package will have to stay on a certain version of lodash
-- stop vendoring axios and remove babel-runtime, along with support for node.js 0.10
+Run unit tests with coverage report and display the result in your browser:
+```
+npm run browser-coverage
+```
 
-Given that by the time lodash becomes incompatible with core-js node.js 0.10 will already be officially unsupported, the second approach might be the correct one.
+Emulate a CI test run:
+```
+npm run test:ci
+```
+
+Enable debug mode for tests:
+```
+npm run test:debug
+```
