@@ -1,10 +1,10 @@
 {
   "name": "contentful-sdk-core",
-  "version": "3.5.2",
+  "version": "3.5.7",
   "description": "Core modules for the Contentful JS SDKs",
   "homepage": "https://www.contentful.com/developers/docs/javascript/",
   "main": "index.js",
-  "modules": "index.es-modules.js",
+  "module": "index.es-modules.js",
   "jsnext:main": "index.es-modules.js",
   "repository": {
     "type": "git",
@@ -30,6 +30,7 @@
   "files": [
     "dist",
     "index.js",
+    "index.es-modules.js",
     "bin"
   ],
   "engines": {
@@ -37,6 +38,7 @@
   },
   "dependencies": {
     "axios": "^0.15.3",
+    "es6-promise": "^4.0.5",
     "lodash": "^4.17.4",
     "qs": "^6.1.0"
   },
@@ -47,6 +49,7 @@
     "babel-loader": "^6.2.10",
     "babel-plugin-add-module-exports": "^0.2.1",
     "babel-plugin-rewire": "^1.0.0-rc-3",
+    "babel-plugin-transform-object-assign": "^6.22.0",
     "babel-plugin-transform-runtime": "^6.4.3",
     "babel-preset-env": "^1.1.8",
     "babel-preset-es2015": "^6.3.13",
