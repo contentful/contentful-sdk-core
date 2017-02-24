@@ -21,7 +21,7 @@
 
 ## Pre-requisites
 
-* Make sure you use at least Node 4
+* Make sure you use at least Node 4.7
 
 ## Installation
 
@@ -68,7 +68,7 @@ npm run browser-coverage
 
 Emulate a CI test run:
 ```
-npm run test:ci
+npm run test:ci-emulate
 ```
 
 Enable debug mode for tests:
