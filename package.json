@@ -21,6 +21,7 @@
     "pretest": "npm run lint",
     "test": "npm run test:cover",
     "test:ci": "npm run test:cover",
+    "test:ci-emulate": "trevor",
     "test:cover": "BABEL_ENV=test babel-node ./node_modules/istanbul/lib/cli.js cover test/runner",
     "test:only": "BABEL_ENV=test babel-node ./test/runner",
     "test:debug": "BABEL_ENV=test babel-node debug ./test/runner",
@@ -71,7 +72,8 @@
     "require-all": "^2.0.0",
     "rimraf": "^2.5.1",
     "semantic-release": "^6.3.2",
-    "sinon": "^2.0.0-pre"
+    "sinon": "^2.0.0-pre",
+    "trevor": "^2.2.0"
   },
   "standard": {
     "parser": "babel-eslint"
