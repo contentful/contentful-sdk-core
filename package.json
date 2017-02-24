@@ -17,7 +17,8 @@
     "build": "npm run clean && npm run build:es5 && npm run build:es-modules",
     "build:es5": "BABEL_ENV=es5 babel lib -d dist/es5",
     "build:es-modules": "BABEL_ENV=es-modules babel lib -d dist/es-modules",
-    "pretest": "standard lib/*.js",
+    "lint": "eslint lib test",
+    "pretest": "npm run lint",
     "test": "npm run test:cover",
     "test:ci": "npm run test:cover",
     "test:cover": "BABEL_ENV=test babel-node ./node_modules/istanbul/lib/cli.js cover test/runner",
@@ -47,7 +48,7 @@
   "devDependencies": {
     "babel-cli": "^6.4.5",
     "babel-core": "^6.23.1",
-    "babel-eslint": "^5.0.0-beta8",
+    "babel-eslint": "^7.1.1",
     "babel-loader": "^6.2.10",
     "babel-plugin-add-module-exports": "^0.2.1",
     "babel-plugin-rewire": "^1.0.0-rc-3",
@@ -59,6 +60,11 @@
     "blue-tape": "^0.2.0",
     "coveralls": "^2.11.6",
     "cz-conventional-changelog": "^1.1.5",
+    "eslint": "^3.16.1",
+    "eslint-config-standard": "^6.2.1",
+    "eslint-plugin-babel": "^4.0.1",
+    "eslint-plugin-promise": "^3.4.2",
+    "eslint-plugin-standard": "^2.0.1",
     "husky": "^0.13.1",
     "in-publish": "^2.0.0",
     "istanbul": "^1.0.0-alpha.2",
@@ -67,8 +73,7 @@
     "require-all": "^2.0.0",
     "rimraf": "^2.5.1",
     "semantic-release": "^4.3.5",
-    "sinon": "^2.0.0-pre",
-    "standard": "^5.4.1"
+    "sinon": "^2.0.0-pre"
   },
   "standard": {
     "parser": "babel-eslint"
