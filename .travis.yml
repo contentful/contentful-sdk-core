@@ -11,7 +11,7 @@ after_success:
   - python travis_after_all.py
   - cat ./coverage/lcov.info | ./node_modules/.bin/coveralls
   - export $(cat .to_export_back) &> /dev/null
-  - ./bin/release-ci.sh
+  - npm run semantic-release
 branches:
   except:
     - "/^v\\d+\\.\\d+\\.\\d+$/"
