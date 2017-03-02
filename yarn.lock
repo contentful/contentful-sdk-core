@@ -1033,8 +1033,8 @@ create-error-class@^2.0.0:
     inherits "^2.0.1"
 
 cross-spawn@^5.0.1:
-  version "5.0.1"
-  resolved "https://registry.yarnpkg.com/cross-spawn/-/cross-spawn-5.0.1.tgz#a3bbb302db2297cbea3c04edf36941f4613aa399"
+  version "5.1.0"
+  resolved "https://registry.yarnpkg.com/cross-spawn/-/cross-spawn-5.1.0.tgz#e8bd0efee58fcff6f8f94510a0a554bbfa235449"
   dependencies:
     lru-cache "^4.0.1"
     shebang-command "^1.2.0"
@@ -2280,12 +2280,6 @@ loader-utils@^0.2.16:
     json5 "^0.5.0"
     object-assign "^4.0.1"
 
-lodash-webpack-plugin@^0.11.2:
-  version "0.11.2"
-  resolved "https://registry.yarnpkg.com/lodash-webpack-plugin/-/lodash-webpack-plugin-0.11.2.tgz#fdb945b1ae94617172da172f20b60264cfbac635"
-  dependencies:
-    lodash "^4.17.4"
-
 lodash._baseassign@^3.0.0:
   version "3.2.0"
   resolved "https://registry.yarnpkg.com/lodash._baseassign/-/lodash._baseassign-3.2.0.tgz#8c38a099500f215ad09e59f1722fd0c52bfe0a4e"
@@ -2332,6 +2326,10 @@ lodash.isarguments@^3.0.0:
 lodash.isarray@^3.0.0:
   version "3.0.4"
   resolved "https://registry.yarnpkg.com/lodash.isarray/-/lodash.isarray-3.0.4.tgz#79e4eb88c36a8122af86f844aa9bcd851b5fbb55"
+
+lodash.kebabcase@^4.1.1:
+  version "4.1.1"
+  resolved "https://registry.yarnpkg.com/lodash.kebabcase/-/lodash.kebabcase-4.1.1.tgz#8489b1cb0d29ff88195cceca448ff6d6cc295c36"
 
 lodash.keys@^3.0.0:
   version "3.1.2"
@@ -3541,9 +3539,9 @@ travis-deploy-once@1.0.0-node-0.10-support:
     request-promise "^4.1.1"
     travis-ci "^2.1.1"
 
-trevor@^2.2.0:
-  version "2.2.0"
-  resolved "https://registry.yarnpkg.com/trevor/-/trevor-2.2.0.tgz#263f3497fd1008321d822e392884b57970f315e6"
+trevor@^2.3.0:
+  version "2.3.0"
+  resolved "https://registry.yarnpkg.com/trevor/-/trevor-2.3.0.tgz#f128b78489fc0b04be58fdc106695577906cda6f"
   dependencies:
     arrify "^1.0.1"
     chalk "^1.1.3"
@@ -3552,6 +3550,7 @@ trevor@^2.2.0:
     figures "^2.0.0"
     indent-string "^3.1.0"
     load-json-file "^2.0.0"
+    lodash.kebabcase "^4.1.1"
     log-update "^1.0.2"
     meow "^3.7.0"
     p-map "^1.1.1"

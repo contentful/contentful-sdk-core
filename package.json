@@ -72,10 +72,8 @@
     "require-all": "^2.0.0",
     "rimraf": "^2.5.1",
     "semantic-release": "^6.3.2",
-    "sinon": "^2.0.0-pre"
-  },
-  "peerDependencies": {
-    "trevor": "^2.2.0"
+    "sinon": "^2.0.0-pre",
+    "trevor": "^2.3.0"
   },
   "config": {
     "commitizen": {
