@@ -3,6 +3,8 @@ before_install:
   - npm install -g npm@latest
   - npm set progress=false
 language: node_js
+install: 
+  - npm install
 node_js:
   - "6.9"
   - "4.7"
