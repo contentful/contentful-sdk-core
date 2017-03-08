@@ -16,9 +16,16 @@ function createHttpMock () {
 
 test('Passes along HTTP client parameters', (t) => {
   const rateLimitStub = sinon.stub()
+  const httpMock = createHttpMock()
+  const concurrency = 2
+  const delay = 500
   wrapHttpClient.__Rewire__('rateLimit', rateLimitStub)
-  wrapHttpClient(createHttpMock(), {})
-  t.equal(rateLimitStub.callCount, 6, 'wraps http method calls')
+  wrapHttpClient(httpMock, {
+    concurrency,
+    delay
+  })
+  t.equal(rateLimitStub.callCount, 1, 'rate limiter is executed')
+  t.true(rateLimitStub.alwaysCalledWith(httpMock, ['get', 'post', 'put', 'delete', 'patch', 'head'], concurrency, delay), 'rate limiter config passed correctly')
   wrapHttpClient.__ResetDependency__('rateLimit')
   t.end()
 })
