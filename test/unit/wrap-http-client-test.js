@@ -1,4 +1,4 @@
-import test from 'tape'
+import test from 'blue-tape'
 import sinon from 'sinon'
 import reduce from 'lodash/reduce'
 import wrapHttpClient from '../../lib/wrap-http-client'
