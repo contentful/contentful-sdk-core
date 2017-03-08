@@ -1,4 +1,4 @@
-import test from 'tape'
+import test from 'blue-tape'
 import createBackoff from '../../lib/create-backoff'
 
 function setup (requestedWaits) {
@@ -32,7 +32,6 @@ test('backoff on first 2 attempts', (t) => {
     })
     t.equals(requestedWaits.length, 2)
     t.equals(response, 'response', 'returns expected response')
-    t.end()
     teardown()
   })
 })
@@ -55,7 +54,6 @@ test('backoff with ratelimit headers', (t) => {
     })
     t.equals(requestedWaits.length, 2)
     t.equals(response, 'response', 'returns expected response')
-    t.end()
     teardown()
   })
 })
@@ -78,7 +76,6 @@ test('backoff until request totally fails', (t) => {
     })
     t.equals(requestedWaits.length, 3, 'wait periods for 3 attempts')
     t.equals(error.message, 'thrown after 3 tries', 'throws expected error')
-    t.end()
     teardown()
   })
 })

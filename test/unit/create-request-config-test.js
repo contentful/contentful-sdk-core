@@ -1,4 +1,4 @@
-import test from 'tape'
+import test from 'blue-tape'
 
 import createRequestConfig from '../../lib/create-request-config'
 
