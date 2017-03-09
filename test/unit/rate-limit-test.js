@@ -1,9 +1,7 @@
 import test from 'blue-tape'
-import { spy } from 'sinon'
-
 import rateLimit from '../../lib/rate-limit'
 import axios from 'axios'
-let MockAdapter = require('axios-mock-adapter')
+import MockAdapter from 'axios-mock-adapter'
 let mock
 function setup () {
   mock = new MockAdapter(axios)
