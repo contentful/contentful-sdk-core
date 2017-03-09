@@ -47,6 +47,7 @@
     "qs": "^6.1.0"
   },
   "devDependencies": {
+    "axios-mock-adapter": "^1.7.1",
     "babel-cli": "^6.4.5",
     "babel-core": "^6.23.1",
     "babel-eslint": "^7.1.1",
