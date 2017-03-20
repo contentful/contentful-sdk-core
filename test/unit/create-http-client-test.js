@@ -1,13 +1,24 @@
 import test from 'blue-tape'
 import sinon from 'sinon'
 
-import createHttpClient from '../../lib/create-http-client'
+import createHttpClient, {__RewireAPI__ as createHttpClientRewireApi} from '../../lib/create-http-client'
+
+import axios from 'axios'
+import MockAdapter from 'axios-mock-adapter'
+
+let mock
+function setup () {
+  mock = new MockAdapter(axios)
+  createHttpClientRewireApi.__Rewire__('rateLimit', sinon.stub())
+  axios.create = sinon.stub().returns({})
+}
+function teardown () {
+  createHttpClientRewireApi.__ResetDependency__('rateLimit')
+  mock.reset()
+}
 
 test('Calls axios with expected URL', t => {
-  const axios = {
-    create: sinon.stub().returns({})
-  }
-
+  setup()
   createHttpClient(axios, {
     accessToken: 'clientAccessToken',
     space: 'clientSpaceId',
@@ -15,5 +26,6 @@ test('Calls axios with expected URL', t => {
   })
 
   t.equals(axios.create.args[0][0].baseURL, 'https://defaulthost:443/spaces/clientSpaceId/')
+  teardown()
   t.end()
 })
