@@ -12,7 +12,7 @@ function teardown () {
 }
 test('Retry on 429', (t) => {
   setup()
-  mock.onGet('/rate-limit-me').replyOnce(429, 'rateLimited', {'X-Contentful-RateLimit-Reset': 2})
+  mock.onGet('/rate-limit-me').replyOnce(429, 'rateLimited', {'x-contentful-rateLimit-reset': 2})
   mock.onGet('/rate-limit-me').replyOnce(200, 'works')
   t.plan(2)
   return axios.get('/rate-limit-me').then((response) => {
@@ -23,7 +23,7 @@ test('Retry on 429', (t) => {
 })
 test('Retry after a duration >= rateLimit header', (t) => {
   setup()
-  mock.onGet('/rate-limit-me').replyOnce(429, 'rateLimited', {'X-Contentful-RateLimit-Reset': 2})
+  mock.onGet('/rate-limit-me').replyOnce(429, 'rateLimited', {'x-contentful-rateLimit-reset': 2})
   mock.onGet('/rate-limit-me').replyOnce(200, 'works')
   const startTime = Date.now()
   t.plan(3)
@@ -49,7 +49,7 @@ test('Retry on 500', (t) => {
     teardown()
   })
 })
-test('Should Faild if it hits maxRetries', (t) => {
+test('Should Fail if it hits maxRetries', (t) => {
   setup()
   for (let i = 0; i < 5; i++) {
     mock.onGet('/error').replyOnce(500, `error attempt ${i + 1}`)

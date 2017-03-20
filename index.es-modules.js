@@ -3,5 +3,4 @@ export { default as createRequestConfig } from './dist/es-modules/create-request
 export { default as enforceObjPath } from './dist/es-modules/enforce-obj-path'
 export { default as freezeSys } from './dist/es-modules/freeze-sys'
 export { default as promisedWait } from './dist/es-modules/promised-wait'
-export { default as rateLimit } from './dist/es-modules/rate-limit'
 export { default as toPlainObject } from './dist/es-modules/to-plain-object'
