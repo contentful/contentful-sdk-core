@@ -83,6 +83,6 @@
     }
   },
   "publishConfig": {
-    "tag": "alpha"
+    "tag": "beta"
   }
 }
