@@ -6,15 +6,15 @@ import createHttpClient, {__RewireAPI__ as createHttpClientRewireApi} from '../.
 import axios from 'axios'
 import MockAdapter from 'axios-mock-adapter'
 
-let mock
+const mock = new MockAdapter(axios)
 function setup () {
-  mock = new MockAdapter(axios)
   createHttpClientRewireApi.__Rewire__('rateLimit', sinon.stub())
-  axios.create = sinon.stub().returns({})
+  sinon.stub(axios, 'create').returns({})
 }
 function teardown () {
   createHttpClientRewireApi.__ResetDependency__('rateLimit')
   mock.reset()
+  axios.create.restore()
 }
 
 test('Calls axios with expected URL', t => {
