@@ -37,12 +37,12 @@ test('Retry on 429 after a duration >= rateLimit header', (t) => {
     teardown()
   })
 })
-test('Retry on 500 - multiple errors', (t) => {
+test('Retry on 5** - multiple errors', (t) => {
   const { client } = setup()
   mock.onGet('/rate-limit-me').replyOnce(500, 'Server Error', {'x-contentful-request-id': 1})
   mock.onGet('/rate-limit-me').replyOnce(500, 'Server Error', {'x-contentful-request-id': 1})
   mock.onGet('/rate-limit-me').replyOnce(200, 'works #1')
-  mock.onGet('/rate-limit-me').replyOnce(500, 'Another Server Error', {'x-contentful-request-id': 2})
+  mock.onGet('/rate-limit-me').replyOnce(503, 'Another Server Error', {'x-contentful-request-id': 2})
   mock.onGet('/rate-limit-me').replyOnce(200, 'works #2')
   t.plan(5)
   return client.get('/rate-limit-me').then((response) => {
@@ -102,6 +102,20 @@ test('Should Fail if it hits maxRetries', (t) => {
 test('Rejects error straight away when X-Contentful-Request-Id header is missing', (t) => {
   const { client } = setupWithOneRetry()
   mock.onGet('/error').replyOnce(500, 'error attempt')
+  mock.onGet('/error').replyOnce(200, 'works')
+  t.plan(2)
+  return client.get('/error').then((response) => {
+    t.fail('the request should return error')
+    teardown()
+  }).catch((error) => {
+    t.ok(error)
+    t.equals(error.response.data, 'error attempt')
+    teardown()
+  })
+})
+test('Rejects errors with strange status codes', (t) => {
+  const { client } = setupWithOneRetry()
+  mock.onGet('/error').replyOnce(765, 'error attempt')
   mock.onGet('/error').replyOnce(200, 'works')
   t.plan(2)
   return client.get('/error').then((response) => {
