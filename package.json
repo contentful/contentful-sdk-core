@@ -45,7 +45,7 @@
     "es6-promise": "^4.0.5",
     "lodash": "^4.17.4",
     "npmlog": "^4.0.2",
-    "platform": "1.3.3",
+    "platform": "bestiejs/platform.js#5dcfefae7cbb2a48c3b635ed9287a07ac6ce8bd1",
     "qs": "^6.1.0"
   },
   "devDependencies": {
