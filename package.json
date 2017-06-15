@@ -41,7 +41,7 @@
     "node": ">=4.7"
   },
   "dependencies": {
-    "axios": "^0.15.3",
+    "axios": "contentful/axios#fix/https-via-http-proxy",
     "es6-promise": "^4.0.5",
     "lodash": "^4.17.4",
     "npmlog": "^4.0.2",
