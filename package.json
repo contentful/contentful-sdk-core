@@ -41,7 +41,6 @@
     "node": ">=4.7"
   },
   "dependencies": {
-    "axios": "contentful/axios#fix/https-via-http-proxy",
     "es6-promise": "^4.0.5",
     "lodash": "^4.17.4",
     "npmlog": "^4.0.2",
@@ -49,6 +48,7 @@
     "qs": "^6.1.0"
   },
   "devDependencies": {
+    "axios": "^0.16.2",
     "axios-mock-adapter": "^1.7.1",
     "babel-cli": "^6.4.5",
     "babel-core": "^6.23.1",
