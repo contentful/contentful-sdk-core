@@ -17,7 +17,7 @@ function teardown () {
   axios.create.restore()
 }
 
-test('Calls axios with expected URL', t => {
+test('Calls axios with expected default URL', t => {
   setup()
   createHttpClient(axios, {
     accessToken: 'clientAccessToken',
@@ -26,6 +26,44 @@ test('Calls axios with expected URL', t => {
   })
 
   t.equals(axios.create.args[0][0].baseURL, 'https://defaulthost:443/spaces/clientSpaceId/')
+  teardown()
+  t.end()
+})
+
+test('Calls axios based on passed host', t => {
+  setup()
+  createHttpClient(axios, {
+    accessToken: 'clientAccessToken',
+    host: 'contentful.com:8080'
+  })
+
+  t.equals(axios.create.args[0][0].baseURL, 'https://contentful.com:8080/spaces/')
+  teardown()
+  t.end()
+})
+
+test('Calls axios based on passed host with insecure flag', t => {
+  setup()
+  createHttpClient(axios, {
+    accessToken: 'clientAccessToken',
+    host: 'contentful.com:321',
+    insecure: true
+  })
+
+  t.equals(axios.create.args[0][0].baseURL, 'http://contentful.com:321/spaces/')
+  teardown()
+  t.end()
+})
+
+test('Calls axios based on passed hostname with insecure flag', t => {
+  setup()
+  createHttpClient(axios, {
+    accessToken: 'clientAccessToken',
+    host: 'contentful.com',
+    insecure: true
+  })
+
+  t.equals(axios.create.args[0][0].baseURL, 'http://contentful.com:80/spaces/')
   teardown()
   t.end()
 })
