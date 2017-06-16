@@ -1,7 +1,8 @@
-import test from 'blue-tape'
-import rateLimit from '../../lib/rate-limit'
 import axios from 'axios'
 import MockAdapter from 'axios-mock-adapter'
+import test from 'blue-tape'
+
+import rateLimit from '../../lib/rate-limit'
 
 const mock = new MockAdapter(axios)
 
