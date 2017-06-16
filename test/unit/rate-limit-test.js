@@ -74,13 +74,15 @@ test('no retry when automatic handling flag is disabled', (t) => {
   const { client } = setupWithoutErrorRetry()
   const responseError = new Error('Mocked 500 Error')
   mock.onGet('/rate-limit-me').replyOnce(500, responseError, {'x-contentful-request-id': 3})
-  t.plan(2)
+  mock.onGet('/rate-limit-me').replyOnce(200, 'would work but retry is disabled', {'x-contentful-request-id': 4})
+  t.plan(3)
   return client.get('/rate-limit-me').then((response) => {
     t.fail('Promise should reject not resolve')
     teardown()
   })
   .catch((error) => {
     t.equals(error.response.status, 500)
+    t.equals(error.response.headers['x-contentful-request-id'], 3)
     t.equals(error.response.data, responseError)
     teardown()
   })
