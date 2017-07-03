@@ -3,7 +3,7 @@ before_install:
   - npm install -g npm@latest
   - npm set progress=false
 language: node_js
-install: 
+install:
   - npm install
 node_js:
   - "6.9"
@@ -11,7 +11,7 @@ node_js:
 after_success:
   - curl -Lo travis_after_all.py https://raw.githubusercontent.com/contentful/travis_after_all/master/travis_after_all.py
   - python travis_after_all.py
-  - cat ./coverage/lcov.info | ./node_modules/.bin/coveralls
+  - bash <(curl -s https://codecov.io/bash)
   - export $(cat .to_export_back) &> /dev/null
   - npm run semantic-release
 branches:
