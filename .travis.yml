@@ -9,6 +9,8 @@ node_js:
   - "6.9"
   - "4.7"
 after_success:
+  - cat ./coverage/lcov.info
+  - cat ./coverage/coverage.raw.json 
   - curl -Lo travis_after_all.py https://raw.githubusercontent.com/contentful/travis_after_all/master/travis_after_all.py
   - python travis_after_all.py
   - bash <(curl -s https://codecov.io/bash)
