@@ -31,7 +31,7 @@ function setupWithOneRetry () {
     logHandler: logHandlerStub,
     retryOnError: true
   })
-  rateLimit(client, 2)
+  rateLimit(client, 1)
   return { client }
 }
 function teardown () {
@@ -74,19 +74,22 @@ test('Retry on 5** - multiple errors', (t) => {
     })
   })
 })
-// Disabled till new version of axios-mock-adapter is out
-// https://github.com/ctimmerm/axios-mock-adapter/issues/52
-test.skip('Retry on network error', (t) => {
-  const { client } = setup()
+
+test('Retry on network error', (t) => {
+  const { client } = setupWithOneRetry()
   mock.onGet('/rate-limit-me').networkError()
-  mock.onGet('/rate-limit-me').replyOnce(200, 'works')
-  t.plan(2)
-  return client.get('/rate-limit-me').then((response) => {
-    t.ok(response.data)
-    t.equals(response.data, 'works')
+
+  return client.get('/rate-limit-me')
+  .then((response) => {
+    t.fail('should not succeed')
+    teardown()
+  })
+  .catch((error) => {
+    t.equals(error.attempts, 2, 'logs two attempts, one initial and one retry')
     teardown()
   })
 })
+
 test('no retry when automatic handling flag is disabled', (t) => {
   const { client } = setupWithoutErrorRetry()
   mock.onGet('/rate-limit-me').replyOnce(500, 'Mocked 500 Error', {'x-contentful-request-id': 3})
