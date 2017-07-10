@@ -1,7 +1,7 @@
 # contentful-sdk-core
 
 [![Build Status](https://travis-ci.org/contentful/contentful-sdk-core.svg?branch=master)](https://travis-ci.org/contentful/contentful-sdk-core)
-[![codecov](https://codecov.io/gh/contentful/contentful-sdk-core/branch/master/graph/badge.svg)](https://codecov.io/gh/contentful/contentful-sdk-core)
+[![Coverage Status](https://coveralls.io/repos/github/contentful/contentful-sdk-core/badge.svg?branch=master)](https://coveralls.io/github/contentful/contentful-sdk-core?branch=master)
 ![David](https://img.shields.io/david/contentful/contentful-sdk-core.svg)
 ![David](https://img.shields.io/david/dev/contentful/contentful-sdk-core.svg)
 
