@@ -13,7 +13,7 @@ else
 fi
 
 # Create the CommonJS and browser builds, so we can run integration tests using those
-npm run build:ci
+npm run build
 
 # Run the node integration tests. Running them on only one version should be enough.
 if ./node_modules/contentful-sdk-core/bin/run-if-node-version.js  && [ ! $SKIP_INTEGRATION_TESTS ] ; then
