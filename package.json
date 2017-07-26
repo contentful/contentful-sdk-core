@@ -20,7 +20,6 @@
     "lint": "eslint lib test",
     "pretest": "npm run lint",
     "test": "npm run test:cover",
-    "test:ci": "npm run test:cover",
     "test:ci-emulate": "trevor",
     "test:cover": "BABEL_ENV=test babel-node ./node_modules/istanbul/lib/cli.js cover ./test/runner | tap-spec",
     "test:unit": "BABEL_ENV=test babel-node ./test/runner | tap-spec",
