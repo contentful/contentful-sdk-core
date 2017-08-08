@@ -16,6 +16,7 @@ function teardown () {
   createHttpClientRewireApi.__ResetDependency__('rateLimit')
   mock.reset()
   axios.create.restore()
+  logHandlerStub.resetHistory()
 }
 
 test('Calls axios with expected default URL', t => {
@@ -96,4 +97,32 @@ test('Fails with missing access token', t => {
     teardown()
     t.end()
   }
+})
+
+test('Calls axios based on passed hostname with basePath', t => {
+  setup()
+  createHttpClient(axios, {
+    accessToken: 'clientAccessToken',
+    host: 'some.random.example.com',
+    basePath: '/foo/bar'
+  })
+
+  t.equals(axios.create.args[0][0].baseURL, 'https://some.random.example.com:443/foo/bar/spaces/')
+  t.equals(logHandlerStub.callCount, 0, 'does not log anything')
+  teardown()
+  t.end()
+})
+
+test('Calls axios based on passed hostname with invalid basePath and fixes the invalid one', t => {
+  setup()
+  createHttpClient(axios, {
+    accessToken: 'clientAccessToken',
+    host: 'some.random.example.com',
+    basePath: 'foo/bar'
+  })
+
+  t.equals(axios.create.args[0][0].baseURL, 'https://some.random.example.com:443/foo/bar/spaces/')
+  t.equals(logHandlerStub.callCount, 0, 'does not log anything')
+  teardown()
+  t.end()
 })
