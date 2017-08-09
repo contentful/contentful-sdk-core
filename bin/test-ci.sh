@@ -9,7 +9,7 @@ set -e
 if ./node_modules/contentful-sdk-core/bin/run-if-node-version.js ; then
   npm run test:cover
 else
-  npm run test:unit
+  npm run test:only
 fi
 
 # Create the CommonJS and browser builds, so we can run integration tests using those
