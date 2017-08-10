@@ -14,11 +14,11 @@ test('Parse browser user agent correctly', (t) => {
   // Fake browser environment
   getUserAgentRewireApi.__Rewire__('isNode', () => false)
   getUserAgentRewireApi.__Rewire__('isReactNative', () => false)
-  getUserAgentRewireApi.__Rewire__('window', {
+  global.window = {
     navigator: {
       platform: 'MacIntel'
     }
-  })
+  }
 
   const userAgent = getUserAgent('contentful.js/1.0.0', 'myApplication/1.0.0', 'myIntegration/1.0.0')
   t.equal(userAgent.match(headerRegEx).length, 5, 'consists of 5 parts')
@@ -34,11 +34,11 @@ test('Parse react native user agent correctly', (t) => {
   // Fake react native environment
   getUserAgentRewireApi.__Rewire__('isNode', () => false)
   getUserAgentRewireApi.__Rewire__('isReactNative', () => true)
-  getUserAgentRewireApi.__Rewire__('window', {
+  global.window = {
     navigator: {
       product: 'ReactNative'
     }
-  })
+  }
 
   const userAgent = getUserAgent('contentful.js/1.0.0', 'myApplication/1.0.0', 'myIntegration/1.0.0')
   t.equal(userAgent.match(headerRegEx).length, 4, 'consists of 4 parts since os is missing in mocked data')
