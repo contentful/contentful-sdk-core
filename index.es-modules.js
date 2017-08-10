@@ -2,6 +2,5 @@ export { default as createHttpClient } from './dist/es-modules/create-http-clien
 export { default as createRequestConfig } from './dist/es-modules/create-request-config'
 export { default as enforceObjPath } from './dist/es-modules/enforce-obj-path'
 export { default as freezeSys } from './dist/es-modules/freeze-sys'
-export { default as promisedWait } from './dist/es-modules/promised-wait'
-export { default as toPlainObject } from './dist/es-modules/to-plain-object'
 export { default as getUserAgentHeader } from './dist/es-modules/get-user-agent'
+export { default as toPlainObject } from './dist/es-modules/to-plain-object'
