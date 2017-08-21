@@ -16,7 +16,7 @@ fi
 npm run build
 
 # Run the node integration tests. Running them on only one version should be enough.
-if ./node_modules/contentful-sdk-core/bin/run-if-node-version.js  && [ ! $SKIP_INTEGRATION_TESTS ] ; then
+if ./node_modules/contentful-sdk-core/bin/run-if-node-version.js  && [ $TRAVIS_EVENT_TYPE = 'cron' ] ; then
   npm run test:integration
 fi
 
