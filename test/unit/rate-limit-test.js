@@ -49,7 +49,7 @@ test('Retry on 429 after a duration >= rateLimit header', (t) => {
     t.equals(response.data, 'works')
     t.equals(logHandlerStub.callCount, 1)
     t.equals(logHandlerStub.args[0][0], 'warning')
-    t.ok(logHandlerStub.args[0][1].includes, 'Rate limit error occured.')
+    t.ok(logHandlerStub.args[0][1].includes, 'Rate limit error occurred.')
     t.ok(Date.now() - startTime >= 4000)
     teardown()
   })
