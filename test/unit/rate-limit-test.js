@@ -34,6 +34,17 @@ function setupWithOneRetry () {
   rateLimit(client, 1)
   return { client }
 }
+function setupWithNonAxiosError () {
+  const client = axios.create({
+    logHandler: logHandlerStub,
+    retryOnError: true
+  })
+  client.interceptors.response.use(function (response) {
+    return Promise.reject(new Error('some non-axios error'))
+  })
+  rateLimit(client)
+  return { client }
+}
 function teardown () {
   logHandlerStub.reset()
   mock.reset()
@@ -110,6 +121,27 @@ test('no retry when automatic handling flag is disabled', (t) => {
       teardown()
     })
 })
+
+test('no retry with non-axios error', (t) => {
+  const { client } = setupWithNonAxiosError()
+  mock.onGet('/rate-limit-me').replyOnce(200, 'worked but will fail due to interceptor', {'x-contentful-request-id': 4})
+
+  return client.get('/rate-limit-me')
+    .then((response) => {
+      t.fail('Promise should reject not resolve')
+      teardown()
+    })
+    .catch((error) => {
+      // Check if right error is returned:
+      t.equals(error.message, 'some non-axios error')
+      // Ensure no retry happened:
+      t.equals(logHandlerStub.callCount, 0, 'did not log anything')
+      t.equals(error.response, undefined)
+      t.equals(error.attempts, undefined)
+      teardown()
+    })
+})
+
 test('Should Fail if it hits maxRetries', (t) => {
   const { client } = setupWithOneRetry()
   mock.onGet('/error').replyOnce(500, 'error attempt #1', {'x-contentful-request-id': 4})
@@ -131,6 +163,7 @@ test('Should Fail if it hits maxRetries', (t) => {
       teardown()
     })
 })
+
 test('Rejects error straight away when X-Contentful-Request-Id header is missing', (t) => {
   const { client } = setupWithOneRetry()
   mock.onGet('/error').replyOnce(500, 'error attempt')
@@ -149,6 +182,7 @@ test('Rejects error straight away when X-Contentful-Request-Id header is missing
       teardown()
     })
 })
+
 test('Rejects errors with strange status codes', (t) => {
   const { client } = setup()
   mock.onGet('/error').replyOnce(765, 'error attempt')
