@@ -56,7 +56,7 @@
     "babel-preset-es2015": "^6.3.13",
     "babel-register": "^6.26.0",
     "blue-tape": "^1.0.0",
-    "coveralls": "^3.0.0",
+    "codecov": "^3.0.0",
     "cz-conventional-changelog": "^2.0.0",
     "eslint": "^4.18.1",
     "eslint-config-standard": "^11.0.0",
