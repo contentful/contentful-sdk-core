@@ -53,7 +53,7 @@ npm run build
 
 Run only the unit tests:
 ```
-npm run test:only
+npm run test:unit
 ```
 
 Run unit tests including coverage report:
