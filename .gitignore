@@ -1,5 +1,3 @@
-dist
-
 # Docker
 *.dockerfile
 *.dockerignore
