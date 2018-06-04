@@ -33,6 +33,7 @@
   "files": [
     "dist",
     "index.js",
+    "index.d.js",
     "index.es-modules.js",
     "bin"
   ],
