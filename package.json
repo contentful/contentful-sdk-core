@@ -26,7 +26,7 @@
     "test:debug": "BABEL_ENV=test babel-node debug ./test/runner",
     "browser-coverage": "npm run test:cover && opener coverage/lcov-report/index.html",
     "prepublish": "in-publish && npm run build || not-in-publish",
-    "semantic-release": "semantic-release pre && npm publish && semantic-release post",
+    "semantic-release": "semantic-release",
     "precommit": "npm run lint",
     "prepush": "npm run test:unit"
   },
