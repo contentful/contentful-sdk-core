@@ -6,6 +6,9 @@
   "main": "index.js",
   "module": "index.es-modules.js",
   "jsnext:main": "index.es-modules.js",
+  "browser": {
+    "os": false
+  },
   "repository": {
     "type": "git",
     "url": "https://github.com/contentful/contentful-sdk-core.git"
