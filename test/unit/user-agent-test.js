@@ -31,6 +31,22 @@ test('Parse browser user agent correctly', (t) => {
   getUserAgentRewireApi.__ResetDependency__('window')
 })
 
+test('Fail safely', (t) => {
+  // Fake browser environment
+  getUserAgentRewireApi.__Rewire__('isNode', () => false)
+  getUserAgentRewireApi.__Rewire__('isReactNative', () => false)
+  global.window = {}
+
+  const userAgent = getUserAgent('contentful.js/1.0.0', 'myApplication/1.0.0', 'myIntegration/1.0.0')
+  t.equal(userAgent.match(headerRegEx).length, 3, 'consists of 3 parts')
+  t.true(userAgent.indexOf('os') === -1, 'empty os')
+  t.true(userAgent.indexOf('platform') === -1, 'empty browser platform')
+  t.end()
+  getUserAgentRewireApi.__ResetDependency__('isNode')
+  getUserAgentRewireApi.__ResetDependency__('isReactNative')
+  getUserAgentRewireApi.__ResetDependency__('window')
+})
+
 test('Parse react native user agent correctly', (t) => {
   // Fake react native environment
   getUserAgentRewireApi.__Rewire__('isNode', () => false)
