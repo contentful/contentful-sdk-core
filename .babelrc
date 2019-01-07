@@ -1,11 +1,8 @@
 {
-  "plugins": [
-    "transform-object-rest-spread"
-  ],
   "env": {
     "test": {
       "presets": [
-        ["env", {
+        ["@babel/env", {
           "targets": {
             "node": "6",
             "browsers": [
@@ -20,7 +17,7 @@
     },
       "es5": {
         "presets": [
-          ["env", {
+          ["@babel/env", {
             "targets": {
               "node": "6",
               "browsers": [
@@ -36,7 +33,7 @@
       },
       "es-modules": {
         "presets": [
-          ["env", {
+          ["@babel/env", {
             "targets": {
               "node": "6",
               "browsers": [
