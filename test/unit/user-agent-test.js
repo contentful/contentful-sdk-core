@@ -1,5 +1,5 @@
 import test from 'blue-tape'
-import getUserAgent, {__RewireAPI__ as getUserAgentRewireApi} from '../../lib/get-user-agent'
+import getUserAgent, { __RewireAPI__ as getUserAgentRewireApi } from '../../lib/get-user-agent'
 
 const headerRegEx = /(app|sdk|platform|integration|os) \S+(\/\d+.\d+.\d+(-[\w\d-]+)?)?;/igm
 

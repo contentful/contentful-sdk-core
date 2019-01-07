@@ -51,7 +51,7 @@ function teardown () {
 }
 test('Retry on 429 after a duration >= rateLimit header', (t) => {
   const { client } = setup()
-  mock.onGet('/rate-limit-me').replyOnce(429, 'rateLimited', {'x-contentful-ratelimit-reset': 4})
+  mock.onGet('/rate-limit-me').replyOnce(429, 'rateLimited', { 'x-contentful-ratelimit-reset': 4 })
   mock.onGet('/rate-limit-me').replyOnce(200, 'works')
   const startTime = Date.now()
   t.plan(6)
@@ -67,10 +67,10 @@ test('Retry on 429 after a duration >= rateLimit header', (t) => {
 })
 test('Retry on 5** - multiple errors', (t) => {
   const { client } = setup()
-  mock.onGet('/rate-limit-me').replyOnce(500, 'Server Error', {'x-contentful-request-id': 1})
-  mock.onGet('/rate-limit-me').replyOnce(500, 'Server Error', {'x-contentful-request-id': 1})
+  mock.onGet('/rate-limit-me').replyOnce(500, 'Server Error', { 'x-contentful-request-id': 1 })
+  mock.onGet('/rate-limit-me').replyOnce(500, 'Server Error', { 'x-contentful-request-id': 1 })
   mock.onGet('/rate-limit-me').replyOnce(200, 'works #1')
-  mock.onGet('/rate-limit-me').replyOnce(503, 'Another Server Error', {'x-contentful-request-id': 2})
+  mock.onGet('/rate-limit-me').replyOnce(503, 'Another Server Error', { 'x-contentful-request-id': 2 })
   mock.onGet('/rate-limit-me').replyOnce(200, 'works #2')
   t.plan(5)
   return client.get('/rate-limit-me').then((response) => {
@@ -103,8 +103,8 @@ test('Retry on network error', (t) => {
 
 test('no retry when automatic handling flag is disabled', (t) => {
   const { client } = setupWithoutErrorRetry()
-  mock.onGet('/rate-limit-me').replyOnce(500, 'Mocked 500 Error', {'x-contentful-request-id': 3})
-  mock.onGet('/rate-limit-me').replyOnce(200, 'would work but retry is disabled', {'x-contentful-request-id': 4})
+  mock.onGet('/rate-limit-me').replyOnce(500, 'Mocked 500 Error', { 'x-contentful-request-id': 3 })
+  mock.onGet('/rate-limit-me').replyOnce(200, 'would work but retry is disabled', { 'x-contentful-request-id': 4 })
 
   return client.get('/rate-limit-me')
     .then((response) => {
@@ -124,7 +124,7 @@ test('no retry when automatic handling flag is disabled', (t) => {
 
 test('no retry with non-axios error', (t) => {
   const { client } = setupWithNonAxiosError()
-  mock.onGet('/rate-limit-me').replyOnce(200, 'worked but will fail due to interceptor', {'x-contentful-request-id': 4})
+  mock.onGet('/rate-limit-me').replyOnce(200, 'worked but will fail due to interceptor', { 'x-contentful-request-id': 4 })
 
   return client.get('/rate-limit-me')
     .then((response) => {
@@ -144,9 +144,9 @@ test('no retry with non-axios error', (t) => {
 
 test('Should Fail if it hits maxRetries', (t) => {
   const { client } = setupWithOneRetry()
-  mock.onGet('/error').replyOnce(500, 'error attempt #1', {'x-contentful-request-id': 4})
-  mock.onGet('/error').replyOnce(501, 'error attempt #2', {'x-contentful-request-id': 4})
-  mock.onGet('/error').replyOnce(200, 'should not be there', {'x-contentful-request-id': 4})
+  mock.onGet('/error').replyOnce(500, 'error attempt #1', { 'x-contentful-request-id': 4 })
+  mock.onGet('/error').replyOnce(501, 'error attempt #2', { 'x-contentful-request-id': 4 })
+  mock.onGet('/error').replyOnce(200, 'should not be there', { 'x-contentful-request-id': 4 })
 
   return client.get('/error')
     .then((response) => {
