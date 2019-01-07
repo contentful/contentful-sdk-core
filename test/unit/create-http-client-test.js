@@ -8,10 +8,12 @@ import MockAdapter from 'axios-mock-adapter'
 
 const logHandlerStub = sinon.stub()
 const mock = new MockAdapter(axios)
+
 function setup () {
   createHttpClientRewireApi.__Rewire__('rateLimit', sinon.stub())
   sinon.stub(axios, 'create').returns({})
 }
+
 function teardown () {
   createHttpClientRewireApi.__ResetDependency__('rateLimit')
   mock.reset()
@@ -123,6 +125,36 @@ test('Calls axios based on passed hostname with invalid basePath and fixes the i
 
   t.equals(axios.create.args[0][0].baseURL, 'https://some.random.example.com:443/foo/bar/spaces/')
   t.equals(logHandlerStub.callCount, 0, 'does not log anything')
+  teardown()
+  t.end()
+})
+
+test('Can change the adapter axios uses', t => {
+  const testAdapter = function myAdapter (config) {
+    return new Promise(function (resolve, reject) {
+      var response = {
+        data: 'Adapter was used',
+        status: 200,
+        statusText: 'request.statusText',
+        headers: {},
+        config: config,
+        request: undefined
+      }
+      resolve(response)
+    })
+  }
+  setup()
+  const instance = createHttpClient(axios, {
+    accessToken: 'clientAccessToken',
+    space: 'clientSpaceId',
+    defaultHostname: 'defaulthost',
+    logHandler: logHandlerStub,
+    adapter: testAdapter
+  })
+
+  t.equals(axios.create.args[0][0].baseURL, 'https://defaulthost:443/spaces/clientSpaceId/')
+  t.equals(logHandlerStub.callCount, 0, 'does not log anything')
+  t.equals(instance.httpClientParams.adapter, testAdapter, 'client uses the custom adapter')
   teardown()
   t.end()
 })
