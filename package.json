@@ -36,8 +36,7 @@
   "files": [
     "dist",
     "index.js",
-    "index.es-modules.js",
-    "bin"
+    "index.es-modules.js"
   ],
   "engines": {
     "node": ">=6"
