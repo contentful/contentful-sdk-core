@@ -1,26 +1,7 @@
 {
-  "env": {
-    "test": {
-      "presets": [
-        ["@babel/env"]
-      ],
-      "plugins": ["rewire"],
-      "sourceMaps": "inline"
-    },
-      "es5": {
-        "presets": [
-          ["@babel/env"]
-        ],
-        "plugins": [
-          "add-module-exports"
-        ]
-      },
-      "es-modules": {
-        "presets": [
-          ["@babel/env", {
-            "modules": false
-          }]
-        ]
-      }
-  }
+  "presets": [
+    ["@babel/env"]
+  ],
+  "plugins": ["rewire"],
+  "sourceMaps": "inline"
 }
