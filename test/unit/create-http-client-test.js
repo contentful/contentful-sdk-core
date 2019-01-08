@@ -1,7 +1,7 @@
 import test from 'blue-tape'
 import sinon from 'sinon'
 
-import createHttpClient, {__RewireAPI__ as createHttpClientRewireApi} from '../../lib/create-http-client'
+import createHttpClient, { __RewireAPI__ as createHttpClientRewireApi } from '../../lib/create-http-client'
 
 import axios from 'axios'
 import MockAdapter from 'axios-mock-adapter'
