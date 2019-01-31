@@ -7,6 +7,8 @@ import axios from 'axios'
 import MockAdapter from 'axios-mock-adapter'
 
 const logHandlerStub = sinon.stub()
+const requestloggerStub = sinon.stub()
+const responseloggerStub = sinon.stub()
 const mock = new MockAdapter(axios)
 
 function setup () {
@@ -76,6 +78,23 @@ test('Calls axios based on passed hostname with insecure flag', t => {
 
   t.equals(axios.create.args[0][0].baseURL, 'http://contentful.com:80/spaces/')
   t.equals(logHandlerStub.callCount, 0, 'does not log anything')
+  teardown()
+  t.end()
+})
+
+test('Calls axios with reques/response logger', t => {
+  setup()
+  createHttpClient(axios, {
+    accessToken: 'clientAccessToken',
+    host: 'contentful.com',
+    insecure: true,
+    requestLogger: requestloggerStub,
+    responseLogger: responseloggerStub
+  })
+
+  t.equals(axios.create.args[0][0].baseURL, 'http://contentful.com:80/spaces/')
+  t.equals(requestloggerStub.callCount, 0, 'requestLogger gets passed')
+  t.equals(responseloggerStub.callCount, 0, 'responseLogger gets passed')
   teardown()
   t.end()
 })
