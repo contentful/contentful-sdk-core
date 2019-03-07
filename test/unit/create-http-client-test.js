@@ -82,6 +82,23 @@ test('Calls axios based on passed hostname with insecure flag', t => {
   t.end()
 })
 
+test('Calls axios based on passed headers', t => {
+  setup()
+  createHttpClient(axios, {
+    accessToken: 'clientAccessToken',
+    headers: {
+      'X-Custom-Header': 'example',
+      Authorization: 'Basic customAuth'
+    }
+  })
+
+  t.equals(axios.create.args[0][0].headers['X-Custom-Header'], 'example')
+  t.equals(axios.create.args[0][0].headers['Authorization'], 'Basic customAuth')
+
+  teardown()
+  t.end()
+})
+
 test('Calls axios with reques/response logger', t => {
   setup()
   createHttpClient(axios, {
