@@ -148,7 +148,7 @@ test('no retry with non-axios error', (t) => {
     })
 })
 
-test('Should Fail if it hits maxRetries', (t) => {
+test.only('Should Fail if it hits maxRetries', (t) => {
   const { client } = setupWithOneRetry()
   mock.onGet('/error').replyOnce(500, 'error attempt #1', { 'x-contentful-request-id': 4 })
   mock.onGet('/error').replyOnce(501, 'error attempt #2', { 'x-contentful-request-id': 4 })
@@ -166,25 +166,6 @@ test('Should Fail if it hits maxRetries', (t) => {
       t.equals(logHandlerStub.args[0][0], 'warning', 'logs a retry warning')
       t.equals(error.message, 'Request failed with status code 501')
       t.equals(error.attempts, 2, 'logs the correct amounth of attempts')
-      teardown()
-    })
-})
-
-test('Rejects error straight away when X-Contentful-Request-Id header is missing', (t) => {
-  const { client } = setupWithOneRetry()
-  mock.onGet('/error').replyOnce(500, 'error attempt')
-  mock.onGet('/error').replyOnce(200, 'works')
-
-  return client.get('/error')
-    .then((response) => {
-      t.fail('the request should return error')
-      teardown()
-    }).catch((error) => {
-      t.ok(error)
-      t.equals(error.response.data, 'error attempt')
-      t.equals(logHandlerStub.callCount, 0, 'did not log anything')
-      t.equals(error.message, 'Request failed with status code 500')
-      t.equals(error.attempts, 1)
       teardown()
     })
 })
