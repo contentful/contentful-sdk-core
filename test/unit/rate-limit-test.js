@@ -148,7 +148,7 @@ test('no retry with non-axios error', (t) => {
     })
 })
 
-test.only('Should Fail if it hits maxRetries', (t) => {
+test('Should Fail if it hits maxRetries', (t) => {
   const { client } = setupWithOneRetry()
   mock.onGet('/error').replyOnce(500, 'error attempt #1', { 'x-contentful-request-id': 4 })
   mock.onGet('/error').replyOnce(501, 'error attempt #2', { 'x-contentful-request-id': 4 })
