@@ -9,15 +9,15 @@ const logHandlerStub = sinon.stub()
 
 const mock = new MockAdapter(axios)
 
-function setup () {
-  const client = axios.create({
+function setup (options = {}) {
+  const client = axios.create(Object.assign({
     logHandler: logHandlerStub,
     retryOnError: true
-  })
+  }, options))
   rateLimit(client, {
     logHandler: logHandlerStub,
     retryOnError: true
-  })
+  }, options.retryLimit)
   return { client }
 }
 
@@ -87,6 +87,34 @@ test('Retry on 5** - multiple errors', (t) => {
       t.ok(Date.now() - startTime <= 3000, 'First error should not influence second errors retry delay')
       t.ok(response.data)
       t.equals(response.data, 'works #2')
+      teardown()
+    })
+  })
+})
+
+test('Retry on 5** - multiple errors - reach/exceed limit', (t) => {
+  const { client } = setup({ retryLimit: 7 })
+  mock.onGet('/rate-limit-me').replyOnce(500, 'Server Error', { 'x-contentful-request-id': 12345 })
+  mock.onGet('/rate-limit-me').replyOnce(500, 'Server Error', { 'x-contentful-request-id': 12345 })
+  mock.onGet('/rate-limit-me').replyOnce(503, 'Another Server Error', { 'x-contentful-request-id': 12345 })
+  mock.onGet('/rate-limit-me').replyOnce(500, 'Server Error', { 'x-contentful-request-id': 12345 })
+  mock.onGet('/rate-limit-me').replyOnce(503, 'Another Server Error', { 'x-contentful-request-id': 12345 })
+  mock.onGet('/rate-limit-me').replyOnce(500, 'Server Error', { 'x-contentful-request-id': 12345 })
+  mock.onGet('/rate-limit-me').replyOnce(503, 'Another Server Error', { 'x-contentful-request-id': 12345 })
+  mock.onGet('/rate-limit-me').replyOnce(200, 'works')
+  mock.onGet('/rate-limit-me').replyOnce(500, 'Server Error', { 'x-contentful-request-id': 12345 })
+
+  t.plan(3)
+
+  return client.get('/rate-limit-me').then((response) => {
+    t.ok(response.data)
+    t.equals(response.data, 'works')
+  }).then(() => {
+    return client.get('/rate-limit-me').then(() => {
+      t.fail('Promise should reject not resolve')
+      teardown()
+    }).catch((error) => {
+      t.equals(error.message, 'Request failed with status code 500')
       teardown()
     })
   })
