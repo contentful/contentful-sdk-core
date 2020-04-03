@@ -90,7 +90,9 @@
       }
     ],
     "@semantic-release/release-notes-generator",
-    "@semantic-release/npm"
+    "@semantic-release/npm",
+    "@semantic-release/changelog",
+    "@semantic-release/github"
   ],
   "config": {
     "commitizen": {
