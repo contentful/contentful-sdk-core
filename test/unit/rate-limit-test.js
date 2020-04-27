@@ -14,27 +14,24 @@ function setup (options = {}) {
     logHandler: logHandlerStub,
     retryOnError: true
   }, options))
-  rateLimit(client, {
-    logHandler: logHandlerStub,
-    retryOnError: true
-  }, options.retryLimit)
+  rateLimit(client, options.retryLimit)
   return { client }
 }
 
 function setupWithoutErrorRetry () {
-  const client = axios.create()
-  rateLimit(client, {
+  const client = axios.create({
     retryOnError: false,
     logHandler: logHandlerStub
   })
+  rateLimit(client)
   return { client }
 }
 function setupWithOneRetry () {
-  const client = axios.create()
-  rateLimit(client, {
+  const client = axios.create({
     retryOnError: true,
     logHandler: logHandlerStub
-  }, 1)
+  })
+  rateLimit(client, 1)
   return { client }
 }
 function setupWithNonAxiosError () {
@@ -45,10 +42,7 @@ function setupWithNonAxiosError () {
   client.interceptors.response.use(function (response) {
     return Promise.reject(new Error('some non-axios error'))
   })
-  rateLimit(client, {
-    retryOnError: true,
-    logHandler: logHandlerStub
-  })
+  rateLimit(client)
   return { client }
 }
 function teardown () {
