@@ -64,7 +64,7 @@
     "husky": "^2.2.0",
     "in-publish": "^2.0.0",
     "istanbul": "^1.0.0-alpha.2",
-    "mkdirp": "^0.5.1",
+    "mkdirp": "^1.0.4",
     "moxios": "^0.4.0",
     "opener": "^1.4.1",
     "require-all": "^3.0.0",
