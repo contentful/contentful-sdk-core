@@ -71,7 +71,7 @@
     "rimraf": "^2.6.2",
     "rollup": "^1.0.2",
     "rollup-plugin-babel": "^4.2.0",
-    "semantic-release": "^15.8.0",
+    "semantic-release": "^17.0.7",
     "sinon": "^9.0.2",
     "tap-spec": "^5.0.0",
     "trevor": "^2.3.0"
