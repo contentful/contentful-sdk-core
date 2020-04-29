@@ -72,7 +72,7 @@
     "rollup": "^1.0.2",
     "rollup-plugin-babel": "^4.2.0",
     "semantic-release": "^15.8.0",
-    "sinon": "^7.3.2",
+    "sinon": "^9.0.2",
     "tap-spec": "^5.0.0",
     "trevor": "^2.3.0"
   },
