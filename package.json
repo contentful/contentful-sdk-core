@@ -48,7 +48,7 @@
     "@babel/node": "^7.2.2",
     "@babel/preset-env": "^7.2.3",
     "@babel/register": "^7.0.0",
-    "axios": "^0.19.1",
+    "axios": "^0.20.0",
     "axios-mock-adapter": "^1.15.0",
     "babel-plugin-rewire": "^1.2.0",
     "blue-tape": "^1.0.0",
