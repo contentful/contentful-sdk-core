@@ -93,7 +93,7 @@ test('Calls axios based on passed headers', t => {
   })
 
   t.equals(axios.create.args[0][0].headers['X-Custom-Header'], 'example')
-  t.equals(axios.create.args[0][0].headers['Authorization'], 'Basic customAuth')
+  t.equals(axios.create.args[0][0].headers.Authorization, 'Basic customAuth')
 
   teardown()
   t.end()
