@@ -60,7 +60,7 @@
     "eslint-plugin-import": "^2.13.0",
     "eslint-plugin-node": "^11.1.0",
     "eslint-plugin-promise": "^4.0.1",
-    "eslint-plugin-standard": "^4.0.0",
+    "eslint-plugin-standard": "^5.0.0",
     "husky": "^4.2.5",
     "in-publish": "^2.0.0",
     "istanbul": "^1.0.0-alpha.2",
