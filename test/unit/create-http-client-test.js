@@ -93,7 +93,7 @@ test('Calls axios based on passed headers', t => {
   })
 
   t.equals(axios.create.args[0][0].headers['X-Custom-Header'], 'example')
-  t.equals(axios.create.args[0][0].headers['Authorization'], 'Basic customAuth')
+  t.equals(axios.create.args[0][0].headers.Authorization, 'Basic customAuth')
 
   teardown()
   t.end()
@@ -168,7 +168,7 @@ test('Calls axios based on passed hostname with invalid basePath and fixes the i
 test('Can change the adapter axios uses', t => {
   const testAdapter = function myAdapter (config) {
     return new Promise(function (resolve, reject) {
-      var response = {
+      const response = {
         data: 'Adapter was used',
         status: 200,
         statusText: 'request.statusText',
