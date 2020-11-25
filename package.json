@@ -39,6 +39,7 @@
     "node": ">=6"
   },
   "dependencies": {
+    "fast-copy": "^2.1.0",
     "lodash": "^4.17.10",
     "qs": "^6.5.2"
   },
