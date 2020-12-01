@@ -1,5 +1,7 @@
 import copy from 'fast-copy'
 import qs from 'qs'
+import type { AxiosStatic } from 'axios'
+import type { ContentfulAxiosInstance, CreateHttpClientParams } from './types'
 
 import rateLimit from './rate-limit'
 import { isNode, getNodeVersion } from './utils'
@@ -11,27 +13,16 @@ const HOST_REGEX = /^(?!\w+:\/\/)([^\s:]+\.?[^\s:]+)(?::(\d+))?(?!:)$/
 /**
  * Create pre configured axios instance
  * @private
- * @param {Object} axios - Axios library
- * @param {Object} httpClientParams - Initialization parameters for the HTTP client
- * @prop {string} space - Space ID
- * @prop {string} accessToken - Access Token
- * @prop {boolean=} insecure - If we should use http instead
- * @prop {string=} host - Alternate host
- * @prop {Object=} httpAgent - HTTP agent for node
- * @prop {Object=} httpsAgent - HTTPS agent for node
- * @prop {function=} adapter - Axios adapter to handle requests
- * @prop {function=} requestLogger - Gets called on every request triggered by the SDK, takes the axios request config as an argument
- * @prop {function=} responseLogger - Gets called on every response, takes axios response object as an argument
- * @prop {Object=} proxy - Axios proxy config
- * @prop {Object=} headers - Additional headers
- * @prop {function=} logHandler - A log handler function to process given log messages & errors. Receives the log level (error, warning & info) and the actual log data (Error object or string). (Default can be found here: https://github.com/contentful/contentful-sdk-core/blob/master/lib/create-http-client.js)
- * @return {Object} Initialized axios instance
+ * @param {AxiosStatic} axios - Axios library
+ * @param {CreateHttpClientParams} options - Initialization parameters for the HTTP client
+ * @return {ContentfulAxiosInstance} Initialized axios instance
  */
-export default function createHttpClient (axios, options) {
+export default function createHttpClient (axios: AxiosStatic, options: CreateHttpClientParams): ContentfulAxiosInstance {
   const defaultConfig = {
-    insecure: false,
-    retryOnError: true,
-    logHandler: (level, data) => {
+    insecure: false as const,
+    retryOnError: true as const,
+    // eslint-disable-next-line @typescript-eslint/no-explicit-any
+    logHandler: (level: string, data: any): void => {
       if (level === 'error' && data) {
         const title = [data.name, data.message].filter((a) => a).join(' - ')
         console.error(`[error] ${title}`)
@@ -41,13 +32,13 @@ export default function createHttpClient (axios, options) {
       console.log(`[${level}] ${data}`)
     },
     // Passed to axios
-    headers: {},
-    httpAgent: false,
-    httpsAgent: false,
+    headers: {} as Record<string, any>,
+    httpAgent: false as const,
+    httpsAgent: false as const,
     timeout: 30000,
-    proxy: false,
+    proxy: false as const,
     basePath: '',
-    adapter: false,
+    adapter: undefined,
     maxContentLength: 1073741824 // 1GB
   }
   const config = {
@@ -65,7 +56,7 @@ export default function createHttpClient (axios, options) {
   const protocol = config.insecure ? 'http' : 'https'
   const space = config.space ? `${config.space}/` : ''
   let hostname = config.defaultHostname
-  let port = config.insecure ? 80 : 443
+  let port: number | string = config.insecure ? 80 : 443
   if (config.host && HOST_REGEX.test(config.host)) {
     const parsed = config.host.split(':')
     if (parsed.length === 2) {
@@ -111,7 +102,7 @@ export default function createHttpClient (axios, options) {
     requestLogger: config.requestLogger,
     retryOnError: config.retryOnError
   }
-  const instance = axios.create(axiosOptions)
+  const instance = axios.create(axiosOptions) as ContentfulAxiosInstance
   instance.httpClientParams = options
 
   /**
@@ -121,10 +112,10 @@ export default function createHttpClient (axios, options) {
    * and the version of the library comes from different places depending
    * on whether it's a browser build or a node.js build.
    * @private
-   * @param {Object} httpClientParams - Initialization parameters for the HTTP client
-   * @return {Object} Initialized axios instance
+   * @param {CreateHttpClientParams} httpClientParams - Initialization parameters for the HTTP client
+   * @return {ContentfulAxiosInstance} Initialized axios instance
    */
-  instance.cloneWithNewParams = function (newParams) {
+  instance.cloneWithNewParams = function (newParams: CreateHttpClientParams): ContentfulAxiosInstance {
     return createHttpClient(axios, {
       ...copy(options),
       ...newParams

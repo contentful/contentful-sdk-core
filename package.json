@@ -42,7 +42,8 @@
   },
   "dependencies": {
     "fast-copy": "^2.1.0",
-    "qs": "^6.5.2"
+    "qs": "^6.9.4",
+    "@types/qs": "^6.9.5"
   },
   "devDependencies": {
     "@babel/cli": "^7.12.8",

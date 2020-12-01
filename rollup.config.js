@@ -8,7 +8,7 @@ const extensions = [
 
 export default [
   {
-    input: 'lib/index.js',
+    input: 'lib/index.ts',
     output: [
       { file: pkg.module, format: 'esm' },
       { file: pkg.main, format: 'cjs' }

@@ -1,9 +1,18 @@
+import type { ContentfulAxiosInstance } from './types'
 
-const attempts = {}
+const attempts: Record<string, number> = {}
 let networkErrorAttempts = 0
 
-export default function rateLimit (instance, maxRetry = 5) {
-  const { responseLogger = () => undefined, requestLogger = () => undefined } = instance.defaults
+function noop(): undefined {
+  return undefined;
+}
+
+const delay = (ms: number): Promise<void> => new Promise((resolve) => {
+  setTimeout(resolve, ms)
+})
+
+export default function rateLimit (instance: ContentfulAxiosInstance, maxRetry = 5): void {
+  const { responseLogger = noop, requestLogger = noop } = instance.defaults
 
   instance.interceptors.request.use(function (config) {
     requestLogger(config)
@@ -18,7 +27,8 @@ export default function rateLimit (instance, maxRetry = 5) {
     responseLogger(response)
     return response
   }, function (error) {
-    let { response, config } = error
+    let { response } = error
+    const { config } = error;
     responseLogger(error)
     // Do not retry if it is disabled or no request config exists (not an axios error)
     if (!config || !instance.defaults.retryOnError) {
@@ -66,10 +76,6 @@ export default function rateLimit (instance, maxRetry = 5) {
         wait = response.headers['x-contentful-ratelimit-reset']
       }
     }
-
-    const delay = ms => new Promise((resolve) => {
-      setTimeout(resolve, ms)
-    })
 
     if (retryErrorType) {
       // convert to ms and add jitter
