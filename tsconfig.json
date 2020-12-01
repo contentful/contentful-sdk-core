@@ -10,6 +10,6 @@
     "esModuleInterop": true,
     "noImplicitThis": false
   },
-  "include": ["lib/**/*"],
+  "include": ["lib/**/*", "global.d.ts"],
   "exclude": ["node_modules", "dist"]
 }
