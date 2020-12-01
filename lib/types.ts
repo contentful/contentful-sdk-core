@@ -1,9 +1,11 @@
-import type { AxiosInstance, AxiosRequestConfig } from 'axios'
+/* eslint-disable @typescript-eslint/no-explicit-any */
+
+import type { AxiosInstance, AxiosRequestConfig, AxiosResponse } from 'axios'
 
 type DefaultOptions = AxiosRequestConfig & {
-  logHandler: Function
-  responseLogger?: Function
-  requestLogger?: Function
+  logHandler: (level: string, data?: unknown) => void
+  responseLogger?: (response: AxiosResponse<any> | Error | any) => unknown
+  requestLogger?: (request: AxiosRequestConfig | Error | any) => unknown
   retryOnError?: boolean
 }
 
@@ -34,18 +36,33 @@ export type CreateHttpClientParams = {
   proxy?: AxiosRequestConfig['proxy']
 
   /** Gets called on every request triggered by the SDK, takes the axios request config as an argument */
-  requestLogger?: Function
+  requestLogger?: DefaultOptions['requestLogger']
   /** Gets called on every response, takes axios response object as an argument */
-  responseLogger?: Function
+  responseLogger?: DefaultOptions['responseLogger']
   /** A log handler function to process given log messages & errors. Receives the log level (error, warning & info) and the actual log data (Error object or string). (Default can be found here: https://github.com/contentful/contentful-sdk-core/blob/master/lib/create-http-client.js) */
-  logHandler?: Function
+  logHandler?: DefaultOptions['logHandler']
+
   /** Additional headers */
   headers?: Record<string, any>
 
   defaultHostname?: string
 
+  /**
+   * Should request be retried on error
+   * @default true
+   */
   retryOnError?: boolean
 
+  /**
+   * How many attempts to retry the request
+   * @default 5
+   */
+  retryLimit?: number
+
+  /**
+   * Request timeout
+   * @default 30000
+   */
   timeout?: number
 
   basePath?: string
@@ -53,6 +70,4 @@ export type CreateHttpClientParams = {
   baseURL?: string
 
   maxContentLength?: number
-
-  retryLimit?: number
 }

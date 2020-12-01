@@ -1,6 +1,5 @@
-/* eslint-disable @typescript-eslint/explicit-function-return-type */
-
-export default function enforceObjPath(obj: any, path: string) {
+// eslint-disable-next-line @typescript-eslint/no-explicit-any
+export default function enforceObjPath(obj: any, path: string): boolean {
   if (!(path in obj)) {
     const err = new Error()
     err.name = 'PropertyMissing'

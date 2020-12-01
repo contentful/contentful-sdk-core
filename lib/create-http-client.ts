@@ -35,7 +35,7 @@ export default function createHttpClient(
       console.log(`[${level}] ${data}`)
     },
     // Passed to axios
-    headers: {} as Record<string, any>,
+    headers: {} as Record<string, unknown>,
     httpAgent: false as const,
     httpsAgent: false as const,
     timeout: 30000,
