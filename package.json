@@ -50,7 +50,6 @@
     "@babel/node": "^7.12.6",
     "@babel/preset-env": "^7.12.7",
     "@babel/preset-typescript": "^7.12.7",
-    "@babel/plugin-proposal-object-rest-spread": "^7.12.1",
     "@babel/register": "^7.0.0",
     "@rollup/plugin-node-resolve": "^11.0.0",
     "axios": "^0.21.0",

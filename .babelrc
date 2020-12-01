@@ -3,6 +3,6 @@
     "@babel/env",
     "@babel/typescript"
   ],
-  "plugins": ["@babel/proposal-object-rest-spread", "rewire"],
+  "plugins": ["rewire"],
   "sourceMaps": "inline"
 }

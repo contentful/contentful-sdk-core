@@ -25,9 +25,6 @@ export default [
             modules: false
           }],
           '@babel/typescript'
-        ],
-        plugins: [
-          '@babel/proposal-object-rest-spread'
         ]
       })
     ],
