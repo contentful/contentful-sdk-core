@@ -120,7 +120,7 @@ export default function createHttpClient(
    * @return {ContentfulAxiosInstance} Initialized axios instance
    */
   instance.cloneWithNewParams = function (
-    newParams: CreateHttpClientParams
+    newParams: Partial<CreateHttpClientParams>
   ): ContentfulAxiosInstance {
     return createHttpClient(axios, {
       ...copy(options),
