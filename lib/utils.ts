@@ -1,4 +1,6 @@
-export function isNode () {
+
+
+export function isNode (): boolean {
   /**
    * Polyfills of 'process' might set process.browser === true
    *
@@ -9,6 +11,6 @@ export function isNode () {
   return typeof process !== 'undefined' && !process.browser
 }
 
-export function getNodeVersion () {
+export function getNodeVersion (): string {
   return process.versions && process.versions.node ? `v${process.versions.node}` : process.version
 }
