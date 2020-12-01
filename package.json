@@ -6,6 +6,7 @@
   "main": "dist/index.js",
   "module": "dist/index.es-modules.js",
   "jsnext:main": "dist/index.es-modules.js",
+  "types": "dist/types/index.d.ts",
   "browser": {
     "os": false
   },
