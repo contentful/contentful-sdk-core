@@ -3,17 +3,19 @@ module.exports = {
     {
       files: '**/*.js',
       parser: 'babel-eslint',
-      extends: ['standard'],
-      plugins: ['standard', 'promise']
+      extends: ['standard', 'prettier'],
+      plugins: ['standard', 'promise'],
     },
     {
       files: '**/*.ts',
       extends: [
         'eslint:recommended',
         'plugin:@typescript-eslint/eslint-recommended',
-        'plugin:@typescript-eslint/recommended'
+        'plugin:@typescript-eslint/recommended',
+        'prettier',
+        'prettier/@typescript-eslint',
       ],
-      plugins: ['promise']
-    }
-  ]
+      plugins: ['promise'],
+    },
+  ],
 }

@@ -15,7 +15,6 @@ function deepFreeze<T>(object: T): T {
   return Object.freeze(object)
 }
 
-
 export default function freezeSys<T>(obj: T): T {
   // @ts-expect-error
   deepFreeze(obj.sys || {})

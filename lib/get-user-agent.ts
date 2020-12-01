@@ -2,11 +2,16 @@ import { platform, release } from 'os'
 
 import { isNode, getNodeVersion } from './utils'
 
-function isReactNative (): boolean {
-  return typeof window !== 'undefined' && 'navigator' in window && 'product' in window.navigator && window.navigator.product === 'ReactNative'
+function isReactNative(): boolean {
+  return (
+    typeof window !== 'undefined' &&
+    'navigator' in window &&
+    'product' in window.navigator &&
+    window.navigator.product === 'ReactNative'
+  )
 }
 
-function getBrowserOS (): string | null {
+function getBrowserOS(): string | null {
   if (!window) {
     return null
   }
@@ -32,7 +37,7 @@ function getBrowserOS (): string | null {
   return os
 }
 
-function getNodeOS (): string | null {
+function getNodeOS(): string | null {
   const os = platform() || 'linux'
   const version = release() || '0.0.0'
   const osMap = {
@@ -43,7 +48,7 @@ function getNodeOS (): string | null {
     linux: 'Linux',
     openbsd: 'Linux',
     sunos: 'Linux',
-    win32: 'Windows'
+    win32: 'Windows',
   }
   if (os in osMap) {
     // @ts-expect-error
@@ -52,7 +57,12 @@ function getNodeOS (): string | null {
   return null
 }
 
-export default function getUserAgentHeader (sdk: string, application?: string, integration?: string, feature?: string): string {
+export default function getUserAgentHeader(
+  sdk: string,
+  application?: string,
+  integration?: string,
+  feature?: string
+): string {
   const headerParts = []
 
   if (application) {

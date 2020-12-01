@@ -17,7 +17,10 @@ const HOST_REGEX = /^(?!\w+:\/\/)([^\s:]+\.?[^\s:]+)(?::(\d+))?(?!:)$/
  * @param {CreateHttpClientParams} options - Initialization parameters for the HTTP client
  * @return {ContentfulAxiosInstance} Initialized axios instance
  */
-export default function createHttpClient (axios: AxiosStatic, options: CreateHttpClientParams): ContentfulAxiosInstance {
+export default function createHttpClient(
+  axios: AxiosStatic,
+  options: CreateHttpClientParams
+): ContentfulAxiosInstance {
   const defaultConfig = {
     insecure: false as const,
     retryOnError: true as const,
@@ -39,11 +42,11 @@ export default function createHttpClient (axios: AxiosStatic, options: CreateHtt
     proxy: false as const,
     basePath: '',
     adapter: undefined,
-    maxContentLength: 1073741824 // 1GB
+    maxContentLength: 1073741824, // 1GB
   }
   const config = {
     ...defaultConfig,
-    ...options
+    ...options,
   }
 
   if (!config.accessToken) {
@@ -60,7 +63,7 @@ export default function createHttpClient (axios: AxiosStatic, options: CreateHtt
   if (config.host && HOST_REGEX.test(config.host)) {
     const parsed = config.host.split(':')
     if (parsed.length === 2) {
-      [hostname, port] = parsed
+      ;[hostname, port] = parsed
     } else {
       hostname = parsed[0]
     }
@@ -71,7 +74,8 @@ export default function createHttpClient (axios: AxiosStatic, options: CreateHtt
     config.basePath = `/${config.basePath.split('/').filter(Boolean).join('/')}`
   }
 
-  const baseURL = options.baseURL || `${protocol}://${hostname}:${port}${config.basePath}/spaces/${space}`
+  const baseURL =
+    options.baseURL || `${protocol}://${hostname}:${port}${config.basePath}/spaces/${space}`
 
   if (!config.headers.Authorization) {
     config.headers.Authorization = 'Bearer ' + config.accessToken
@@ -100,7 +104,7 @@ export default function createHttpClient (axios: AxiosStatic, options: CreateHtt
     logHandler: config.logHandler,
     responseLogger: config.responseLogger,
     requestLogger: config.requestLogger,
-    retryOnError: config.retryOnError
+    retryOnError: config.retryOnError,
   }
   const instance = axios.create(axiosOptions) as ContentfulAxiosInstance
   instance.httpClientParams = options
@@ -115,10 +119,12 @@ export default function createHttpClient (axios: AxiosStatic, options: CreateHtt
    * @param {CreateHttpClientParams} httpClientParams - Initialization parameters for the HTTP client
    * @return {ContentfulAxiosInstance} Initialized axios instance
    */
-  instance.cloneWithNewParams = function (newParams: CreateHttpClientParams): ContentfulAxiosInstance {
+  instance.cloneWithNewParams = function (
+    newParams: CreateHttpClientParams
+  ): ContentfulAxiosInstance {
     return createHttpClient(axios, {
       ...copy(options),
-      ...newParams
+      ...newParams,
     })
   }
   rateLimit(instance, config.retryLimit)
