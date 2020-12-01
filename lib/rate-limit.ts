@@ -1,4 +1,4 @@
-import type { ContentfulAxiosInstance } from './types'
+import type { AxiosInstance } from './types'
 
 const attempts: Record<string, number> = {}
 let networkErrorAttempts = 0
@@ -12,7 +12,7 @@ const delay = (ms: number): Promise<void> =>
     setTimeout(resolve, ms)
   })
 
-export default function rateLimit(instance: ContentfulAxiosInstance, maxRetry = 5): void {
+export default function rateLimit(instance: AxiosInstance, maxRetry = 5): void {
   const { responseLogger = noop, requestLogger = noop } = instance.defaults
 
   instance.interceptors.request.use(

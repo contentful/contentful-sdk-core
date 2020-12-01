@@ -1,7 +1,7 @@
 import copy from 'fast-copy'
 import qs from 'qs'
 import type { AxiosStatic } from 'axios'
-import type { ContentfulAxiosInstance, CreateHttpClientParams } from './types'
+import type { AxiosInstance, CreateHttpClientParams } from './types'
 
 import rateLimit from './rate-limit'
 import { isNode, getNodeVersion } from './utils'
@@ -20,7 +20,7 @@ const HOST_REGEX = /^(?!\w+:\/\/)([^\s:]+\.?[^\s:]+)(?::(\d+))?(?!:)$/
 export default function createHttpClient(
   axios: AxiosStatic,
   options: CreateHttpClientParams
-): ContentfulAxiosInstance {
+): AxiosInstance {
   const defaultConfig = {
     insecure: false as const,
     retryOnError: true as const,
@@ -106,7 +106,7 @@ export default function createHttpClient(
     requestLogger: config.requestLogger,
     retryOnError: config.retryOnError,
   }
-  const instance = axios.create(axiosOptions) as ContentfulAxiosInstance
+  const instance = axios.create(axiosOptions) as AxiosInstance
   instance.httpClientParams = options
 
   /**
@@ -121,7 +121,7 @@ export default function createHttpClient(
    */
   instance.cloneWithNewParams = function (
     newParams: Partial<CreateHttpClientParams>
-  ): ContentfulAxiosInstance {
+  ): AxiosInstance {
     return createHttpClient(axios, {
       ...copy(options),
       ...newParams,

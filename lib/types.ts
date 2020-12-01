@@ -1,6 +1,10 @@
 /* eslint-disable @typescript-eslint/no-explicit-any */
 
-import type { AxiosInstance, AxiosRequestConfig, AxiosResponse } from 'axios'
+import type {
+  AxiosInstance as OriginalAxiosInstance,
+  AxiosRequestConfig,
+  AxiosResponse,
+} from 'axios'
 
 type DefaultOptions = AxiosRequestConfig & {
   logHandler: (level: string, data?: Error | string) => void
@@ -9,9 +13,9 @@ type DefaultOptions = AxiosRequestConfig & {
   retryOnError?: boolean
 }
 
-export type ContentfulAxiosInstance = AxiosInstance & {
+export type AxiosInstance = OriginalAxiosInstance & {
   httpClientParams: CreateHttpClientParams
-  cloneWithNewParams: (params: CreateHttpClientParams) => ContentfulAxiosInstance
+  cloneWithNewParams: (params: Partial<CreateHttpClientParams>) => AxiosInstance
   defaults: DefaultOptions
 }
 
