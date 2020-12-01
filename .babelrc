@@ -1,7 +1,8 @@
 {
   "presets": [
-    ["@babel/env"]
+    "@babel/env",
+    "@babel/typescript"
   ],
-  "plugins": ["rewire"],
+  "plugins": ["@babel/proposal-object-rest-spread", "rewire"],
   "sourceMaps": "inline"
 }
