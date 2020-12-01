@@ -1,6 +1,7 @@
 {
   "presets": [
-    ["@babel/env"]
+    "@babel/env",
+    "@babel/typescript"
   ],
   "plugins": ["rewire"],
   "sourceMaps": "inline"
