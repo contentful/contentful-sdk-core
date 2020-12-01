@@ -3,9 +3,9 @@
 import type { AxiosInstance, AxiosRequestConfig, AxiosResponse } from 'axios'
 
 type DefaultOptions = AxiosRequestConfig & {
-  logHandler: (level: string, data?: unknown) => void
-  responseLogger?: (response: AxiosResponse<any> | Error | any) => unknown
-  requestLogger?: (request: AxiosRequestConfig | Error | any) => unknown
+  logHandler: (level: string, data?: Error | string) => void
+  responseLogger?: (response: AxiosResponse<any> | Error) => unknown
+  requestLogger?: (request: AxiosRequestConfig | Error) => unknown
   retryOnError?: boolean
 }
 
@@ -20,10 +20,16 @@ export type CreateHttpClientParams = {
   accessToken: string
   /** Space ID */
   space?: string
-  /** If we should use http instead */
+
+  /**
+   * Requests will be made over http instead of the default https
+   * @default false
+   */
   insecure?: boolean
 
-  /** Alternate host */
+  /**
+   * API host
+   */
   host?: string
   /** HTTP agent for node */
   httpAgent?: AxiosRequestConfig['httpAgent']
@@ -42,25 +48,25 @@ export type CreateHttpClientParams = {
   /** A log handler function to process given log messages & errors. Receives the log level (error, warning & info) and the actual log data (Error object or string). (Default can be found here: https://github.com/contentful/contentful-sdk-core/blob/master/lib/create-http-client.js) */
   logHandler?: DefaultOptions['logHandler']
 
-  /** Additional headers */
-  headers?: Record<string, any>
+  /** Optional additional headers */
+  headers?: Record<string, unknown>
 
   defaultHostname?: string
 
   /**
-   * Should request be retried on error
+   * If we should retry on errors and 429 rate limit exceptions
    * @default true
    */
   retryOnError?: boolean
 
   /**
-   * How many attempts to retry the request
+   * Optional number of retries before failure
    * @default 5
    */
   retryLimit?: number
 
   /**
-   * Request timeout
+   * Optional number of milliseconds before the request times out.
    * @default 30000
    */
   timeout?: number
@@ -69,5 +75,9 @@ export type CreateHttpClientParams = {
 
   baseURL?: string
 
+  /**
+   * Optional maximum content length in bytes
+   * @default 1073741824 i.e 1GB
+   */
   maxContentLength?: number
 }
