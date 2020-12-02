@@ -20,8 +20,9 @@ export type AxiosInstance = OriginalAxiosInstance & {
 }
 
 export type CreateHttpClientParams = {
-  /** Access Token */
-  accessToken: string
+  /** Access Token or an async function that returns Access Token */
+  accessToken: string | (() => Promise<string>)
+
   /** Space ID */
   space?: string
 
