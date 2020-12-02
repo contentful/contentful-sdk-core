@@ -50,7 +50,20 @@ export type CreateHttpClientParams = {
   requestLogger?: DefaultOptions['requestLogger']
   /** Gets called on every response, takes axios response object as an argument */
   responseLogger?: DefaultOptions['responseLogger']
-  /** A log handler function to process given log messages & errors. Receives the log level (error, warning & info) and the actual log data (Error object or string). (Default can be found here: https://github.com/contentful/contentful-sdk-core/blob/master/src/create-http-client.js) */
+
+  /** Custom request interceptor */
+  requestInterceptor?: {
+    onFulfilled?: (value: AxiosRequestConfig) => AxiosRequestConfig | Promise<AxiosRequestConfig>
+    onRejected?: (error: any) => any
+  }
+
+  /** Custom response interceptor */
+  responseInterceptor?: {
+    onFulfilled?: (value: AxiosResponse) => AxiosResponse | Promise<AxiosResponse>
+    onRejected?: (error: any) => any
+  }
+
+  /** A log handler function to process given log messages & errors. Receives the log level (error, warning & info) and the actual log data (Error object or string). (Default can be found here: https://github.com/contentful/contentful-sdk-core/blob/master/lib/create-http-client.js) */
   logHandler?: DefaultOptions['logHandler']
 
   /** Optional additional headers */

@@ -129,9 +129,26 @@ export default function createHttpClient(
       ...newParams,
     })
   }
+
+  if (config.requestInterceptor) {
+    instance.interceptors.request.use(
+      config.requestInterceptor.onFulfilled,
+      config.requestInterceptor.onRejected
+    )
+  }
+
   if (typeof config.accessToken === 'function') {
     asyncToken(instance, config.accessToken)
   }
+
   rateLimit(instance, config.retryLimit)
+
+  if (config.responseInterceptor) {
+    instance.interceptors.response.use(
+      config.responseInterceptor.onFulfilled,
+      config.responseInterceptor.onRejected
+    )
+  }
+
   return instance
 }
