@@ -15,6 +15,11 @@ test('Detects node properly with babel-polyfill', (t) => {
 
 test('Detects node version', (t) => {
   const version = getNodeVersion()
-  t.true(version.match(/v?(?:0|[1-9]\d*)\.(?:0|[1-9]\d*)\.(?:0|[1-9]\d*)(?:-[\da-z-]+(?:\.[\da-z-]+)*)?(?:\+[\da-z-]+(?:\.[\da-z-]+)*)?\b/), 'detected valid semver node version')
+  t.true(
+    version.match(
+      /v?(?:0|[1-9]\d*)\.(?:0|[1-9]\d*)\.(?:0|[1-9]\d*)(?:-[\da-z-]+(?:\.[\da-z-]+)*)?(?:\+[\da-z-]+(?:\.[\da-z-]+)*)?\b/
+    ),
+    'detected valid semver node version'
+  )
   t.end()
 })

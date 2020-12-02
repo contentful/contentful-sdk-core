@@ -1,13 +1,22 @@
 import test from 'blue-tape'
 import getUserAgent, { __RewireAPI__ as getUserAgentRewireApi } from '../../lib/get-user-agent'
 
-const headerRegEx = /(app|sdk|platform|integration|os) \S+(\/\d+.\d+.\d+(-[\w\d-]+)?)?;/igm
+const headerRegEx = /(app|sdk|platform|integration|os) \S+(\/\d+.\d+.\d+(-[\w\d-]+)?)?;/gim
 
 test('Parse node user agent correctly', (t) => {
-  const userAgent = getUserAgent('contentful.js/1.0.0', 'myApplication/1.0.0', 'myIntegration/1.0.0')
+  const userAgent = getUserAgent(
+    'contentful.js/1.0.0',
+    'myApplication/1.0.0',
+    'myIntegration/1.0.0'
+  )
   t.equal(userAgent.match(headerRegEx).length, 5, 'consists of 5 parts')
   t.true(userAgent.indexOf('platform node.js/') !== -1, 'detects node.js platform')
-  t.true(userAgent.match(/node\.js\/\bv?(?:0|[1-9]\d*)\.(?:0|[1-9]\d*)\.(?:0|[1-9]\d*)(?:-[\da-z-]+(?:\.[\da-z-]+)*)?(?:\+[\da-z-]+(?:\.[\da-z-]+)*)?\b/), 'detected valid semver node version')
+  t.true(
+    userAgent.match(
+      /node\.js\/\bv?(?:0|[1-9]\d*)\.(?:0|[1-9]\d*)\.(?:0|[1-9]\d*)(?:-[\da-z-]+(?:\.[\da-z-]+)*)?(?:\+[\da-z-]+(?:\.[\da-z-]+)*)?\b/
+    ),
+    'detected valid semver node version'
+  )
   t.end()
 })
 
@@ -17,11 +26,15 @@ test('Parse browser user agent correctly', (t) => {
   getUserAgentRewireApi.__Rewire__('isReactNative', () => false)
   global.window = {
     navigator: {
-      platform: 'MacIntel'
-    }
+      platform: 'MacIntel',
+    },
   }
 
-  const userAgent = getUserAgent('contentful.js/1.0.0', 'myApplication/1.0.0', 'myIntegration/1.0.0')
+  const userAgent = getUserAgent(
+    'contentful.js/1.0.0',
+    'myApplication/1.0.0',
+    'myIntegration/1.0.0'
+  )
   t.equal(userAgent.match(headerRegEx).length, 5, 'consists of 5 parts')
   t.true(userAgent.indexOf('os macOS;') !== -1, 'detects correct os')
   t.true(userAgent.indexOf('platform browser;') !== -1, 'detects browser platform')
@@ -37,7 +50,11 @@ test('Fail safely', (t) => {
   getUserAgentRewireApi.__Rewire__('isReactNative', () => false)
   global.window = {}
 
-  const userAgent = getUserAgent('contentful.js/1.0.0', 'myApplication/1.0.0', 'myIntegration/1.0.0')
+  const userAgent = getUserAgent(
+    'contentful.js/1.0.0',
+    'myApplication/1.0.0',
+    'myIntegration/1.0.0'
+  )
   t.equal(userAgent.match(headerRegEx).length, 3, 'consists of 3 parts')
   t.true(userAgent.indexOf('os') === -1, 'empty os')
   t.true(userAgent.indexOf('platform') === -1, 'empty browser platform')
@@ -53,12 +70,20 @@ test('Parse react native user agent correctly', (t) => {
   getUserAgentRewireApi.__Rewire__('isReactNative', () => true)
   global.window = {
     navigator: {
-      product: 'ReactNative'
-    }
+      product: 'ReactNative',
+    },
   }
 
-  const userAgent = getUserAgent('contentful.js/1.0.0', 'myApplication/1.0.0', 'myIntegration/1.0.0')
-  t.equal(userAgent.match(headerRegEx).length, 4, 'consists of 4 parts since os is missing in mocked data')
+  const userAgent = getUserAgent(
+    'contentful.js/1.0.0',
+    'myApplication/1.0.0',
+    'myIntegration/1.0.0'
+  )
+  t.equal(
+    userAgent.match(headerRegEx).length,
+    4,
+    'consists of 4 parts since os is missing in mocked data'
+  )
   t.true(userAgent.indexOf('platform ReactNative') !== -1, 'detects react native platform')
   t.end()
 

@@ -2,10 +2,10 @@ import test from 'blue-tape'
 
 import createRequestConfig from '../../lib/create-request-config'
 
-test('Create request config', t => {
+test('Create request config', (t) => {
   const config = createRequestConfig({
     resolveLinks: true,
-    query: {}
+    query: {},
   })
 
   t.ok(config.params, 'params property exist')

@@ -9,35 +9,40 @@ const logHandlerStub = sinon.stub()
 
 const mock = new MockAdapter(axios)
 
-function setup (options = {}) {
-  const client = axios.create(Object.assign({
-    logHandler: logHandlerStub,
-    retryOnError: true
-  }, options))
+function setup(options = {}) {
+  const client = axios.create(
+    Object.assign(
+      {
+        logHandler: logHandlerStub,
+        retryOnError: true,
+      },
+      options
+    )
+  )
   rateLimit(client, options.retryLimit)
   return { client }
 }
 
-function setupWithoutErrorRetry () {
+function setupWithoutErrorRetry() {
   const client = axios.create({
     retryOnError: false,
-    logHandler: logHandlerStub
+    logHandler: logHandlerStub,
   })
   rateLimit(client)
   return { client }
 }
-function setupWithOneRetry () {
+function setupWithOneRetry() {
   const client = axios.create({
     retryOnError: true,
-    logHandler: logHandlerStub
+    logHandler: logHandlerStub,
   })
   rateLimit(client, 1)
   return { client }
 }
-function setupWithNonAxiosError () {
+function setupWithNonAxiosError() {
   const client = axios.create({
     logHandler: logHandlerStub,
-    retryOnError: true
+    retryOnError: true,
   })
   client.interceptors.response.use(function (response) {
     return Promise.reject(new Error('some non-axios error'))
@@ -45,7 +50,7 @@ function setupWithNonAxiosError () {
   rateLimit(client)
   return { client }
 }
-function teardown () {
+function teardown() {
   logHandlerStub.reset()
   mock.reset()
 }
@@ -70,7 +75,9 @@ test('Retry on 5** - multiple errors', (t) => {
   mock.onGet('/rate-limit-me').replyOnce(500, 'Server Error', { 'x-contentful-request-id': 1 })
   mock.onGet('/rate-limit-me').replyOnce(500, 'Server Error', { 'x-contentful-request-id': 1 })
   mock.onGet('/rate-limit-me').replyOnce(200, 'works #1')
-  mock.onGet('/rate-limit-me').replyOnce(503, 'Another Server Error', { 'x-contentful-request-id': 2 })
+  mock
+    .onGet('/rate-limit-me')
+    .replyOnce(503, 'Another Server Error', { 'x-contentful-request-id': 2 })
   mock.onGet('/rate-limit-me').replyOnce(200, 'works #2')
   t.plan(5)
   return client.get('/rate-limit-me').then((response) => {
@@ -78,7 +85,10 @@ test('Retry on 5** - multiple errors', (t) => {
     t.equals(response.data, 'works #1')
     const startTime = Date.now()
     return client.get('/rate-limit-me').then((response) => {
-      t.ok(Date.now() - startTime <= 3000, 'First error should not influence second errors retry delay')
+      t.ok(
+        Date.now() - startTime <= 3000,
+        'First error should not influence second errors retry delay'
+      )
       t.ok(response.data)
       t.equals(response.data, 'works #2')
       teardown()
@@ -90,35 +100,48 @@ test('Retry on 5** - multiple errors - reach/exceed limit', (t) => {
   const { client } = setup({ retryLimit: 7 })
   mock.onGet('/rate-limit-me').replyOnce(500, 'Server Error', { 'x-contentful-request-id': 12345 })
   mock.onGet('/rate-limit-me').replyOnce(500, 'Server Error', { 'x-contentful-request-id': 12345 })
-  mock.onGet('/rate-limit-me').replyOnce(503, 'Another Server Error', { 'x-contentful-request-id': 12345 })
+  mock
+    .onGet('/rate-limit-me')
+    .replyOnce(503, 'Another Server Error', { 'x-contentful-request-id': 12345 })
   mock.onGet('/rate-limit-me').replyOnce(500, 'Server Error', { 'x-contentful-request-id': 12345 })
-  mock.onGet('/rate-limit-me').replyOnce(503, 'Another Server Error', { 'x-contentful-request-id': 12345 })
+  mock
+    .onGet('/rate-limit-me')
+    .replyOnce(503, 'Another Server Error', { 'x-contentful-request-id': 12345 })
   mock.onGet('/rate-limit-me').replyOnce(500, 'Server Error', { 'x-contentful-request-id': 12345 })
-  mock.onGet('/rate-limit-me').replyOnce(503, 'Another Server Error', { 'x-contentful-request-id': 12345 })
+  mock
+    .onGet('/rate-limit-me')
+    .replyOnce(503, 'Another Server Error', { 'x-contentful-request-id': 12345 })
   mock.onGet('/rate-limit-me').replyOnce(200, 'works')
   mock.onGet('/rate-limit-me').replyOnce(500, 'Server Error', { 'x-contentful-request-id': 12345 })
 
   t.plan(3)
 
-  return client.get('/rate-limit-me').then((response) => {
-    t.ok(response.data)
-    t.equals(response.data, 'works')
-  }).then(() => {
-    return client.get('/rate-limit-me').then(() => {
-      t.fail('Promise should reject not resolve')
-      teardown()
-    }).catch((error) => {
-      t.equals(error.message, 'Request failed with status code 500')
-      teardown()
+  return client
+    .get('/rate-limit-me')
+    .then((response) => {
+      t.ok(response.data)
+      t.equals(response.data, 'works')
     })
-  })
+    .then(() => {
+      return client
+        .get('/rate-limit-me')
+        .then(() => {
+          t.fail('Promise should reject not resolve')
+          teardown()
+        })
+        .catch((error) => {
+          t.equals(error.message, 'Request failed with status code 500')
+          teardown()
+        })
+    })
 })
 
 test('Retry on network error', (t) => {
   const { client } = setupWithOneRetry()
   mock.onGet('/rate-limit-me').networkError()
 
-  return client.get('/rate-limit-me')
+  return client
+    .get('/rate-limit-me')
     .then((response) => {
       t.fail('should not succeed')
       teardown()
@@ -132,9 +155,12 @@ test('Retry on network error', (t) => {
 test('no retry when automatic handling flag is disabled', (t) => {
   const { client } = setupWithoutErrorRetry()
   mock.onGet('/rate-limit-me').replyOnce(500, 'Mocked 500 Error', { 'x-contentful-request-id': 3 })
-  mock.onGet('/rate-limit-me').replyOnce(200, 'would work but retry is disabled', { 'x-contentful-request-id': 4 })
+  mock
+    .onGet('/rate-limit-me')
+    .replyOnce(200, 'would work but retry is disabled', { 'x-contentful-request-id': 4 })
 
-  return client.get('/rate-limit-me')
+  return client
+    .get('/rate-limit-me')
     .then((response) => {
       t.fail('Promise should reject not resolve')
       teardown()
@@ -152,9 +178,12 @@ test('no retry when automatic handling flag is disabled', (t) => {
 
 test('no retry with non-axios error', (t) => {
   const { client } = setupWithNonAxiosError()
-  mock.onGet('/rate-limit-me').replyOnce(200, 'worked but will fail due to interceptor', { 'x-contentful-request-id': 4 })
+  mock
+    .onGet('/rate-limit-me')
+    .replyOnce(200, 'worked but will fail due to interceptor', { 'x-contentful-request-id': 4 })
 
-  return client.get('/rate-limit-me')
+  return client
+    .get('/rate-limit-me')
     .then((response) => {
       t.fail('Promise should reject not resolve')
       teardown()
@@ -176,14 +205,19 @@ test('Should Fail if it hits maxRetries', (t) => {
   mock.onGet('/error').replyOnce(501, 'error attempt #2', { 'x-contentful-request-id': 4 })
   mock.onGet('/error').replyOnce(200, 'should not be there', { 'x-contentful-request-id': 4 })
 
-  return client.get('/error')
+  return client
+    .get('/error')
     .then((response) => {
       t.fail('the request should return error')
       teardown()
     })
     .catch((error) => {
       t.ok(error)
-      t.equals(error.response.data, 'error attempt #2', 'returned error since maxRetries was reached')
+      t.equals(
+        error.response.data,
+        'error attempt #2',
+        'returned error since maxRetries was reached'
+      )
       t.equals(logHandlerStub.callCount, 1)
       t.equals(logHandlerStub.args[0][0], 'warning', 'logs a retry warning')
       t.equals(error.message, 'Request failed with status code 501')
@@ -197,11 +231,13 @@ test('Rejects error straight away when X-Contentful-Request-Id header is missing
   mock.onGet('/error').replyOnce(500, 'error attempt')
   mock.onGet('/error').replyOnce(200, 'works')
 
-  return client.get('/error')
+  return client
+    .get('/error')
     .then((response) => {
       t.fail('the request should return error')
       teardown()
-    }).catch((error) => {
+    })
+    .catch((error) => {
       t.ok(error)
       t.equals(error.response.data, 'error attempt')
       t.equals(logHandlerStub.callCount, 0, 'did not log anything')
@@ -216,11 +252,13 @@ test('Rejects errors with strange status codes', (t) => {
   mock.onGet('/error').replyOnce(765, 'error attempt')
   mock.onGet('/error').replyOnce(200, 'works')
 
-  return client.get('/error')
+  return client
+    .get('/error')
     .then((response) => {
       t.fail('the request should return error')
       teardown()
-    }).catch((error) => {
+    })
+    .catch((error) => {
       t.ok(error)
       t.equals(error.response.data, 'error attempt')
       t.equals(logHandlerStub.callCount, 0, 'did not log anything')

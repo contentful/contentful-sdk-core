@@ -1,8 +1,5 @@
 {
-  "presets": [
-    "@babel/env",
-    "@babel/typescript"
-  ],
-  "plugins": ["rewire"],
+  "presets": ["@babel/env", "@babel/typescript"],
+  "plugins": ["rewire-ts"],
   "sourceMaps": "inline"
 }

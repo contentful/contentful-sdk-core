@@ -6,11 +6,13 @@ import copy from 'fast-copy'
  * @param data - Any plain JSON response returned from the API
  * @return Enhanced object with toPlainObject method
  */
-export default function toPlainObject<T = object, R = T>(data: T): T & {
+export default function toPlainObject<T = object, R = T>(
+  data: T
+): T & {
   /**
    * Returns this entity as a plain JS object
    */
-  toPlainObject(): R;
+  toPlainObject(): R
 } {
   return Object.defineProperty(data, 'toPlainObject', {
     enumerable: false,
@@ -18,6 +20,6 @@ export default function toPlainObject<T = object, R = T>(data: T): T & {
     writable: false,
     value: function () {
       return copy(this)
-    }
+    },
   })
 }

@@ -1,7 +1,9 @@
 import test from 'blue-tape'
 import sinon from 'sinon'
 
-import createHttpClient, { __RewireAPI__ as createHttpClientRewireApi } from '../../lib/create-http-client'
+import createHttpClient, {
+  __RewireAPI__ as createHttpClientRewireApi,
+} from '../../lib/create-http-client'
 
 import axios from 'axios'
 import MockAdapter from 'axios-mock-adapter'
@@ -11,25 +13,25 @@ const requestloggerStub = sinon.stub()
 const responseloggerStub = sinon.stub()
 const mock = new MockAdapter(axios)
 
-function setup () {
+function setup() {
   createHttpClientRewireApi.__Rewire__('rateLimit', sinon.stub())
   sinon.stub(axios, 'create').returns({})
 }
 
-function teardown () {
+function teardown() {
   createHttpClientRewireApi.__ResetDependency__('rateLimit')
   mock.reset()
   axios.create.restore()
   logHandlerStub.resetHistory()
 }
 
-test('Calls axios with expected default URL', t => {
+test('Calls axios with expected default URL', (t) => {
   setup()
   createHttpClient(axios, {
     accessToken: 'clientAccessToken',
     space: 'clientSpaceId',
     defaultHostname: 'defaulthost',
-    logHandler: logHandlerStub
+    logHandler: logHandlerStub,
   })
 
   t.equals(axios.create.args[0][0].baseURL, 'https://defaulthost:443/spaces/clientSpaceId/')
@@ -38,12 +40,12 @@ test('Calls axios with expected default URL', t => {
   t.end()
 })
 
-test('Calls axios based on passed host', t => {
+test('Calls axios based on passed host', (t) => {
   setup()
   createHttpClient(axios, {
     accessToken: 'clientAccessToken',
     host: 'contentful.com:8080',
-    logHandler: logHandlerStub
+    logHandler: logHandlerStub,
   })
 
   t.equals(axios.create.args[0][0].baseURL, 'https://contentful.com:8080/spaces/')
@@ -52,13 +54,13 @@ test('Calls axios based on passed host', t => {
   t.end()
 })
 
-test('Calls axios based on passed host with insecure flag', t => {
+test('Calls axios based on passed host with insecure flag', (t) => {
   setup()
   createHttpClient(axios, {
     accessToken: 'clientAccessToken',
     host: 'contentful.com:321',
     insecure: true,
-    logHandler: logHandlerStub
+    logHandler: logHandlerStub,
   })
 
   t.equals(axios.create.args[0][0].baseURL, 'http://contentful.com:321/spaces/')
@@ -67,13 +69,13 @@ test('Calls axios based on passed host with insecure flag', t => {
   t.end()
 })
 
-test('Calls axios based on passed hostname with insecure flag', t => {
+test('Calls axios based on passed hostname with insecure flag', (t) => {
   setup()
   createHttpClient(axios, {
     accessToken: 'clientAccessToken',
     host: 'contentful.com',
     insecure: true,
-    logHandler: logHandlerStub
+    logHandler: logHandlerStub,
   })
 
   t.equals(axios.create.args[0][0].baseURL, 'http://contentful.com:80/spaces/')
@@ -82,14 +84,14 @@ test('Calls axios based on passed hostname with insecure flag', t => {
   t.end()
 })
 
-test('Calls axios based on passed headers', t => {
+test('Calls axios based on passed headers', (t) => {
   setup()
   createHttpClient(axios, {
     accessToken: 'clientAccessToken',
     headers: {
       'X-Custom-Header': 'example',
-      Authorization: 'Basic customAuth'
-    }
+      Authorization: 'Basic customAuth',
+    },
   })
 
   t.equals(axios.create.args[0][0].headers['X-Custom-Header'], 'example')
@@ -99,14 +101,14 @@ test('Calls axios based on passed headers', t => {
   t.end()
 })
 
-test('Calls axios with reques/response logger', t => {
+test('Calls axios with reques/response logger', (t) => {
   setup()
   createHttpClient(axios, {
     accessToken: 'clientAccessToken',
     host: 'contentful.com',
     insecure: true,
     requestLogger: requestloggerStub,
-    responseLogger: responseloggerStub
+    responseLogger: responseloggerStub,
   })
 
   t.equals(axios.create.args[0][0].baseURL, 'http://contentful.com:80/spaces/')
@@ -116,11 +118,11 @@ test('Calls axios with reques/response logger', t => {
   t.end()
 })
 
-test('Fails with missing access token', t => {
+test('Fails with missing access token', (t) => {
   setup()
   try {
     createHttpClient(axios, {
-      logHandler: logHandlerStub
+      logHandler: logHandlerStub,
     })
     t.fail('should fail')
     teardown()
@@ -130,19 +132,23 @@ test('Fails with missing access token', t => {
     t.equals(err.message, 'Expected parameter accessToken')
     t.equals(logHandlerStub.callCount, 1, 'logs only once')
     t.equals(logHandlerStub.args[0][0], 'error', 'logs an error')
-    t.equals(logHandlerStub.args[0][1].message, 'Expected parameter accessToken', 'logged error has correct message')
+    t.equals(
+      logHandlerStub.args[0][1].message,
+      'Expected parameter accessToken',
+      'logged error has correct message'
+    )
     t.ok(logHandlerStub.args[0][1] instanceof TypeError, 'logs a TypeError')
     teardown()
     t.end()
   }
 })
 
-test('Calls axios based on passed hostname with basePath', t => {
+test('Calls axios based on passed hostname with basePath', (t) => {
   setup()
   createHttpClient(axios, {
     accessToken: 'clientAccessToken',
     host: 'some.random.example.com',
-    basePath: '/foo/bar'
+    basePath: '/foo/bar',
   })
 
   t.equals(axios.create.args[0][0].baseURL, 'https://some.random.example.com:443/foo/bar/spaces/')
@@ -151,12 +157,12 @@ test('Calls axios based on passed hostname with basePath', t => {
   t.end()
 })
 
-test('Calls axios based on passed hostname with invalid basePath and fixes the invalid one', t => {
+test('Calls axios based on passed hostname with invalid basePath and fixes the invalid one', (t) => {
   setup()
   createHttpClient(axios, {
     accessToken: 'clientAccessToken',
     host: 'some.random.example.com',
-    basePath: 'foo/bar'
+    basePath: 'foo/bar',
   })
 
   t.equals(axios.create.args[0][0].baseURL, 'https://some.random.example.com:443/foo/bar/spaces/')
@@ -165,8 +171,8 @@ test('Calls axios based on passed hostname with invalid basePath and fixes the i
   t.end()
 })
 
-test('Can change the adapter axios uses', t => {
-  const testAdapter = function myAdapter (config) {
+test('Can change the adapter axios uses', (t) => {
+  const testAdapter = function myAdapter(config) {
     return new Promise(function (resolve, reject) {
       const response = {
         data: 'Adapter was used',
@@ -174,7 +180,7 @@ test('Can change the adapter axios uses', t => {
         statusText: 'request.statusText',
         headers: {},
         config: config,
-        request: undefined
+        request: undefined,
       }
       resolve(response)
     })
@@ -185,7 +191,7 @@ test('Can change the adapter axios uses', t => {
     space: 'clientSpaceId',
     defaultHostname: 'defaulthost',
     logHandler: logHandlerStub,
-    adapter: testAdapter
+    adapter: testAdapter,
   })
 
   t.equals(axios.create.args[0][0].baseURL, 'https://defaulthost:443/spaces/clientSpaceId/')
