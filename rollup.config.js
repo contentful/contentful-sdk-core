@@ -6,7 +6,7 @@ const extensions = ['.js', '.ts']
 
 export default [
   {
-    input: 'lib/index.ts',
+    input: 'src/index.ts',
     output: [
       { file: pkg.module, format: 'esm' },
       { file: pkg.main, format: 'cjs' },

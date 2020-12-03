@@ -1,6 +1,6 @@
 import test from 'blue-tape'
 
-import freezeSys from '../../lib/freeze-sys'
+import freezeSys from '../../src/freeze-sys'
 
 test('Freezes sys and child objects', (t) => {
   t.plan(2)

@@ -3,7 +3,7 @@ import MockAdapter from 'axios-mock-adapter'
 import test from 'blue-tape'
 import sinon from 'sinon'
 
-import rateLimit from '../../lib/rate-limit'
+import rateLimit from '../../src/rate-limit'
 
 const logHandlerStub = sinon.stub()
 
