@@ -5,12 +5,12 @@ describe('utils-test', () => {
     expect(isNode()).toEqual(true)
   })
 
-  // it('Detects node properly with babel-polyfill', (t) => {
-  //   global.process.browser = true
-  //   t.equals(isNode(), false, 'detects non-node environment with babel-polyfill')
-  //   delete global.process.browser
-  //   t.end()
-  // })
+  it('Detects node properly with babel-polyfill', () => {
+    global.process.browser = true
+    // detects non-node environment with babel-polyfill
+    expect(isNode()).toEqual(false)
+    delete global.process.browser
+  })
 
   it('Detects node version', () => {
     const version = getNodeVersion()
