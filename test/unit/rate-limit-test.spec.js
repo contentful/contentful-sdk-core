@@ -119,25 +119,26 @@ it('Retry on 5** - multiple errors - reach/exceed limit', (done) => {
   mock.onGet('/rate-limit-me').replyOnce(200, 'works')
   mock.onGet('/rate-limit-me').replyOnce(500, 'Server Error', { 'x-contentful-request-id': 12345 })
 
-  // expect.assertions(3)
+  expect.assertions(3)
 
-  return client.get('/rate-limit-me').then((response) => {
-    expect(response.data).toBeDefined()
-    expect(response.data).toEqual('works')
-    done()
-  })
-  // .then(() => {
-  //   return client
-  //     .get('/rate-limit-me')
-  //     .then(() => {
-  //       throw new Error('Promise should reject not resolve')
-  //     })
-  //     .catch((error) => {
-  //       expect(error.message).toEqual('Request failed with status code 500')
-  //
-  //       done()
-  //     })
-  // })
+  return client
+    .get('/rate-limit-me')
+    .then((response) => {
+      expect(response.data).toBeDefined()
+      expect(response.data).toEqual('works')
+    })
+    .then(() => {
+      return client
+        .get('/rate-limit-me')
+        .then(() => {
+          throw new Error('Promise should reject not resolve')
+        })
+        .catch((error) => {
+          expect(error.message).toEqual('Request failed with status code 500')
+
+          done()
+        })
+    })
 })
 
 it('Retry on network error', (done) => {
