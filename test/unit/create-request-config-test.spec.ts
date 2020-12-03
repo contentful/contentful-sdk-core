@@ -9,5 +9,5 @@ it('Create request config', () => {
 
   expect(config.params).toBeDefined()
   // resolveLinks property is removed from query
-  expect(config.params.resolveLinks).not.toBeDefined()
+  expect(config.params?.resolveLinks).not.toBeDefined()
 })

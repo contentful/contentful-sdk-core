@@ -8,4 +8,5 @@ module.exports = {
     beforeEach: true,
     afterEach: true,
   },
+  rules: { '@typescript-eslint/explicit-function-return-type': 'off' },
 }

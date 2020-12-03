@@ -130,11 +130,13 @@ export default function createHttpClient(
     })
   }
 
-  if (config.requestInterceptor) {
-    instance.interceptors.request.use(
-      config.requestInterceptor.onFulfilled,
-      config.requestInterceptor.onRejected
-    )
+  /**
+   * Apply interceptors.
+   * Please note that the order of interceptors is important
+   */
+
+  if (config.onBeforeRequest) {
+    instance.interceptors.request.use(config.onBeforeRequest)
   }
 
   if (typeof config.accessToken === 'function') {
@@ -143,11 +145,8 @@ export default function createHttpClient(
 
   rateLimit(instance, config.retryLimit)
 
-  if (config.responseInterceptor) {
-    instance.interceptors.response.use(
-      config.responseInterceptor.onFulfilled,
-      config.responseInterceptor.onRejected
-    )
+  if (config.onError) {
+    instance.interceptors.response.use((response) => response, config.onError)
   }
 
   return instance

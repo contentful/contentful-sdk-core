@@ -1,6 +1,8 @@
 import getUserAgent from '../../src/get-user-agent'
 import * as utils from '../../src/utils'
 
+const mockedUtils = utils as jest.Mocked<typeof utils>
+
 jest.mock('../../src/utils', () => ({
   isNode: jest.fn().mockResolvedValue(true),
   isReactNative: jest.fn().mockReturnValue(false),
@@ -34,7 +36,7 @@ it('Parse node user agent correctly', () => {
 })
 
 it('Parse browser user agent correctly', () => {
-  utils.isNode.mockReturnValue(false)
+  mockedUtils.isNode.mockReturnValue(false)
 
   const userAgent = getUserAgent(
     'contentful.js/1.0.0',
@@ -42,21 +44,22 @@ it('Parse browser user agent correctly', () => {
     'myIntegration/1.0.0'
   )
 
-  expect(userAgent.match(headerRegEx).length).toEqual(5)
+  expect(userAgent.match(headerRegEx)?.length).toEqual(5)
   expect(userAgent.indexOf('os macOS;') !== -1).toBeTruthy()
   expect(userAgent.indexOf('platform browser;') !== -1).toBeTruthy()
 })
 
 it('Fail safely', () => {
-  utils.isNode.mockReturnValue(false)
-  utils.getWindow.mockReturnValue({})
+  mockedUtils.isNode.mockReturnValue(false)
+  // @ts-expect-error intententionally return broken window object
+  mockedUtils.getWindow.mockReturnValue({})
 
   const userAgent = getUserAgent(
     'contentful.js/1.0.0',
     'myApplication/1.0.0',
     'myIntegration/1.0.0'
   )
-  expect(userAgent.match(headerRegEx).length).toEqual(3)
+  expect(userAgent.match(headerRegEx)?.length).toEqual(3)
   // empty os
   expect(userAgent.indexOf('os') === -1).toBeTruthy()
   // empty browser platform
@@ -64,9 +67,10 @@ it('Fail safely', () => {
 })
 
 it('Parse react native user agent correctly', () => {
-  utils.isNode.mockReturnValue(false)
-  utils.isReactNative.mockReturnValue(true)
-  utils.getWindow.mockReturnValue({
+  mockedUtils.isNode.mockReturnValue(false)
+  mockedUtils.isReactNative.mockReturnValue(true)
+  mockedUtils.getWindow.mockReturnValue({
+    // @ts-expect-error incomplete navigator object
     navigator: {
       platform: 'ReactNative',
       userAgent:
@@ -81,7 +85,7 @@ it('Parse react native user agent correctly', () => {
   )
 
   // consists of 4 parts since os is missing in mocked data
-  expect(userAgent.match(headerRegEx).length).toEqual(4)
+  expect(userAgent.match(headerRegEx)?.length).toEqual(4)
   // detects react native platform
   expect(userAgent.indexOf('platform ReactNative') !== -1).toBeTruthy()
 })
