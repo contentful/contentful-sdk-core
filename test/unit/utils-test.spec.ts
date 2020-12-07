@@ -9,6 +9,7 @@ describe('utils-test', () => {
     global.process.browser = true
     // detects non-node environment with babel-polyfill
     expect(isNode()).toEqual(false)
+    // @ts-expect-error
     delete global.process.browser
   })
 

@@ -20,8 +20,9 @@ export type AxiosInstance = OriginalAxiosInstance & {
 }
 
 export type CreateHttpClientParams = {
-  /** Access Token */
-  accessToken: string
+  /** Access Token or an async function that returns Access Token */
+  accessToken: string | (() => Promise<string>)
+
   /** Space ID */
   space?: string
 
@@ -49,7 +50,14 @@ export type CreateHttpClientParams = {
   requestLogger?: DefaultOptions['requestLogger']
   /** Gets called on every response, takes axios response object as an argument */
   responseLogger?: DefaultOptions['responseLogger']
-  /** A log handler function to process given log messages & errors. Receives the log level (error, warning & info) and the actual log data (Error object or string). (Default can be found here: https://github.com/contentful/contentful-sdk-core/blob/master/src/create-http-client.js) */
+
+  /** Request interceptor */
+  onBeforeRequest?: (value: AxiosRequestConfig) => AxiosRequestConfig | Promise<AxiosRequestConfig>
+
+  /** Error handler */
+  onError?: (error: any) => any
+
+  /** A log handler function to process given log messages & errors. Receives the log level (error, warning & info) and the actual log data (Error object or string). (Default can be found here: https://github.com/contentful/contentful-sdk-core/blob/master/lib/create-http-client.js) */
   logHandler?: DefaultOptions['logHandler']
 
   /** Optional additional headers */

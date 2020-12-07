@@ -4,6 +4,8 @@ import type { AxiosStatic } from 'axios'
 import type { AxiosInstance, CreateHttpClientParams } from './types'
 
 import rateLimit from './rate-limit'
+import asyncToken from './async-token'
+
 import { isNode, getNodeVersion } from './utils'
 
 // Matches 'sub.host:port' or 'host:port' and extracts hostname and port
@@ -77,7 +79,7 @@ export default function createHttpClient(
   const baseURL =
     options.baseURL || `${protocol}://${hostname}:${port}${config.basePath}/spaces/${space}`
 
-  if (!config.headers.Authorization) {
+  if (!config.headers.Authorization && typeof config.accessToken !== 'function') {
     config.headers.Authorization = 'Bearer ' + config.accessToken
   }
 
@@ -127,6 +129,25 @@ export default function createHttpClient(
       ...newParams,
     })
   }
+
+  /**
+   * Apply interceptors.
+   * Please note that the order of interceptors is important
+   */
+
+  if (config.onBeforeRequest) {
+    instance.interceptors.request.use(config.onBeforeRequest)
+  }
+
+  if (typeof config.accessToken === 'function') {
+    asyncToken(instance, config.accessToken)
+  }
+
   rateLimit(instance, config.retryLimit)
+
+  if (config.onError) {
+    instance.interceptors.response.use((response) => response, config.onError)
+  }
+
   return instance
 }

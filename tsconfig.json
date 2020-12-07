@@ -1,5 +1,7 @@
 {
   "compilerOptions": {
+    "baseUrl": "./",
+    "rootDir": "./src",
     "target": "esnext",
     "moduleResolution": "node",
     "allowJs": true,
