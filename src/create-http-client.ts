@@ -45,6 +45,7 @@ export default function createHttpClient(
     basePath: '',
     adapter: undefined,
     maxContentLength: 1073741824, // 1GB
+    maxBodyLength: 1073741824, // 1GB
   }
   const config = {
     ...defaultConfig,
@@ -102,6 +103,7 @@ export default function createHttpClient(
     timeout: config.timeout,
     adapter: config.adapter,
     maxContentLength: config.maxContentLength,
+    maxBodyLength: config.maxBodyLength,
     // Contentful
     logHandler: config.logHandler,
     responseLogger: config.responseLogger,
