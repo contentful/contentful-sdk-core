@@ -55,7 +55,7 @@
     "@babel/register": "^7.0.0",
     "@rollup/plugin-node-resolve": "^13.0.0",
     "@types/qs": "^6.9.5",
-    "@typescript-eslint/eslint-plugin": "4.22.1",
+    "@typescript-eslint/eslint-plugin": "4.23.0",
     "@typescript-eslint/parser": "4.22.1",
     "axios": "^0.21.0",
     "axios-mock-adapter": "^1.15.0",
