@@ -1,4 +1,4 @@
-import { platform, release } from 'os'
+import os from 'os'
 
 import { isNode, getNodeVersion, isReactNative, getWindow } from './utils'
 
@@ -12,29 +12,28 @@ function getBrowserOS(): string | null {
   const macosPlatforms = ['Macintosh', 'MacIntel', 'MacPPC', 'Mac68K']
   const windowsPlatforms = ['Win32', 'Win64', 'Windows', 'WinCE']
   const iosPlatforms = ['iPhone', 'iPad', 'iPod']
-  let os = null
 
   if (macosPlatforms.indexOf(platform) !== -1) {
-    os = 'macOS'
+    return 'macOS'
   } else if (iosPlatforms.indexOf(platform) !== -1) {
-    os = 'iOS'
+    return 'iOS'
   } else if (windowsPlatforms.indexOf(platform) !== -1) {
-    os = 'Windows'
+    return 'Windows'
   } else if (/Android/.test(userAgent)) {
-    os = 'Android'
+    return 'Android'
   } else if (/Linux/.test(platform)) {
-    os = 'Linux'
+    return 'Linux'
   }
 
-  return os
+  return null
 }
 
-type OsMap = Record<string,  'Android' | 'Linux' | 'Windows' | 'macOS'>
+type PlatformMap = Record<string,  'Android' | 'Linux' | 'Windows' | 'macOS'>
 
 function getNodeOS(): string | null {
-  const os = platform() || 'linux'
-  const version = release() || '0.0.0'
-  const osMap: OsMap = {
+  const platform = os.platform() || 'linux'
+  const version = os.release() || '0.0.0'
+  const platformMap: PlatformMap = {
     android: 'Android',
     aix: 'Linux',
     darwin: 'macOS',
@@ -44,8 +43,8 @@ function getNodeOS(): string | null {
     sunos: 'Linux',
     win32: 'Windows',
   }
-  if (os in osMap) {
-    return `${osMap[os] || 'Linux'}/${version}`
+  if (platform in platformMap) {
+    return `${platformMap[platform] || 'Linux'}/${version}`
   }
   return null
 }
@@ -72,24 +71,24 @@ export default function getUserAgentHeader(
 
   headerParts.push(`sdk ${sdk}`)
 
-  let os = null
+  let platform = null
   try {
     if (isReactNative()) {
-      os = getBrowserOS()
+      platform = getBrowserOS()
       headerParts.push('platform ReactNative')
     } else if (isNode()) {
-      os = getNodeOS()
+      platform = getNodeOS()
       headerParts.push(`platform node.js/${getNodeVersion()}`)
     } else {
-      os = getBrowserOS()
+      platform = getBrowserOS()
       headerParts.push('platform browser')
     }
   } catch (e) {
-    os = null
+    platform = null
   }
 
-  if (os) {
-    headerParts.push(`os ${os}`)
+  if (platform) {
+    headerParts.push(`os ${platform}`)
   }
 
   return `${headerParts.filter((item) => item !== '').join('; ')};`
