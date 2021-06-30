@@ -1,5 +1,3 @@
-import { platform, release } from 'os'
-
 import { isNode, getNodeVersion, isReactNative, getWindow } from './utils'
 
 function getBrowserOS(): string | null {
@@ -30,6 +28,7 @@ function getBrowserOS(): string | null {
 }
 
 function getNodeOS(): string | null {
+  const { platform, release } = require('os')
   const os = platform() || 'linux'
   const version = release() || '0.0.0'
   const osMap = {
