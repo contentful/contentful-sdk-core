@@ -35,23 +35,6 @@ it('Parse node user agent correctly', () => {
   ).toBeTruthy()
 })
 
-it('Parses additional Info', () => {
-  const userAgent = getUserAgent(
-    'contentful.js/1.0.0',
-    'myApplication/1.0.0',
-    'myIntegration/1.0.0'
-  )
-
-  // detects node.js platform
-  expect(userAgent.indexOf('platform node.js/') !== -1).toBeTruthy()
-  // detected valid semver node version
-  expect(
-    userAgent.match(
-      /node\.js\/\bv?(?:0|[1-9]\d*)\.(?:0|[1-9]\d*)\.(?:0|[1-9]\d*)(?:-[\da-z-]+(?:\.[\da-z-]+)*)?(?:\+[\da-z-]+(?:\.[\da-z-]+)*)?\b/
-    )
-  ).toBeTruthy()
-})
-
 it('Parse browser user agent correctly', () => {
   mockedUtils.isNode.mockReturnValue(false)
 
