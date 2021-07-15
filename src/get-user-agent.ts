@@ -53,7 +53,8 @@ export default function getUserAgentHeader(
   sdk: string,
   application?: string,
   integration?: string,
-  feature?: string
+  feature?: string,
+  additionalInfo?: {[key: string]: string}
 ): string {
   const headerParts = []
 
@@ -89,6 +90,12 @@ export default function getUserAgentHeader(
 
   if (os) {
     headerParts.push(`os ${os}`)
+  }
+
+  if (additionalInfo) {
+    Object.entries(additionalInfo).forEach(([key, value]) => {
+      headerParts.push(`${key} ${value}`)
+    })
   }
 
   return `${headerParts.filter((item) => item !== '').join('; ')};`
