@@ -97,5 +97,5 @@ export type CreateHttpClientParams = {
    * Optional maximum body length in bytes
    * @default 1073741824 i.e 1GB
    */
-   maxBodyLength?: number
+  maxBodyLength?: number
 }
