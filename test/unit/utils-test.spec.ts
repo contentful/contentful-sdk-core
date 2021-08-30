@@ -9,7 +9,8 @@ describe('utils-test', () => {
     global.process.browser = true
     // detects non-node environment with babel-polyfill
     expect(isNode()).toEqual(false)
-    // @ts-expect-error
+    // @ts-expect-error TODO It's unclear why we are using the browser
+    // property here as it does not exist on type 'Process'.
     delete global.process.browser
   })
 

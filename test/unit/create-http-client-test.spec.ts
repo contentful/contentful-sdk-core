@@ -12,7 +12,8 @@ const logHandlerStub = jest.fn()
 const mock = new MockAdapter(axios)
 
 beforeEach(() => {
-  // @ts-expect-error
+  // @ts-expect-error No need to instantiate a complete axios instance
+  // for the mock.
   jest.spyOn(axios, 'create').mockReturnValue({})
 })
 

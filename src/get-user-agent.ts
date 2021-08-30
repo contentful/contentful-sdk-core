@@ -29,10 +29,12 @@ function getBrowserOS(): string | null {
   return os
 }
 
+type OsMap = Record<string,  'Android' | 'Linux' | 'Windows' | 'macOS'>
+
 function getNodeOS(): string | null {
   const os = platform() || 'linux'
   const version = release() || '0.0.0'
-  const osMap = {
+  const osMap: OsMap = {
     android: 'Android',
     aix: 'Linux',
     darwin: 'macOS',
@@ -43,7 +45,6 @@ function getNodeOS(): string | null {
     win32: 'Windows',
   }
   if (os in osMap) {
-    // @ts-expect-error
     return `${osMap[os] || 'Linux'}/${version}`
   }
   return null

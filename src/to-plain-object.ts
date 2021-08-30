@@ -6,7 +6,7 @@ import copy from 'fast-copy'
  * @param data - Any plain JSON response returned from the API
  * @return Enhanced object with toPlainObject method
  */
-export default function toPlainObject<T = object, R = T>(
+export default function toPlainObject<T = Record<string, unknown>, R = T>(
   data: T
 ): T & {
   /**
