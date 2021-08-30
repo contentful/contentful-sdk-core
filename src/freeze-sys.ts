@@ -1,8 +1,6 @@
 // copied from https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Object/freeze
 
-type FreezeObject = {
-  [index: string]: any
-}
+type FreezeObject = Record<string, any>
 
 function deepFreeze<T extends FreezeObject>(object: T): T {
   const propNames = Object.getOwnPropertyNames(object)

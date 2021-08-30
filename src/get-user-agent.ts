@@ -29,9 +29,7 @@ function getBrowserOS(): string | null {
   return os
 }
 
-type OsMap = {
-  [index: string]: 'Android' | 'Linux' | 'Windows' | 'macOS'
-}
+type OsMap = Record<string,  'Android' | 'Linux' | 'Windows' | 'macOS'>
 
 function getNodeOS(): string | null {
   const os = platform() || 'linux'
