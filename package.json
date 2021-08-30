@@ -35,10 +35,7 @@
     "tsc": "tsc --noEmit",
     "prepush": "npm run test:unit"
   },
-  "files": [
-    "dist",
-    "bin"
-  ],
+  "files": ["dist", "bin"],
   "engines": {
     "node": ">=6"
   },
@@ -88,37 +85,35 @@
     "typescript": "4.2.4"
   },
   "lint-staged": {
-    "*.{js,jsx,ts,tsx}": [
-      "prettier --write",
-      "eslint"
-    ],
-    "*.md": [
-      "prettier --write"
-    ]
+    "*.{js,jsx,ts,tsx}": ["prettier --write", "eslint"],
+    "*.md": ["prettier --write"]
   },
   "husky": {
     "hooks": {
       "pre-commit": "lint-staged"
     }
   },
-  "plugins": [
-    [
-      "@semantic-release/commit-analyzer",
-      {
-        "releaseRules": [
-          {
-            "type": "build",
-            "scope": "deps",
-            "release": "patch"
-          }
-        ]
-      }
-    ],
-    "@semantic-release/release-notes-generator",
-    "@semantic-release/npm",
-    "@semantic-release/changelog",
-    "@semantic-release/github"
-  ],
+  "release": {
+    "branches": ["master", "next"],
+    "plugins": [
+      [
+        "@semantic-release/commit-analyzer",
+        {
+          "releaseRules": [
+            {
+              "type": "build",
+              "scope": "deps",
+              "release": "patch"
+            }
+          ]
+        }
+      ],
+      "@semantic-release/release-notes-generator",
+      "@semantic-release/npm",
+      "@semantic-release/changelog",
+      "@semantic-release/github"
+    ]
+  },
   "config": {
     "commitizen": {
       "path": "./node_modules/cz-conventional-changelog"
