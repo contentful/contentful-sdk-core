@@ -8,6 +8,7 @@ function getBrowserOS(): string | null {
     return null
   }
   const userAgent = win.navigator.userAgent
+  // TODO: platform is deprecated.
   const platform = win.navigator.platform
   const macosPlatforms = ['Macintosh', 'MacIntel', 'MacPPC', 'Mac68K']
   const windowsPlatforms = ['Win32', 'Win64', 'Windows', 'WinCE']
