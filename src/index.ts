@@ -4,5 +4,6 @@ export { default as enforceObjPath } from './enforce-obj-path'
 export { default as freezeSys } from './freeze-sys'
 export { default as getUserAgentHeader } from './get-user-agent'
 export { default as toPlainObject } from './to-plain-object'
+export { default as errorHandler } from './error-handler'
 
 export type { AxiosInstance, CreateHttpClientParams } from './types'

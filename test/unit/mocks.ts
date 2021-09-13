@@ -54,4 +54,16 @@ const assetMock = {
   },
 }
 
-export { linkMock, sysMock, contentTypeMock, entryMock, assetMock }
+const errorMock = {
+  config: {
+    url: 'requesturl',
+    headers: {},
+  },
+  response: {
+    status: 404,
+    statusText: 'Not Found',
+    data: {},
+  },
+}
+
+export { linkMock, sysMock, contentTypeMock, entryMock, assetMock, errorMock }
