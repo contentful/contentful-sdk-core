@@ -71,10 +71,10 @@ describe('A errorHandler', () => {
     }
   })
 
-  it('Obscures management token in any error message', async () => {
+  it('Obscures token in any error message', async () => {
     const responseError: any = cloneDeep(errorMock)
     responseError.config.headers = {
-      Authorization: 'Bearer secret-management-token',
+      Authorization: 'Bearer secret-token',
     }
 
     try {
@@ -83,7 +83,7 @@ describe('A errorHandler', () => {
       const parsedMessage = JSON.parse(err.message)
       expect(parsedMessage.request.headers.Authorization).equals(
         'Bearer ...token',
-        'Obscures management token'
+        'Obscures token'
       )
     }
 
@@ -100,16 +100,13 @@ describe('A errorHandler', () => {
     }
 
     requestError.config.headers = {
-      Authorization: 'Bearer secret-management-token',
+      Authorization: 'Bearer secret-token',
     }
 
     try {
       errorHandler(requestError)
     } catch (err) {
-      expect(err.config.headers.Authorization).equals(
-        'Bearer ...token',
-        'Obscures management token'
-      )
+      expect(err.config.headers.Authorization).equals('Bearer ...token', 'Obscures token')
     }
   })
 })
