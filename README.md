@@ -17,10 +17,6 @@
 
 [Contentful](https://www.contentful.com) provides a content infrastructure for digital teams to power content in websites, apps, and devices. Unlike a CMS, Contentful was built to integrate with the modern software stack. It offers a central hub for structured content, powerful management and delivery APIs, and a customizable web app that enable developers and content creators to ship digital products faster.
 
-## Pre-requisites
-
-- Make sure you use at least Node 4.7
-
 ## Installation
 
 ```
@@ -33,7 +29,7 @@ This package contains some core modules and utilities used by both the [contentf
 
 ## Support
 
-We support all current browsers in their last 3 versions including IE 11. The minimal node version is 4.
+We support LTS versions of Node.js and all current browsers in their last 3 versions including IE 11.
 
 ### ES2015 modules version
 
