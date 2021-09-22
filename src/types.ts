@@ -98,4 +98,11 @@ export type CreateHttpClientParams = {
    * @default 1073741824 i.e 1GB
    */
   maxBodyLength?: number
+
+    /**
+     * Optional maximum number of requests per second (rate-limit)
+     * @desc should represent the max of your current plan's rate limit
+     * @default 0 = no throttling
+     */
+  throttle?: number
 }

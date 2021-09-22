@@ -44,7 +44,7 @@ export default function rateLimit(instance: AxiosInstance, maxRetry = 5): void {
       let retryErrorType = null
       let wait = 0
 
-      // Errors without response did not recieve anything from the server
+      // Errors without response did not receive anything from the server
       if (!response) {
         retryErrorType = 'Connection'
         networkErrorAttempts++

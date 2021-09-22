@@ -4,6 +4,7 @@ import axios, { AxiosAdapter } from 'axios'
 import MockAdapter from 'axios-mock-adapter'
 
 jest.mock('../../src/rate-limit', () => jest.fn())
+jest.mock('../../src/rate-limit-throttle', () => jest.fn())
 
 const mockedAxios = axios as jest.Mocked<typeof axios>
 
