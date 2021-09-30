@@ -1,11 +1,8 @@
+import { noop } from 'lodash'
 import type { AxiosInstance } from './types'
 
 const attempts: Record<string, number> = {}
 let networkErrorAttempts = 0
-
-function noop(): undefined {
-  return undefined
-}
 
 const delay = (ms: number): Promise<void> =>
   new Promise((resolve) => {
