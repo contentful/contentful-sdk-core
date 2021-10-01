@@ -10,6 +10,8 @@ jobs:
       - run: npm install
       - run: npm run build
       - run: npm run tsc
+      - run: npm run lint
+      - run: npm run prettier:check
       - run: npm run test:cover
   release:
     docker:
