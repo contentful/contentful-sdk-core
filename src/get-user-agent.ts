@@ -29,7 +29,7 @@ function getBrowserOS(): string | null {
   return null
 }
 
-type PlatformMap = Record<string,  'Android' | 'Linux' | 'Windows' | 'macOS'>
+type PlatformMap = Record<string, 'Android' | 'Linux' | 'Windows' | 'macOS'>
 
 function getNodeOS(): string | null {
   const platform = os.platform() || 'linux'
