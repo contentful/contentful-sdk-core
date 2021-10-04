@@ -88,6 +88,17 @@ describe('throttle to rate limit axios interceptor', () => {
     expectLogHandlerHasBeenCalled(7, 1)
   })
 
+  it('invalid % argument defaults to 7/s', async () => {
+    const client = createHttpClient(axios, {
+      accessToken: 'token',
+      logHandler: logHandlerStub,
+      // @ts-ignore
+      throttle: 'invalid%',
+    })
+    await expectCallsExecutedWithin(client, 7, 1010)
+    expectLogHandlerHasBeenCalled(7, 1)
+  })
+
   it('calculate limit based on response header', async () => {
     const client = createHttpClient(axios, {
       accessToken: 'token',

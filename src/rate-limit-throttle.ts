@@ -2,7 +2,7 @@ import { isString, noop } from 'lodash'
 import pThrottle from 'p-throttle'
 import { AxiosInstance } from './types'
 
-type ThrottleType = 'auto' | `${number}%`
+type ThrottleType = 'auto' | string
 
 const PERCENTAGE_REGEX = /(?<value>\d+)(%)/
 
