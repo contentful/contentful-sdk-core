@@ -1,11 +1,8 @@
+import { noop } from 'lodash'
 import type { AxiosInstance } from './types'
 
 const attempts: Record<string, number> = {}
 let networkErrorAttempts = 0
-
-function noop(): undefined {
-  return undefined
-}
 
 const delay = (ms: number): Promise<void> =>
   new Promise((resolve) => {
@@ -44,7 +41,7 @@ export default function rateLimit(instance: AxiosInstance, maxRetry = 5): void {
       let retryErrorType = null
       let wait = 0
 
-      // Errors without response did not recieve anything from the server
+      // Errors without response did not receive anything from the server
       if (!response) {
         retryErrorType = 'Connection'
         networkErrorAttempts++

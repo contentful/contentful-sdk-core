@@ -1,9 +1,10 @@
 import copy from 'fast-copy'
 import qs from 'qs'
 import type { AxiosStatic } from 'axios'
+import rateLimitThrottle from './rate-limit-throttle'
 import type { AxiosInstance, CreateHttpClientParams } from './types'
 
-import rateLimit from './rate-limit'
+import rateLimitRetry from './rate-limit'
 import asyncToken from './async-token'
 
 import { isNode, getNodeVersion } from './utils'
@@ -41,6 +42,7 @@ export default function createHttpClient(
     httpAgent: false as const,
     httpsAgent: false as const,
     timeout: 30000,
+    throttle: 0,
     proxy: false as const,
     basePath: '',
     adapter: undefined,
@@ -145,7 +147,10 @@ export default function createHttpClient(
     asyncToken(instance, config.accessToken)
   }
 
-  rateLimit(instance, config.retryLimit)
+  if (config.throttle) {
+    rateLimitThrottle(instance, config.throttle)
+  }
+  rateLimitRetry(instance, config.retryLimit)
 
   if (config.onError) {
     instance.interceptors.response.use((response) => response, config.onError)

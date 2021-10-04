@@ -2,7 +2,7 @@ import axios from 'axios'
 import MockAdapter from 'axios-mock-adapter'
 
 import createHttpClient from '../../src/create-http-client'
-import { CreateHttpClientParams } from '../../src/types'
+import { CreateHttpClientParams } from '../../src'
 
 const logHandlerStub = jest.fn()
 
