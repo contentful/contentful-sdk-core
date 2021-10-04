@@ -1,3 +1,5 @@
+/* eslint @typescript-eslint/ban-ts-comment: 0 */
+
 import { isNode, getNodeVersion } from '../../src/utils'
 
 describe('utils-test', () => {
@@ -6,11 +8,13 @@ describe('utils-test', () => {
   })
 
   it('Detects node properly with babel-polyfill', () => {
+    // @ts-ignore
     global.process.browser = true
     // detects non-node environment with babel-polyfill
     expect(isNode()).toEqual(false)
-    // @ts-expect-error TODO It's unclear why we are using the browser
     // property here as it does not exist on type 'Process'.
+    // TODO It's unclear why we are using the browser
+    // @ts-ignore
     delete global.process.browser
   })
 

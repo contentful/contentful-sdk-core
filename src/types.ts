@@ -105,5 +105,5 @@ export type CreateHttpClientParams = {
    * @default 0 = no throttling
    * @param 1-30 (fixed number of limit), 'auto' (calculated limit based on current tier), '0%' - '100%' (calculated % limit based on tier)
    */
-  throttle?: 'auto' | `${number}%` | number
+  throttle?: 'auto' | string | number
 }
