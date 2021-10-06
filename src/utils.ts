@@ -25,3 +25,7 @@ export function getNodeVersion(): string {
 export function getWindow(): Window {
   return window
 }
+
+export function noop(): undefined {
+  return undefined
+}

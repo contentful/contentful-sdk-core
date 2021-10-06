@@ -33,7 +33,8 @@
     "prettier:check": "prettier --check '**/*.{jsx,js,ts,tsx}'",
     "precommit": "npm run lint",
     "tsc": "tsc --noEmit",
-    "prepush": "npm run test:unit"
+    "prepush": "npm run test:unit",
+    "postbuild": "bundlesize"
   },
   "files": [
     "dist",
@@ -44,7 +45,8 @@
   },
   "dependencies": {
     "fast-copy": "^2.1.0",
-    "lodash": "^4.17.21",
+    "lodash.isplainobject": "^4.0.6",
+    "lodash.isstring": "^4.0.1",
     "p-throttle": "^4.1.1",
     "qs": "^6.9.4"
   },
@@ -62,13 +64,15 @@
     "@semantic-release/npm": "^7.1.3",
     "@semantic-release/release-notes-generator": "^9.0.3",
     "@types/chai": "^4.2.21",
-    "@types/lodash": "^4.14.172",
+    "@types/lodash.isplainobject": "^4.0.6",
+    "@types/lodash.isstring": "^4.0.6",
     "@types/qs": "^6.9.5",
     "@typescript-eslint/eslint-plugin": "4.33.0",
     "@typescript-eslint/parser": "4.31.2",
     "axios": "^0.21.0",
     "axios-mock-adapter": "^1.15.0",
     "babel-eslint": "^10.1.0",
+    "bundlesize": "^0.18.1",
     "chai": "^4.3.4",
     "core-js": "^3.8.0",
     "cz-conventional-changelog": "^3.1.0",
@@ -97,6 +101,16 @@
     "tslib": "^2.0.3",
     "typescript": "3.9.10"
   },
+  "bundlesize": [
+    {
+      "path": "./dist/index.js",
+      "maxSize": "10Kb"
+    },
+    {
+      "path": "./dist/index.es-modules.js",
+      "maxSize": "10Kb"
+    }
+  ],
   "lint-staged": {
     "*.{js,jsx,ts,tsx}": [
       "prettier --write",

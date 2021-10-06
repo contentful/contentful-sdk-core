@@ -1,4 +1,4 @@
-import { noop } from 'lodash'
+import { noop } from './utils'
 import type { AxiosInstance } from './types'
 
 const attempts: Record<string, number> = {}
