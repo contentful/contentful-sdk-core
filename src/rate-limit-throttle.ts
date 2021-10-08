@@ -1,6 +1,7 @@
-import { isString, noop } from 'lodash'
+import isString from 'lodash.isstring'
 import pThrottle from 'p-throttle'
 import { AxiosInstance } from './types'
+import { noop } from './utils'
 
 type ThrottleType = 'auto' | string
 
@@ -19,7 +20,7 @@ function calculateLimit(type: ThrottleType, max = 7) {
   return Math.min(30, Math.max(1, limit))
 }
 
-function createThrottle(limit: number, logger: (...args: unknown[]) => void) {
+function createThrottle(limit: number, logger: (...args: any[]) => void) {
   logger('info', `Throttle request to ${limit}/s`)
   return pThrottle({
     limit,

@@ -1,4 +1,4 @@
-import { isPlainObject } from 'lodash'
+import isPlainObject from 'lodash.isplainobject'
 import { AxiosError } from 'axios'
 
 /**
