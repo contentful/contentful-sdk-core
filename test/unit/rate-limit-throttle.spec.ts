@@ -22,7 +22,7 @@ function executeCalls(client: AxiosInstance, callsCount: number) {
 }
 
 describe('throttle to rate limit axios interceptor', () => {
-  let mock = new MockAdapter(axios)
+  let mock: InstanceType<typeof MockAdapter>
 
   beforeEach(() => {
     mock = new MockAdapter(axios)
@@ -30,6 +30,7 @@ describe('throttle to rate limit axios interceptor', () => {
   })
 
   afterEach(() => {
+    mock.reset()
     logHandlerStub.mockReset()
   })
 
@@ -65,6 +66,19 @@ describe('throttle to rate limit axios interceptor', () => {
     })
     await expectCallsExecutedWithin(client, 20, 100)
     expect(logHandlerStub).not.toHaveBeenCalled()
+  })
+
+  it('throws on network errors', async () => {
+    mock = new MockAdapter(axios)
+    mock.onGet('/throttled-call').networkError()
+    const client = createHttpClient(axios, {
+      accessToken: 'token',
+      logHandler: logHandlerStub,
+      throttle: 'auto',
+      retryOnError: false,
+    })
+
+    await expect(client.get('/throttled-call')).rejects.toThrow('Network Error')
   })
 
   it('fires limited requests per second', async () => {
