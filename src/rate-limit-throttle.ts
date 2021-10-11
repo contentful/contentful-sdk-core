@@ -35,39 +35,54 @@ export default (axiosInstance: AxiosInstance, type: ThrottleType | number = 'aut
   let throttle = createThrottle(limit, logHandler)
   let isCalculated = false
 
-  let requestInterceptorId = axiosInstance.interceptors.request.use((config) => {
-    return throttle<[], typeof config>(() => config)()
-  }, Promise.reject)
+  let requestInterceptorId = axiosInstance.interceptors.request.use(
+    (config) => {
+      return throttle<[], typeof config>(() => config)()
+    },
+    function (error) {
+      return Promise.reject(error)
+    }
+  )
 
-  const responseInterceptorId = axiosInstance.interceptors.response.use((response) => {
-    if (
-      !isCalculated &&
-      isString(type) &&
-      (type === 'auto' || PERCENTAGE_REGEX.test(type)) &&
-      response.headers &&
-      response.headers['x-contentful-ratelimit-second-limit']
-    ) {
-      const rawLimit = parseInt(response.headers['x-contentful-ratelimit-second-limit'])
-      const nextLimit = calculateLimit(type, rawLimit)
+  const responseInterceptorId = axiosInstance.interceptors.response.use(
+    (response) => {
+      if (
+        !isCalculated &&
+        isString(type) &&
+        (type === 'auto' || PERCENTAGE_REGEX.test(type)) &&
+        response.headers &&
+        response.headers['x-contentful-ratelimit-second-limit']
+      ) {
+        const rawLimit = parseInt(response.headers['x-contentful-ratelimit-second-limit'])
+        const nextLimit = calculateLimit(type, rawLimit)
 
-      if (nextLimit !== limit) {
-        if (requestInterceptorId) {
-          axiosInstance.interceptors.request.eject(requestInterceptorId)
+        if (nextLimit !== limit) {
+          if (requestInterceptorId) {
+            axiosInstance.interceptors.request.eject(requestInterceptorId)
+          }
+
+          limit = nextLimit
+
+          throttle = createThrottle(nextLimit, logHandler)
+          requestInterceptorId = axiosInstance.interceptors.request.use(
+            (config) => {
+              return throttle<[], typeof config>(() => config)()
+            },
+            function (error) {
+              return Promise.reject(error)
+            }
+          )
         }
 
-        limit = nextLimit
-
-        throttle = createThrottle(nextLimit, logHandler)
-        requestInterceptorId = axiosInstance.interceptors.request.use((config) => {
-          return throttle<[], typeof config>(() => config)()
-        }, Promise.reject)
+        isCalculated = true
       }
 
-      isCalculated = true
+      return response
+    },
+    function (error) {
+      return Promise.reject(error)
     }
-
-    return response
-  }, Promise.reject)
+  )
 
   return () => {
     axiosInstance.interceptors.request.eject(requestInterceptorId)
