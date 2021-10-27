@@ -96,7 +96,7 @@
     "rimraf": "^3.0.2",
     "rollup": "^2.34.0",
     "rollup-plugin-babel": "^4.4.0",
-    "semantic-release": "^17.0.7",
+    "semantic-release": "^18.0.0",
     "tsdx": "^0.14.1",
     "tslib": "^2.0.3",
     "typescript": "3.9.10"
