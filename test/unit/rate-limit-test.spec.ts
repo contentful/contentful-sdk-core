@@ -83,38 +83,6 @@ it('Retry on 5** - multiple errors', async () => {
   expect(response.data).toEqual('works #2')
 })
 
-it('Retry on 5** - multiple errors - reach/exceed limit', async () => {
-  const { client } = setup({ retryLimit: 7 })
-  mock.onGet('/rate-limit-me').replyOnce(500, 'Server Error', { 'x-contentful-request-id': 12345 })
-  mock.onGet('/rate-limit-me').replyOnce(500, 'Server Error', { 'x-contentful-request-id': 12345 })
-  mock
-    .onGet('/rate-limit-me')
-    .replyOnce(503, 'Another Server Error', { 'x-contentful-request-id': 12345 })
-  mock.onGet('/rate-limit-me').replyOnce(500, 'Server Error', { 'x-contentful-request-id': 12345 })
-  mock
-    .onGet('/rate-limit-me')
-    .replyOnce(503, 'Another Server Error', { 'x-contentful-request-id': 12345 })
-  mock.onGet('/rate-limit-me').replyOnce(500, 'Server Error', { 'x-contentful-request-id': 12345 })
-  mock
-    .onGet('/rate-limit-me')
-    .replyOnce(503, 'Another Server Error', { 'x-contentful-request-id': 12345 })
-  mock.onGet('/rate-limit-me').replyOnce(200, 'works')
-  mock.onGet('/rate-limit-me').replyOnce(500, 'Server Error', { 'x-contentful-request-id': 12345 })
-
-  expect.assertions(3)
-
-  const response = await client.get('/rate-limit-me')
-
-  expect(response.data).toBeDefined()
-  expect(response.data).toEqual('works')
-
-  try {
-    await client.get('/rate-limit-me')
-  } catch (error) {
-    expect(error.message).toEqual('Request failed with status code 500')
-  }
-})
-
 it('Retry on network error', async () => {
   const { client } = setupWithOneRetry()
   mock.onGet('/rate-limit-me').networkError()
@@ -166,21 +134,22 @@ it('Should Fail if it hits maxRetries', async () => {
   }
 })
 
-it('Rejects error straight away when X-Contentful-Request-Id header is missing', async () => {
+it('Retry on responses when X-Contentful-Request-Id header is missing', async () => {
   const { client } = setupWithOneRetry()
   mock.onGet('/error').replyOnce(500, 'error attempt')
+  mock.onGet('/error').replyOnce(500, 'error attempt 2')
   mock.onGet('/error').replyOnce(200, 'works')
 
-  expect.assertions(4)
+  expect.assertions(5)
 
   try {
     await client.get('/error')
   } catch (error) {
-    expect(error.response.data).toEqual('error attempt')
+    expect(error.response.data).toEqual('error attempt 2')
+    expect(logHandlerStub).toHaveBeenCalledTimes(1)
+    expect(logHandlerStub.mock.calls[0][0]).toEqual('warning')
     expect(error.message).toEqual('Request failed with status code 500')
-    expect(error.attempts).toEqual(1)
-    // did not log anything
-    expect(logHandlerStub).toBeCalledTimes(0)
+    expect(error.attempts).toEqual(2)
   }
 })
 

@@ -106,4 +106,10 @@ export type CreateHttpClientParams = {
    * @param 1-30 (fixed number of limit), 'auto' (calculated limit based on current tier), '0%' - '100%' (calculated % limit based on tier)
    */
   throttle?: 'auto' | string | number
+
+  /**
+   * Optional how often the current request has been retried
+   * @default 0
+   */
+  attempt?: number
 }
