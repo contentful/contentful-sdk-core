@@ -1,5 +1,3 @@
-import os from 'os'
-
 import { isNode, getNodeVersion, isReactNative, getWindow } from './utils'
 
 function getBrowserOS(): string | null {
@@ -32,8 +30,8 @@ function getBrowserOS(): string | null {
 type PlatformMap = Record<string, 'Android' | 'Linux' | 'Windows' | 'macOS'>
 
 function getNodeOS(): string | null {
-  const platform = os.platform() || 'linux'
-  const version = os.release() || '0.0.0'
+  const platform = process.platform || 'linux'
+  const version = process.version || '0.0.0'
   const platformMap: PlatformMap = {
     android: 'Android',
     aix: 'Linux',
