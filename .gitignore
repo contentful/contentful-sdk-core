@@ -157,3 +157,6 @@ $RECYCLE.BIN/
 .vscode/
 
 # End of https://www.gitignore.io/api/node,windows,osx,linux,vim
+
+# Parcel
+.parcel-cache
