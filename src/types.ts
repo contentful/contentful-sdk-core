@@ -1,5 +1,6 @@
 /* eslint-disable @typescript-eslint/no-explicit-any */
 
+import {AxiosRequestHeaders} from "axios";
 import type {
   AxiosInstance as OriginalAxiosInstance,
   AxiosRequestConfig,
@@ -61,7 +62,7 @@ export type CreateHttpClientParams = {
   logHandler?: DefaultOptions['logHandler']
 
   /** Optional additional headers */
-  headers?: Record<string, unknown>
+  headers?: AxiosRequestHeaders
 
   defaultHostname?: string
 

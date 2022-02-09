@@ -1,6 +1,6 @@
 {
   "name": "contentful-sdk-core",
-  "version": "0.0.1-determined-by-semantic-release",
+  "version": "0.0.0-determined-by-semantic-release",
   "description": "Core modules for the Contentful JS SDKs",
   "homepage": "https://www.contentful.com/developers/docs/javascript/",
   "main": "dist/index.js",
@@ -41,7 +41,7 @@
     "bin"
   ],
   "engines": {
-    "node": ">=6"
+    "node": ">=12"
   },
   "dependencies": {
     "fast-copy": "^2.1.0",
@@ -67,10 +67,10 @@
     "@types/lodash.isplainobject": "^4.0.6",
     "@types/lodash.isstring": "^4.0.6",
     "@types/qs": "^6.9.5",
-    "@typescript-eslint/eslint-plugin": "4.33.0",
-    "@typescript-eslint/parser": "4.31.2",
-    "axios": "^0.21.0",
-    "axios-mock-adapter": "^1.15.0",
+    "@typescript-eslint/eslint-plugin": "^5.11.0",
+    "@typescript-eslint/parser": "^5.11.0",
+    "axios": "^0.25.0",
+    "axios-mock-adapter": "^1.20.0",
     "babel-eslint": "^10.1.0",
     "bundlesize": "^0.18.1",
     "chai": "^4.3.4",
@@ -99,7 +99,7 @@
     "semantic-release": "^17.0.7",
     "tsdx": "^0.14.1",
     "tslib": "^2.0.3",
-    "typescript": "3.9.10"
+    "typescript": "^4.5.5"
   },
   "bundlesize": [
     {

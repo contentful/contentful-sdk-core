@@ -1,3 +1,5 @@
+// eslint-disable @typescript-eslint/no-explicit-any
+
 import errorHandler from '../../src/error-handler'
 import { errorMock } from './mocks'
 import { expect } from 'chai'
@@ -21,7 +23,7 @@ describe('A errorHandler', () => {
 
     try {
       errorHandler(error)
-    } catch (err) {
+    } catch (err:any) {
       const parsedMessage = JSON.parse(err.message)
       expect(err.name).equals('SpecificError', 'error name')
       expect(parsedMessage.request.url).equals('requesturl', 'request url')
@@ -46,7 +48,7 @@ describe('A errorHandler', () => {
 
     try {
       errorHandler(error)
-    } catch (err) {
+    } catch (err:any) {
       const parsedMessage = JSON.parse(err.message)
       expect(err.name).equals('500 Internal', 'error name defaults to status code and text')
       expect(parsedMessage.request.url).equals('requesturl', 'request url')
@@ -61,7 +63,7 @@ describe('A errorHandler', () => {
 
     try {
       errorHandler(error)
-    } catch (err) {
+    } catch (err:any) {
       const parsedMessage = JSON.parse(err.message)
       expect(err.name).equals(
         '500 Everything is on fire',
@@ -79,7 +81,7 @@ describe('A errorHandler', () => {
 
     try {
       errorHandler(responseError)
-    } catch (err) {
+    } catch (err:any) {
       const parsedMessage = JSON.parse(err.message)
       expect(parsedMessage.request.headers.Authorization).equals(
         'Bearer ...token',
@@ -105,7 +107,7 @@ describe('A errorHandler', () => {
 
     try {
       errorHandler(requestError)
-    } catch (err) {
+    } catch (err:any) {
       expect(err.config.headers.Authorization).equals('Bearer ...token', 'Obscures token')
     }
   })

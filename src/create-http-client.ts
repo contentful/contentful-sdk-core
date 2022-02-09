@@ -1,3 +1,4 @@
+import {AxiosRequestHeaders} from "axios";
 import copy from 'fast-copy'
 import qs from 'qs'
 import type { AxiosStatic } from 'axios'
@@ -38,7 +39,7 @@ export default function createHttpClient(
       console.log(`[${level}] ${data}`)
     },
     // Passed to axios
-    headers: {} as Record<string, unknown>,
+    headers: {} as AxiosRequestHeaders,
     httpAgent: false as const,
     httpsAgent: false as const,
     timeout: 30000,

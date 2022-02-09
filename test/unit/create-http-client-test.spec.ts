@@ -1,3 +1,5 @@
+// eslint-disable @typescript-eslint/no-explicit-any
+
 import createHttpClient from '../../src/create-http-client'
 
 import axios, { AxiosAdapter } from 'axios'
@@ -84,25 +86,25 @@ it('Calls axios based on passed headers', () => {
 
   const [callConfig] = mockedAxios.create.mock.calls[0]
   expect(callConfig?.baseURL)
-  expect(callConfig?.headers['X-Custom-Header']).toEqual('example')
-  expect(callConfig?.headers.Authorization).toEqual('Basic customAuth')
+  expect(callConfig?.headers?.['X-Custom-Header']).toEqual('example')
+  expect(callConfig?.headers?.Authorization).toEqual('Basic customAuth')
 })
 
-it('Calls axios with reques/response logger', () => {
-  const requestloggerStub = jest.fn()
-  const responseloggerStub = jest.fn()
+it('Calls axios with request/response logger', () => {
+  const requestLoggerStub = jest.fn()
+  const responseLoggerStub = jest.fn()
   createHttpClient(axios, {
     accessToken: 'clientAccessToken',
     host: 'contentful.com',
     insecure: true,
-    requestLogger: requestloggerStub,
-    responseLogger: responseloggerStub,
+    requestLogger: requestLoggerStub,
+    responseLogger: responseLoggerStub,
   })
 
   const [callConfig] = mockedAxios.create.mock.calls[0]
   expect(callConfig?.baseURL).toEqual('http://contentful.com:80/spaces/')
-  expect(requestloggerStub).not.toHaveBeenCalled()
-  expect(responseloggerStub).not.toHaveBeenCalled()
+  expect(requestLoggerStub).not.toHaveBeenCalled()
+  expect(responseLoggerStub).not.toHaveBeenCalled()
 })
 
 it('Fails with missing access token', () => {
@@ -111,7 +113,7 @@ it('Fails with missing access token', () => {
     createHttpClient(axios, {
       logHandler: logHandlerStub,
     })
-  } catch (err) {
+  } catch (err:any) {
     expect(err instanceof TypeError).toBeTruthy()
     expect(err.message).toEqual('Expected parameter accessToken')
     expect(logHandlerStub).toHaveBeenCalledTimes(1)
