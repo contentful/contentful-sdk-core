@@ -1,4 +1,4 @@
-// eslint-disable @typescript-eslint/no-explicit-any
+/* eslint-disable @typescript-eslint/no-explicit-any */
 
 import errorHandler from '../../src/error-handler'
 import { errorMock } from './mocks'
