@@ -1,6 +1,6 @@
 {
   "name": "contentful-sdk-core",
-  "version": "0.0.1-determined-by-semantic-release",
+  "version": "0.0.0-determined-by-semantic-release",
   "description": "Core modules for the Contentful JS SDKs",
   "homepage": "https://www.contentful.com/developers/docs/javascript/",
   "main": "dist/index.js",
@@ -23,9 +23,9 @@
     "build": "npm run clean && npm run build:types && npm run build:js",
     "lint": "eslint src test --ext '.ts,.js'",
     "pretest": "npm run lint",
-    "test": "tsdx test",
-    "test:watch": "tsdx test --watch",
-    "test:cover": "tsdx test --coverage",
+    "test": "jest",
+    "test:watch": "jest --watch",
+    "test:cover": "jest --coverage",
     "browser-coverage": "npm run test:cover && opener coverage/lcov-report/index.html",
     "prepublish": "in-publish && npm run build || not-in-publish",
     "semantic-release": "semantic-release",
@@ -41,7 +41,7 @@
     "bin"
   ],
   "engines": {
-    "node": ">=6"
+    "node": ">=12"
   },
   "dependencies": {
     "fast-copy": "^2.1.0",
@@ -64,13 +64,14 @@
     "@semantic-release/npm": "^7.1.3",
     "@semantic-release/release-notes-generator": "^9.0.3",
     "@types/chai": "^4.2.21",
+    "@types/jest": "^27.4.0",
     "@types/lodash.isplainobject": "^4.0.6",
     "@types/lodash.isstring": "^4.0.6",
     "@types/qs": "^6.9.5",
-    "@typescript-eslint/eslint-plugin": "4.33.0",
-    "@typescript-eslint/parser": "4.31.2",
-    "axios": "^0.21.0",
-    "axios-mock-adapter": "^1.15.0",
+    "@typescript-eslint/eslint-plugin": "^5.11.0",
+    "@typescript-eslint/parser": "^5.11.0",
+    "axios": "^0.25.0",
+    "axios-mock-adapter": "^1.20.0",
     "babel-eslint": "^10.1.0",
     "bundlesize": "^0.18.1",
     "chai": "^4.3.4",
@@ -86,6 +87,7 @@
     "eslint-plugin-standard": "^5.0.0",
     "husky": "^7.0.0",
     "in-publish": "^2.0.0",
+    "jest": "^27.5.1",
     "lint-staged": "^12.0.2",
     "mkdirp": "^1.0.4",
     "moxios": "^0.4.0",
@@ -97,9 +99,9 @@
     "rollup": "^2.34.0",
     "rollup-plugin-babel": "^4.4.0",
     "semantic-release": "^17.0.7",
-    "tsdx": "^0.14.1",
+    "ts-jest": "^27.1.3",
     "tslib": "^2.0.3",
-    "typescript": "3.9.10"
+    "typescript": "^4.5.5"
   },
   "bundlesize": [
     {

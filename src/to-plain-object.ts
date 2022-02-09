@@ -6,14 +6,7 @@ import copy from 'fast-copy'
  * @param data - Any plain JSON response returned from the API
  * @return Enhanced object with toPlainObject method
  */
-export default function toPlainObject<T = Record<string, unknown>, R = T>(
-  data: T
-): T & {
-  /**
-   * Returns this entity as a plain JS object
-   */
-  toPlainObject(): R
-} {
+export default function toPlainObject(data: unknown) {
   return Object.defineProperty(data, 'toPlainObject', {
     enumerable: false,
     configurable: false,

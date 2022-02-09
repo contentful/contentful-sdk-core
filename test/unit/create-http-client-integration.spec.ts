@@ -21,7 +21,7 @@ it('should retrieve token asynchronously', async () => {
   expect(instance.defaults.headers.Authorization).not.toBeDefined()
 
   await instance.get('/test-endpoint')
-  expect(mock.history.get[0].headers.Authorization).toEqual('Bearer async-token')
+  expect(mock.history.get[0].headers?.Authorization).toEqual('Bearer async-token')
 })
 
 describe('custom interceptors', () => {
@@ -45,10 +45,10 @@ describe('custom interceptors', () => {
     mock.onGet('/test-endpoint').replyOnce(200)
 
     await instance.get('/test-endpoint')
-    expect(mock.history.get[0].headers['custom-header']).toEqual('custom-header-value')
+    expect(mock.history.get[0].headers?.['custom-header']).toEqual('custom-header-value')
   })
 
-  it('is able to intercept responce codes', async () => {
+  it('is able to intercept response codes', async () => {
     let accessToken = 'invalid-token'
 
     const refreshToken = () => {
@@ -63,6 +63,8 @@ describe('custom interceptors', () => {
         if (error.response.status === 403 && !originalRequest._retry403) {
           originalRequest._retry403 = true
           const newToken = await refreshToken()
+          // eslint-disable-next-line @typescript-eslint/ban-ts-comment
+          // @ts-ignore
           axios.defaults.headers.Authorization = 'Bearer ' + newToken
           return instance(originalRequest)
         }
@@ -75,7 +77,7 @@ describe('custom interceptors', () => {
 
     await instance.get('/test-endpoint')
 
-    expect(mock.history.get[0].headers.Authorization).toEqual('Bearer invalid-token')
-    expect(mock.history.get[1].headers.Authorization).toEqual('Bearer valid-token')
+    expect(mock.history.get[0].headers?.Authorization).toEqual('Bearer invalid-token')
+    expect(mock.history.get[1].headers?.Authorization).toEqual('Bearer valid-token')
   })
 })
