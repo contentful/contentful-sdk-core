@@ -1,6 +1,6 @@
 /* eslint-disable @typescript-eslint/no-explicit-any */
 
-import {AxiosRequestHeaders} from "axios";
+import { AxiosRequestHeaders } from 'axios'
 import type {
   AxiosInstance as OriginalAxiosInstance,
   AxiosRequestConfig,

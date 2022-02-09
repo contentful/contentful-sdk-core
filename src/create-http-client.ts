@@ -1,4 +1,4 @@
-import {AxiosRequestHeaders} from "axios";
+import { AxiosRequestHeaders } from 'axios'
 import copy from 'fast-copy'
 import qs from 'qs'
 import type { AxiosStatic } from 'axios'

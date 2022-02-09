@@ -113,7 +113,7 @@ it('Fails with missing access token', () => {
     createHttpClient(axios, {
       logHandler: logHandlerStub,
     })
-  } catch (err:any) {
+  } catch (err: any) {
     expect(err instanceof TypeError).toBeTruthy()
     expect(err.message).toEqual('Expected parameter accessToken')
     expect(logHandlerStub).toHaveBeenCalledTimes(1)

@@ -91,7 +91,7 @@ it('Retry on network error', async () => {
 
   try {
     await client.get('/rate-limit-me')
-  } catch (error:any) {
+  } catch (error: any) {
     // logs two attempts, one initial and one retry
     expect(error.attempts).toEqual(2)
   }
@@ -107,7 +107,7 @@ it('no retry when automatic handling flag is disabled', async () => {
   expect.assertions(6)
   try {
     await client.get('/rate-limit-me')
-  } catch (error:any) {
+  } catch (error: any) {
     expect(error.response.status).toEqual(500)
     expect(error.response.headers['x-contentful-request-id']).toEqual(3)
     expect(error.response.data).toEqual('Mocked 500 Error')
@@ -126,7 +126,7 @@ it('Should Fail if it hits maxRetries', async () => {
   expect.assertions(5)
   try {
     await client.get('/error')
-  } catch (error:any) {
+  } catch (error: any) {
     // returned error since maxRetries was reached
     expect(error.response.data).toEqual('error attempt #2')
     expect(logHandlerStub).toHaveBeenCalledTimes(1)
@@ -146,7 +146,7 @@ it('Retry on responses when X-Contentful-Request-Id header is missing', async ()
 
   try {
     await client.get('/error')
-  } catch (error:any) {
+  } catch (error: any) {
     expect(error.response.data).toEqual('error attempt 2')
     expect(logHandlerStub).toHaveBeenCalledTimes(1)
     expect(logHandlerStub.mock.calls[0][0]).toEqual('warning')
@@ -163,7 +163,7 @@ it('Rejects errors with strange status codes', async () => {
   expect.assertions(2)
   try {
     await client.get('/error')
-  } catch (error:any) {
+  } catch (error: any) {
     expect(error.response.data).toEqual('error attempt')
     // did not log anything
     expect(logHandlerStub).toBeCalledTimes(0)

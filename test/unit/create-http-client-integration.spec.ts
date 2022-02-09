@@ -63,9 +63,9 @@ describe('custom interceptors', () => {
         if (error.response.status === 403 && !originalRequest._retry403) {
           originalRequest._retry403 = true
           const newToken = await refreshToken()
-            // eslint-disable-next-line @typescript-eslint/ban-ts-comment
-            // @ts-ignore
-            axios.defaults.headers.Authorization = 'Bearer ' + newToken
+          // eslint-disable-next-line @typescript-eslint/ban-ts-comment
+          // @ts-ignore
+          axios.defaults.headers.Authorization = 'Bearer ' + newToken
           return instance(originalRequest)
         }
         return Promise.reject(error)
