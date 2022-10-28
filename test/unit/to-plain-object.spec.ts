@@ -2,7 +2,9 @@ import toPlainObject from '../../src/to-plain-object'
 
 it('toPlainObject', () => {
   class TestClassObject {
-    constructor(name) {
+    private name: string
+    private nestedProp: any
+    constructor(name: string) {
       this.name = name
       this.nestedProp = {
         int: 42,
