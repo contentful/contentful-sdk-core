@@ -33,8 +33,7 @@
     "prettier:check": "prettier --check '**/*.{jsx,js,ts,tsx}'",
     "precommit": "npm run lint",
     "tsc": "tsc --noEmit",
-    "prepush": "npm run test:unit",
-    "postbuild": "bundlesize"
+    "prepush": "npm run test:unit && bundlesize"
   },
   "files": [
     "dist",
