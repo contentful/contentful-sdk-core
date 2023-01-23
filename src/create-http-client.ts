@@ -8,8 +8,6 @@ import type { AxiosInstance, CreateHttpClientParams } from './types'
 import rateLimitRetry from './rate-limit'
 import asyncToken from './async-token'
 
-import { isNode, getNodeVersion } from './utils'
-
 // Matches 'sub.host:port' or 'host:port' and extracts hostname and port
 // Also enforces toplevel domain specified, no spaces and no protocol
 const HOST_REGEX = /^(?!\w+:\/\/)([^\s:]+\.?[^\s:]+)(?::(\d+))?(?!:)$/
@@ -85,14 +83,6 @@ export default function createHttpClient(
 
   if (!config.headers.Authorization && typeof config.accessToken !== 'function') {
     config.headers.Authorization = 'Bearer ' + config.accessToken
-  }
-
-  // Set these headers only for node because browsers don't like it when you
-  // override user-agent or accept-encoding.
-  // The SDKs should set their own X-Contentful-User-Agent.
-  if (isNode()) {
-    config.headers['user-agent'] = 'node.js/' + getNodeVersion()
-    config.headers['Accept-Encoding'] = 'gzip'
   }
 
   const axiosOptions = {
