@@ -1,12 +1,10 @@
 export function isNode(): boolean {
   /**
-   * Polyfills of 'process' might set process.browser === true
-   *
-   * See:
-   * https://github.com/webpack/node-libs-browser/blob/master/mock/process.js#L8
-   * https://github.com/defunctzombie/node-process/blob/master/browser.js#L156
-   **/
-  return typeof process !== 'undefined' && !process.browser
+   * Save way to check for the global scope which should confirm if an environment is node
+   * For reference: https://stackoverflow.com/a/31090240
+   */
+  const isNodeFunc = new Function('try {return this===global;}catch(e){return false;}')
+  return isNodeFunc()
 }
 
 export function isReactNative(): boolean {
