@@ -1,0 +1,14 @@
+apiVersion: backstage.io/v1alpha1
+kind: Component
+metadata:
+  name: contentful-sdk-core
+  description: |
+    Core modules for the Contentful JS SDKs
+  annotations:
+    circleci.com/project-slug: github/contentful/contentful-sdk-core
+    github.com/project-slug: contentful/contentful-sdk-core
+    contentful.com/ci-alert-slack: prd-phoenix-ci-alerts
+spec:
+  type: cli
+  lifecycle: production
+  owner: group:team-phoenix
