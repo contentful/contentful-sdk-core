@@ -1,9 +1,5 @@
 # contentful-sdk-core
 
-[![Build Status](https://travis-ci.org/contentful/contentful-sdk-core.svg?branch=master)](https://travis-ci.org/contentful/contentful-sdk-core)
-![David](https://img.shields.io/david/contentful/contentful-sdk-core.svg)
-![David](https://img.shields.io/david/dev/contentful/contentful-sdk-core.svg)
-
 ![MIT License](https://img.shields.io/badge/license-MIT-blue.svg)
 [![NPM Version](https://img.shields.io/npm/v/contentful-sdk-core.svg)](https://www.npmjs.com/package/contentful-sdk-core)
 [![npm downloads](https://img.shields.io/npm/dm/contentful-management.svg)](http://npm-stat.com/charts.html?package=contentful-management)
