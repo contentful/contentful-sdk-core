@@ -1,5 +1,5 @@
 /* eslint-disable @typescript-eslint/no-explicit-any */
-import { AxiosRequestHeaders } from 'axios'
+import { AxiosRequestHeaders, InternalAxiosRequestConfig } from 'axios'
 
 import type {
   AxiosInstance as OriginalAxiosInstance,
@@ -7,7 +7,7 @@ import type {
   AxiosResponse,
 } from 'axios'
 
-type DefaultOptions = AxiosRequestConfig & {
+export type DefaultOptions = AxiosRequestConfig & {
   logHandler: (level: string, data?: Error | string) => void
   responseLogger?: (response: AxiosResponse<any> | Error) => unknown
   requestLogger?: (request: AxiosRequestConfig | Error) => unknown
@@ -53,7 +53,9 @@ export type CreateHttpClientParams = {
   responseLogger?: DefaultOptions['responseLogger']
 
   /** Request interceptor */
-  onBeforeRequest?: (value: AxiosRequestConfig) => AxiosRequestConfig | Promise<AxiosRequestConfig>
+  onBeforeRequest?: (
+    value: InternalAxiosRequestConfig
+  ) => InternalAxiosRequestConfig | Promise<InternalAxiosRequestConfig>
 
   /** Error handler */
   onError?: (error: any) => any
@@ -113,4 +115,14 @@ export type CreateHttpClientParams = {
    * @default 0
    */
   attempt?: number
+}
+
+export type ContentfulErrorData = {
+  status?: number
+  statusText?: string
+  requestId?: string
+  message: string
+  details: Record<string, unknown>
+  request?: Record<string, unknown>
+  sys?: { id?: string }
 }
