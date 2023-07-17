@@ -1,4 +1,5 @@
-import type { AxiosRequestHeaders, AxiosStatic } from 'axios'
+import { AxiosRequestHeaders } from 'axios'
+import type { AxiosStatic } from 'axios'
 import copy from 'fast-copy'
 import qs from 'qs'
 import asyncToken from './async-token'
