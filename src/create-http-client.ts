@@ -1,19 +1,18 @@
-import { AxiosRequestHeaders } from 'axios'
+import type { AxiosRequestHeaders, AxiosStatic } from 'axios'
 import copy from 'fast-copy'
 import qs from 'qs'
-import type { AxiosStatic } from 'axios'
-import rateLimitThrottle from './rate-limit-throttle'
-import type { AxiosInstance, CreateHttpClientParams } from './types'
+import asyncToken from './async-token'
 
 import rateLimitRetry from './rate-limit'
-import asyncToken from './async-token'
+import rateLimitThrottle from './rate-limit-throttle'
+import type { AxiosInstance, CreateHttpClientParams, DefaultOptions } from './types'
 
 // Matches 'sub.host:port' or 'host:port' and extracts hostname and port
 // Also enforces toplevel domain specified, no spaces and no protocol
 const HOST_REGEX = /^(?!\w+:\/\/)([^\s:]+\.?[^\s:]+)(?::(\d+))?(?!:)$/
 
 /**
- * Create pre configured axios instance
+ * Create pre-configured axios instance
  * @private
  * @param {AxiosStatic} axios - Axios library
  * @param {CreateHttpClientParams} options - Initialization parameters for the HTTP client
@@ -85,13 +84,17 @@ export default function createHttpClient(
     config.headers.Authorization = 'Bearer ' + config.accessToken
   }
 
-  const axiosOptions = {
+  const axiosOptions: DefaultOptions = {
     // Axios
     baseURL,
     headers: config.headers,
     httpAgent: config.httpAgent,
     httpsAgent: config.httpsAgent,
-    paramsSerializer: qs.stringify,
+    paramsSerializer: {
+      serialize: (params) => {
+        return qs.stringify(params, { arrayFormat: 'repeat' })
+      },
+    },
     proxy: config.proxy,
     timeout: config.timeout,
     adapter: config.adapter,

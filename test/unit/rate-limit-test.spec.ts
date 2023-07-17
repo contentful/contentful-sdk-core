@@ -109,7 +109,7 @@ it('no retry when automatic handling flag is disabled', async () => {
     await client.get('/rate-limit-me')
   } catch (error: any) {
     expect(error.response.status).toEqual(500)
-    expect(error.response.headers['x-contentful-request-id']).toEqual(3)
+    expect(error.response.headers['x-contentful-request-id']).toEqual('3')
     expect(error.response.data).toEqual('Mocked 500 Error')
     expect(logHandlerStub).toHaveBeenCalledTimes(0)
     expect(error.message).toEqual('Request failed with status code 500')

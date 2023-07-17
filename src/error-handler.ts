@@ -1,5 +1,6 @@
 import isPlainObject from 'lodash.isplainobject'
-import { AxiosError } from 'axios'
+import type { AxiosError } from 'axios'
+import type { ContentfulErrorData } from './types'
 
 /**
  * Handles errors received from the server. Parses the error into a more useful
@@ -9,7 +10,7 @@ import { AxiosError } from 'axios'
  * and the expected error codes.
  * @private
  */
-export default function errorHandler(errorResponse: AxiosError): never {
+export default function errorHandler(errorResponse: AxiosError<ContentfulErrorData>): never {
   const { config, response } = errorResponse
   let errorName
 
@@ -25,21 +26,14 @@ export default function errorHandler(errorResponse: AxiosError): never {
 
   const data = response?.data
 
-  const errorData: {
-    status?: number
-    statusText?: string
-    requestId?: string
-    message: string
-    details: Record<string, unknown>
-    request?: Record<string, unknown>
-  } = {
+  const errorData: ContentfulErrorData = {
     status: response?.status,
     statusText: response?.statusText,
     message: '',
     details: {},
   }
 
-  if (isPlainObject(config)) {
+  if (config && isPlainObject(config)) {
     errorData.request = {
       url: config.url,
       headers: config.headers,
@@ -47,7 +41,7 @@ export default function errorHandler(errorResponse: AxiosError): never {
       payloadData: config.data,
     }
   }
-  if (data && isPlainObject(data)) {
+  if (data && typeof data === 'object') {
     if ('requestId' in data) {
       errorData.requestId = data.requestId || 'UNKNOWN'
     }
@@ -57,11 +51,7 @@ export default function errorHandler(errorResponse: AxiosError): never {
     if ('details' in data) {
       errorData.details = data.details || {}
     }
-    if ('sys' in data) {
-      if ('id' in data.sys) {
-        errorName = data.sys.id
-      }
-    }
+    errorName = data.sys?.id
   }
 
   const error = new Error()
