@@ -1,7 +1,6 @@
 import { AxiosRequestHeaders } from 'axios'
 import type { AxiosStatic } from 'axios'
 import copy from 'fast-copy'
-import qs from 'qs'
 import asyncToken from './async-token'
 
 import rateLimitRetry from './rate-limit'
@@ -17,7 +16,7 @@ const HOST_REGEX = /^(?!\w+:\/\/)([^\s:]+\.?[^\s:]+)(?::(\d+))?(?!:)$/
  * @private
  * @param {AxiosStatic} axios - Axios library
  * @param {CreateHttpClientParams} options - Initialization parameters for the HTTP client
- * @return {ContentfulAxiosInstance} Initialized axios instance
+ * @return {AxiosInstance} Initialized axios instance
  */
 export default function createHttpClient(
   axios: AxiosStatic,
@@ -42,7 +41,6 @@ export default function createHttpClient(
     httpsAgent: false as const,
     timeout: 30000,
     throttle: 0,
-    proxy: false as const,
     basePath: '',
     adapter: undefined,
     maxContentLength: 1073741824, // 1GB
@@ -91,11 +89,6 @@ export default function createHttpClient(
     headers: config.headers,
     httpAgent: config.httpAgent,
     httpsAgent: config.httpsAgent,
-    paramsSerializer: {
-      serialize: (params) => {
-        return qs.stringify(params, { arrayFormat: 'repeat' })
-      },
-    },
     proxy: config.proxy,
     timeout: config.timeout,
     adapter: config.adapter,
@@ -107,6 +100,7 @@ export default function createHttpClient(
     requestLogger: config.requestLogger,
     retryOnError: config.retryOnError,
   }
+
   const instance = axios.create(axiosOptions) as AxiosInstance
   instance.httpClientParams = options
 
@@ -117,8 +111,8 @@ export default function createHttpClient(
    * and the version of the library comes from different places depending
    * on whether it's a browser build or a node.js build.
    * @private
-   * @param {CreateHttpClientParams} httpClientParams - Initialization parameters for the HTTP client
-   * @return {ContentfulAxiosInstance} Initialized axios instance
+   * @param {CreateHttpClientParams} newParams - Initialization parameters for the HTTP client
+   * @return {AxiosInstance} Initialized axios instance
    */
   instance.cloneWithNewParams = function (
     newParams: Partial<CreateHttpClientParams>
