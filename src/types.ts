@@ -1,5 +1,5 @@
 /* eslint-disable @typescript-eslint/no-explicit-any */
-import { AxiosRequestHeaders, InternalAxiosRequestConfig } from 'axios'
+import { AxiosHeaderValue, AxiosRequestHeaders, InternalAxiosRequestConfig } from 'axios'
 
 import type {
   AxiosInstance as OriginalAxiosInstance,
@@ -64,7 +64,7 @@ export type CreateHttpClientParams = {
   logHandler?: DefaultOptions['logHandler']
 
   /** Optional additional headers */
-  headers?: AxiosRequestHeaders
+  headers?: AxiosRequestHeaders | Record<string, AxiosHeaderValue>
 
   defaultHostname?: string
 
@@ -122,7 +122,7 @@ export type ContentfulErrorData = {
   statusText?: string
   requestId?: string
   message: string
-  details: Record<string, unknown>
-  request?: Record<string, unknown>
+  details: Record<string, any>
+  request?: Record<string, any>
   sys?: { id?: string }
 }

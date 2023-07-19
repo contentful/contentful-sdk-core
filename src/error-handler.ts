@@ -1,5 +1,4 @@
 import isPlainObject from 'lodash.isplainobject'
-import type { AxiosError } from 'axios'
 import type { ContentfulErrorData } from './types'
 
 /**
@@ -10,7 +9,7 @@ import type { ContentfulErrorData } from './types'
  * and the expected error codes.
  * @private
  */
-export default function errorHandler(errorResponse: AxiosError<ContentfulErrorData>): never {
+export default function errorHandler(errorResponse: any): never {
   const { config, response } = errorResponse
   let errorName
 
