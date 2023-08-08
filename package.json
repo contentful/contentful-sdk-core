@@ -90,7 +90,7 @@
     "moxios": "^0.4.0",
     "opener": "^1.4.1",
     "prettier": "^2.2.1",
-    "regenerator-runtime": "^0.13.7",
+    "regenerator-runtime": "^0.14.0",
     "require-all": "^3.0.0",
     "rimraf": "^4.2.0",
     "rollup": "^2.34.0",
