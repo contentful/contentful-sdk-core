@@ -5,8 +5,8 @@
   "homepage": "https://www.contentful.com/developers/docs/javascript/",
   "type": "module",
   "exports": {
-    "import": "./dist/index.es-modules.js",
-    "require": "./dist/index.js"
+    "import": "./dist/index.mjs",
+    "require": "./dist/index.cjs"
   },
   "types": "dist/types/index.d.ts",
   "engines": {
