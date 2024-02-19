@@ -8,8 +8,8 @@ export default [
   {
     input: 'src/index.ts',
     output: [
-      { file: pkg.module, format: 'esm' },
-      { file: pkg.main, format: 'cjs' },
+      { file: pkg.exports.import, format: 'esm' },
+      { file: pkg.exports.require, format: 'cjs' },
     ],
     plugins: [
       // Allows node_modules resolution
@@ -17,16 +17,6 @@ export default [
       // Compile TypeScript/JavaScript files
       babel({
         extensions,
-        babelrc: false,
-        presets: [
-          [
-            '@babel/env',
-            {
-              modules: false,
-            },
-          ],
-          '@babel/typescript',
-        ],
       }),
     ],
     external: [...Object.keys(pkg.dependencies || []), 'os'],
