@@ -5,8 +5,17 @@
   "homepage": "https://www.contentful.com/developers/docs/javascript/",
   "main": "dist/index.js",
   "module": "dist/index.es-modules.js",
-  "jsnext:main": "dist/index.es-modules.js",
   "types": "dist/types/index.d.ts",
+  "engines": {
+    "node": ">=18"
+  },
+  "browserslist": [
+    ">0.3%",
+    "Chrome >= 75",
+    "Edge >= 74",
+    "Firefox >= 73",
+    "Safari >= 13"
+  ],
   "browser": {
     "os": false
   },
@@ -36,12 +45,8 @@
     "prepush": "npm run test:unit && bundlesize"
   },
   "files": [
-    "dist",
-    "bin"
+    "dist"
   ],
-  "engines": {
-    "node": ">=12"
-  },
   "dependencies": {
     "fast-copy": "^2.1.7",
     "lodash.isplainobject": "^4.0.6",
