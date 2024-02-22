@@ -7,7 +7,7 @@ orbs:
 jobs:
   test:
     docker:
-      - image: cimg/node:18
+      - image: cimg/node:18.19
     steps:
       - checkout
       - node/install-packages
@@ -18,7 +18,7 @@ jobs:
       - run: npm run test:cover
   release:
     docker:
-      - image: cimg/node:18
+      - image: cimg/node:18.19
     steps:
       - checkout
       - vault/get-secrets: # Loads vault secrets
