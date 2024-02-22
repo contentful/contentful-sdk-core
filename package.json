@@ -44,7 +44,6 @@
     "prettier": "prettier --write '**/*.{jsx,js,ts,tsx}'",
     "prettier:check": "prettier --check '**/*.{jsx,js,ts,tsx}'",
     "precommit": "npm run lint",
-    "tsc": "tsc --noEmit",
     "prepush": "npm run test:unit && bundlesize"
   },
   "files": [
