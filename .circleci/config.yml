@@ -11,7 +11,7 @@ jobs:
       - checkout
       - restore_cache:
           key: dependency-cache-{{ checksum "package.json" }}
-      - run: npm install
+      - run: npm ci
       - run: npm run build
       - run: npm run tsc
       - run: npm run lint
@@ -24,7 +24,9 @@ jobs:
       - checkout
       - vault/get-secrets: # Loads vault secrets
           template-preset: 'semantic-release-ecosystem'
-      - run: npm install
+      - restore_cache:
+          key: dependency-cache-{{ checksum "package.json" }}
+      - run: npm ci
       - run: npm run build
       - run: npm run semantic-release
 workflows:
