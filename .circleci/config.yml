@@ -9,9 +9,7 @@ jobs:
       - image: cimg/node:18.16
     steps:
       - checkout
-      - restore_cache:
-          key: dependency-cache-{{ checksum "package.json" }}
-      - run: npm ci
+      - node/install-packages
       - run: npm run build
       - run: npm run tsc
       - run: npm run lint
@@ -24,9 +22,7 @@ jobs:
       - checkout
       - vault/get-secrets: # Loads vault secrets
           template-preset: 'semantic-release-ecosystem'
-      - restore_cache:
-          key: dependency-cache-{{ checksum "package.json" }}
-      - run: npm ci
+      - node/install-packages
       - run: npm run build
       - run: npm run semantic-release
 workflows:
