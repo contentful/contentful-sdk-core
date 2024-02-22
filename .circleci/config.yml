@@ -2,11 +2,12 @@ version: 2.1
 
 orbs:
   vault: contentful/vault@1
+  node: circleci/node@5.2.0
 
 jobs:
   test:
     docker:
-      - image: cimg/node:18.16
+      - image: cimg/node:18
     steps:
       - checkout
       - node/install-packages
@@ -17,7 +18,7 @@ jobs:
       - run: npm run test:cover
   release:
     docker:
-      - image: cimg/node:18.16
+      - image: cimg/node:18
     steps:
       - checkout
       - vault/get-secrets: # Loads vault secrets
