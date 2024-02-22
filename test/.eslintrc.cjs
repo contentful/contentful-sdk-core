@@ -1,5 +1,5 @@
 module.exports = {
-  extends: '../.eslintrc.js',
+  extends: '../.eslintrc.cjs',
   globals: {
     describe: true,
     it: true,

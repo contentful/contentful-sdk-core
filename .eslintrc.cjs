@@ -1,8 +1,9 @@
 module.exports = {
   overrides: [
     {
-      files: '**/*.js',
-      parser: 'babel-eslint',
+      files: '**/*.*js',
+      parser: '@babel/eslint-parser',
+      parserOptions: { plugins: ['importAttributes'], importAttributes: true },
       extends: ['standard', 'prettier'],
       plugins: ['standard', 'promise'],
     },
@@ -15,6 +16,9 @@ module.exports = {
         'prettier',
       ],
       plugins: ['promise'],
+      rules: {
+        "@typescript-eslint/no-explicit-any": 1
+      }
     },
   ],
 }
