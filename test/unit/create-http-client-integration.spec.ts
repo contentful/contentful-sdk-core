@@ -1,3 +1,5 @@
+import { afterEach, it, expect, describe } from 'vitest'
+
 import createHttpClient from '../../src/create-http-client'
 
 import axios from 'axios'

@@ -1,9 +1,9 @@
-import {jest} from '@jest/globals'
+import { vi, it, expect, Mocked } from 'vitest'
 
 import getUserAgent from '../../src/get-user-agent'
 import * as utils from '../../src/utils'
 
-const mockedUtils = utils as vi.Mocked<typeof utils>
+const mockedUtils = utils as Mocked<typeof utils>
 
 vi.mock('../../src/utils', () => ({
   isNode: vi.fn().mockResolvedValue(true),

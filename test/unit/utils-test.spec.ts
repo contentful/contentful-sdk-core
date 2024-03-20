@@ -1,4 +1,4 @@
-/* eslint @typescript-eslint/ban-ts-comment: 0 */
+import { it, expect, describe } from 'vitest'
 
 import { isNode, getNodeVersion } from '../../src/utils'
 

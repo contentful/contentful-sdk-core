@@ -1,5 +1,4 @@
-/* eslint @typescript-eslint/ban-ts-comment: 0 */
-import { vi } from 'vitest'
+import { vi, beforeEach, afterEach, it, expect, describe } from 'vitest'
 
 import axios from 'axios'
 import MockAdapter from 'axios-mock-adapter'
@@ -15,7 +14,7 @@ function wait(ms = 1000) {
 }
 
 function executeCalls(client: AxiosInstance, callsCount: number) {
-  const requests = []
+  const requests: unknown[] = []
   for (let i = 0; i < callsCount; i++) {
     requests.push(client.get('/throttled-call'))
   }

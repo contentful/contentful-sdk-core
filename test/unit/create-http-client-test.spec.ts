@@ -1,4 +1,4 @@
-import { vi } from 'vitest'
+import { vi, beforeEach, it, expect } from 'vitest'
 
 import createHttpClient from '../../src/create-http-client'
 

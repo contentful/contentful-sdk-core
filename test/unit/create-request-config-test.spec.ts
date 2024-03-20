@@ -1,3 +1,5 @@
+import { it, expect } from 'vitest'
+
 import createRequestConfig from '../../src/create-request-config'
 
 it('Create request config', () => {

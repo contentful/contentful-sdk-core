@@ -1,3 +1,5 @@
+import { it, expect } from 'vitest'
+
 import freezeSys from '../../src/freeze-sys'
 
 it('Freezes sys and child objects', () => {
