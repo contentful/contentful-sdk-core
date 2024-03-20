@@ -1,27 +1,26 @@
-/* eslint-disable @typescript-eslint/no-explicit-any */
+import { vi } from 'vitest'
 
 import createHttpClient from '../../src/create-http-client'
 
 import axios, { AxiosAdapter } from 'axios'
 import MockAdapter from 'axios-mock-adapter'
 
-jest.mock('../../src/rate-limit', () => jest.fn())
-jest.mock('../../src/rate-limit-throttle', () => jest.fn())
+vi.mock('axios')
 
-const mockedAxios = axios as jest.Mocked<typeof axios>
+vi.mock('../../src/rate-limit')
+vi.mock('../../src/rate-limit-throttle')
 
-const logHandlerStub = jest.fn()
+const logHandlerStub = vi.fn()
 
 const mock = new MockAdapter(axios)
 
 beforeEach(() => {
-  // @ts-expect-error No need to instantiate a complete axios instance
-  // for the mock.
-  jest.spyOn(axios, 'create').mockReturnValue({})
+  // @ts-expect-error No need to instantiate a complete axios instance for the mock.
+  vi.spyOn(axios, 'create').mockReturnValue({})
 })
 
 afterEach(() => {
-  mockedAxios.create.mockReset()
+  vi.mocked(axios).mockReset()
   mock.reset()
   logHandlerStub.mockReset()
 })
@@ -34,7 +33,7 @@ it('Calls axios with expected default URL', () => {
     logHandler: logHandlerStub,
   })
 
-  const [callConfig] = mockedAxios.create.mock.calls[0]
+  const [callConfig] = vi.mocked(axios.create).mock.calls[0]
   expect(callConfig?.baseURL).toEqual('https://defaulthost:443/spaces/clientSpaceId/')
   expect(logHandlerStub).not.toHaveBeenCalled()
 })
@@ -46,7 +45,7 @@ it('Calls axios based on passed host', () => {
     logHandler: logHandlerStub,
   })
 
-  const [callConfig] = mockedAxios.create.mock.calls[0]
+  const [callConfig] = vi.mocked(axios.create).mock.calls[0]
   expect(callConfig?.baseURL).toEqual('https://contentful.com:8080/spaces/')
   expect(logHandlerStub).not.toHaveBeenCalled()
 })
@@ -58,7 +57,7 @@ it('Calls axios based on passed host with insecure flag', () => {
     insecure: true,
     logHandler: logHandlerStub,
   })
-  const [callConfig] = mockedAxios.create.mock.calls[0]
+  const [callConfig] = vi.mocked(axios.create).mock.calls[0]
   expect(callConfig?.baseURL).toEqual('http://contentful.com:321/spaces/')
   expect(logHandlerStub).not.toHaveBeenCalled()
 })
@@ -70,7 +69,7 @@ it('Calls axios based on passed hostname with insecure flag', () => {
     insecure: true,
     logHandler: logHandlerStub,
   })
-  const [callConfig] = mockedAxios.create.mock.calls[0]
+  const [callConfig] = vi.mocked(axios.create).mock.calls[0]
   expect(callConfig?.baseURL).toEqual('http://contentful.com:80/spaces/')
   expect(logHandlerStub).not.toHaveBeenCalled()
 })
@@ -84,15 +83,17 @@ it('Calls axios based on passed headers', () => {
     },
   })
 
-  const [callConfig] = mockedAxios.create.mock.calls[0]
+  const [callConfig] = vi.mocked(axios.create).mock.calls[0]
   expect(callConfig?.baseURL)
+  // @ts-ignore
   expect(callConfig?.headers?.['X-Custom-Header']).toEqual('example')
+  // @ts-ignore
   expect(callConfig?.headers?.Authorization).toEqual('Basic customAuth')
 })
 
 it('Calls axios with request/response logger', () => {
-  const requestLoggerStub = jest.fn()
-  const responseLoggerStub = jest.fn()
+  const requestLoggerStub = vi.fn()
+  const responseLoggerStub = vi.fn()
   createHttpClient(axios, {
     accessToken: 'clientAccessToken',
     host: 'contentful.com',
@@ -101,7 +102,7 @@ it('Calls axios with request/response logger', () => {
     responseLogger: responseLoggerStub,
   })
 
-  const [callConfig] = mockedAxios.create.mock.calls[0]
+  const [callConfig] = vi.mocked(axios.create).mock.calls[0]
   expect(callConfig?.baseURL).toEqual('http://contentful.com:80/spaces/')
   expect(requestLoggerStub).not.toHaveBeenCalled()
   expect(responseLoggerStub).not.toHaveBeenCalled()
@@ -130,7 +131,7 @@ it('Calls axios based on passed hostname with basePath', () => {
     basePath: '/foo/bar',
   })
 
-  const [callConfig] = mockedAxios.create.mock.calls[0]
+  const [callConfig] = vi.mocked(axios.create).mock.calls[0]
   expect(callConfig?.baseURL).toEqual('https://some.random.example.com:443/foo/bar/spaces/')
   expect(logHandlerStub).not.toHaveBeenCalled()
 })
@@ -142,7 +143,7 @@ it('Calls axios based on passed hostname with invalid basePath and fixes the inv
     basePath: 'foo/bar',
   })
 
-  const [callConfig] = mockedAxios.create.mock.calls[0]
+  const [callConfig] = vi.mocked(axios.create).mock.calls[0]
   expect(callConfig?.baseURL).toEqual('https://some.random.example.com:443/foo/bar/spaces/')
   expect(logHandlerStub).not.toHaveBeenCalled()
 })
@@ -170,7 +171,7 @@ it('Can change the adapter axios uses', () => {
     adapter: testAdapter,
   })
 
-  const [callConfig] = mockedAxios.create.mock.calls[0]
+  const [callConfig] = vi.mocked(axios.create).mock.calls[0]
   expect(callConfig?.baseURL).toEqual('https://defaulthost:443/spaces/clientSpaceId/')
   expect(logHandlerStub).not.toHaveBeenCalled()
   expect(instance.httpClientParams.adapter).toEqual(testAdapter)

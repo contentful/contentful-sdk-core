@@ -34,10 +34,7 @@ describe('custom interceptors', () => {
       accessToken: 'token',
       onBeforeRequest: async (config) => {
         const value = await getHeaderAsync()
-        config.headers = {
-          ...config.headers,
-          'custom-header': value,
-        }
+        config.headers['custom-header'] = value
         return config
       },
     })

@@ -1,4 +1,3 @@
-/* eslint-disable @typescript-eslint/no-explicit-any */
 import { AxiosHeaderValue, AxiosRequestHeaders, InternalAxiosRequestConfig } from 'axios'
 
 import type {
@@ -54,7 +53,7 @@ export type CreateHttpClientParams = {
 
   /** Request interceptor */
   onBeforeRequest?: (
-    value: InternalAxiosRequestConfig
+    value: InternalAxiosRequestConfig,
   ) => InternalAxiosRequestConfig | Promise<InternalAxiosRequestConfig>
 
   /** Error handler */

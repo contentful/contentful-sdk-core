@@ -7,7 +7,7 @@ import copy from 'fast-copy'
  * @return Enhanced object with toPlainObject method
  */
 export default function toPlainObject<T = Record<string, unknown>, R = T>(
-  data: T
+  data: T,
 ): T & {
   /**
    * Returns this entity as a plain JS object

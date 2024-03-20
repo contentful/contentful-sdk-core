@@ -21,7 +21,7 @@ export default function rateLimit(instance: AxiosInstance, maxRetry = 5): void {
     function (error) {
       requestLogger(error)
       return Promise.reject(error)
-    }
+    },
   )
 
   instance.interceptors.response.use(
@@ -69,7 +69,7 @@ export default function rateLimit(instance: AxiosInstance, maxRetry = 5): void {
         wait = Math.floor(wait * 1000 + Math.random() * 200 + 500)
         instance.defaults.logHandler(
           'warning',
-          `${retryErrorType} error occurred. Waiting for ${wait} ms before retrying...`
+          `${retryErrorType} error occurred. Waiting for ${wait} ms before retrying...`,
         )
 
         // increase attempts counter
@@ -84,6 +84,6 @@ export default function rateLimit(instance: AxiosInstance, maxRetry = 5): void {
         return delay(wait).then(() => instance(config))
       }
       return Promise.reject(error)
-    }
+    },
   )
 }

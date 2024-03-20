@@ -1,4 +1,4 @@
-/* eslint-disable @typescript-eslint/no-explicit-any */
+import { vi } from 'vitest'
 
 import axios from 'axios'
 import MockAdapter from 'axios-mock-adapter'
@@ -6,9 +6,9 @@ import MockAdapter from 'axios-mock-adapter'
 import createHttpClient from '../../src/create-http-client'
 import { CreateHttpClientParams } from '../../src'
 
-const logHandlerStub = jest.fn()
+const logHandlerStub = vi.fn()
 
-jest.setTimeout(50000)
+vi.setConfig({ testTimeout: 50000 })
 
 const mock = new MockAdapter(axios)
 

@@ -37,11 +37,11 @@ export default (axiosInstance: AxiosInstance, type: ThrottleType | number = 'aut
 
   let requestInterceptorId = axiosInstance.interceptors.request.use(
     (config) => {
-      return throttle<[], typeof config>(() => config)()
+      return throttle(() => config)()
     },
     function (error) {
       return Promise.reject(error)
-    }
+    },
   )
 
   const responseInterceptorId = axiosInstance.interceptors.response.use(
@@ -66,11 +66,11 @@ export default (axiosInstance: AxiosInstance, type: ThrottleType | number = 'aut
           throttle = createThrottle(nextLimit, logHandler)
           requestInterceptorId = axiosInstance.interceptors.request.use(
             (config) => {
-              return throttle<[], typeof config>(() => config)()
+              return throttle(() => config)()
             },
             function (error) {
               return Promise.reject(error)
-            }
+            },
           )
         }
 
@@ -81,7 +81,7 @@ export default (axiosInstance: AxiosInstance, type: ThrottleType | number = 'aut
     },
     function (error) {
       return Promise.reject(error)
-    }
+    },
   )
 
   return () => {

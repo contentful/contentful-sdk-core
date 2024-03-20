@@ -21,7 +21,7 @@ const HOST_REGEX = /^(?!\w+:\/\/)([^\s:]+\.?[^\s:]+)(?::(\d+))?(?!:)$/
  */
 export default function createHttpClient(
   axios: AxiosStatic,
-  options: CreateHttpClientParams
+  options: CreateHttpClientParams,
 ): AxiosInstance {
   const defaultConfig = {
     insecure: false as const,
@@ -121,7 +121,7 @@ export default function createHttpClient(
    * @return {AxiosInstance} Initialized axios instance
    */
   instance.cloneWithNewParams = function (
-    newParams: Partial<CreateHttpClientParams>
+    newParams: Partial<CreateHttpClientParams>,
   ): AxiosInstance {
     return createHttpClient(axios, {
       ...copy(options),

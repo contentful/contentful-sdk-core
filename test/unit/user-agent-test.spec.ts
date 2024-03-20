@@ -1,13 +1,15 @@
+import {jest} from '@jest/globals'
+
 import getUserAgent from '../../src/get-user-agent'
 import * as utils from '../../src/utils'
 
-const mockedUtils = utils as jest.Mocked<typeof utils>
+const mockedUtils = utils as vi.Mocked<typeof utils>
 
-jest.mock('../../src/utils', () => ({
-  isNode: jest.fn().mockResolvedValue(true),
-  isReactNative: jest.fn().mockReturnValue(false),
-  getNodeVersion: jest.fn().mockReturnValue('v12.13.1'),
-  getWindow: jest.fn().mockReturnValue({
+vi.mock('../../src/utils', () => ({
+  isNode: vi.fn().mockResolvedValue(true),
+  isReactNative: vi.fn().mockReturnValue(false),
+  getNodeVersion: vi.fn().mockReturnValue('v12.13.1'),
+  getWindow: vi.fn().mockReturnValue({
     navigator: {
       platform: 'MacIntel',
       userAgent:
@@ -22,7 +24,7 @@ it('Parse node user agent correctly', () => {
   const userAgent = getUserAgent(
     'contentful.js/1.0.0',
     'myApplication/1.0.0',
-    'myIntegration/1.0.0'
+    'myIntegration/1.0.0',
   )
 
   // detects node.js platform
@@ -30,8 +32,8 @@ it('Parse node user agent correctly', () => {
   // detected valid semver node version
   expect(
     userAgent.match(
-      /node\.js\/\bv?(?:0|[1-9]\d*)\.(?:0|[1-9]\d*)\.(?:0|[1-9]\d*)(?:-[\da-z-]+(?:\.[\da-z-]+)*)?(?:\+[\da-z-]+(?:\.[\da-z-]+)*)?\b/
-    )
+      /node\.js\/\bv?(?:0|[1-9]\d*)\.(?:0|[1-9]\d*)\.(?:0|[1-9]\d*)(?:-[\da-z-]+(?:\.[\da-z-]+)*)?(?:\+[\da-z-]+(?:\.[\da-z-]+)*)?\b/,
+    ),
   ).toBeTruthy()
 })
 
@@ -41,7 +43,7 @@ it('Parse browser user agent correctly', () => {
   const userAgent = getUserAgent(
     'contentful.js/1.0.0',
     'myApplication/1.0.0',
-    'myIntegration/1.0.0'
+    'myIntegration/1.0.0',
   )
 
   expect(userAgent.match(headerRegEx)?.length).toEqual(5)
@@ -57,7 +59,7 @@ it('Fail safely', () => {
   const userAgent = getUserAgent(
     'contentful.js/1.0.0',
     'myApplication/1.0.0',
-    'myIntegration/1.0.0'
+    'myIntegration/1.0.0',
   )
   expect(userAgent.match(headerRegEx)?.length).toEqual(3)
   // empty os
@@ -81,7 +83,7 @@ it('Parse react native user agent correctly', () => {
   const userAgent = getUserAgent(
     'contentful.js/1.0.0',
     'myApplication/1.0.0',
-    'myIntegration/1.0.0'
+    'myIntegration/1.0.0',
   )
 
   // consists of 4 parts since os is missing in mocked data

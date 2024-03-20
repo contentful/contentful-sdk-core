@@ -1,8 +1,5 @@
-/* eslint-disable @typescript-eslint/no-explicit-any */
-
 import errorHandler from '../../src/error-handler'
 import { errorMock } from './mocks'
-import { expect } from 'chai'
 import cloneDeep from 'lodash/cloneDeep'
 
 const error: any = cloneDeep(errorMock)
@@ -25,11 +22,11 @@ describe('A errorHandler', () => {
       errorHandler(error)
     } catch (err: any) {
       const parsedMessage = JSON.parse(err.message)
-      expect(err.name).equals('SpecificError', 'error name')
-      expect(parsedMessage.request.url).equals('requesturl', 'request url')
-      expect(parsedMessage.message).equals('datamessage', 'error payload message')
-      expect(parsedMessage.requestId).equals('requestid', 'request id')
-      expect(parsedMessage.details).equals('errordetails', 'error payload details')
+      expect(err.name).toBe('SpecificError')
+      expect(parsedMessage.request.url).toBe('requesturl')
+      expect(parsedMessage.message).toBe('datamessage')
+      expect(parsedMessage.requestId).toBe('requestid')
+      expect(parsedMessage.details).toBe('errordetails')
     }
   })
 
@@ -50,9 +47,9 @@ describe('A errorHandler', () => {
       errorHandler(error)
     } catch (err: any) {
       const parsedMessage = JSON.parse(err.message)
-      expect(err.name).equals('500 Internal', 'error name defaults to status code and text')
-      expect(parsedMessage.request.url).equals('requesturl', 'request url')
-      expect(parsedMessage.requestId).equals('requestid', 'request id')
+      expect(err.name).toBe('500 Internal')
+      expect(parsedMessage.request.url).toBe('requesturl')
+      expect(parsedMessage.requestId).toBe('requestid')
     }
   })
 
@@ -65,11 +62,8 @@ describe('A errorHandler', () => {
       errorHandler(error)
     } catch (err: any) {
       const parsedMessage = JSON.parse(err.message)
-      expect(err.name).equals(
-        '500 Everything is on fire',
-        'error name defaults to status code and text'
-      )
-      expect(parsedMessage.request.url).equals('requesturl', 'request url')
+      expect(err.name).toBe('500 Everything is on fire')
+      expect(parsedMessage.request.url).toBe('requesturl')
     }
   })
 
@@ -83,10 +77,7 @@ describe('A errorHandler', () => {
       errorHandler(responseError)
     } catch (err: any) {
       const parsedMessage = JSON.parse(err.message)
-      expect(parsedMessage.request.headers.Authorization).equals(
-        'Bearer ...token',
-        'Obscures token'
-      )
+      expect(parsedMessage.request.headers.Authorization).toBe('Bearer ...token')
     }
 
     const requestError: any = {
@@ -108,7 +99,7 @@ describe('A errorHandler', () => {
     try {
       errorHandler(requestError)
     } catch (err: any) {
-      expect(err.config.headers.Authorization).equals('Bearer ...token', 'Obscures token')
+      expect(err.config.headers.Authorization).toBe('Bearer ...token')
     }
   })
 })

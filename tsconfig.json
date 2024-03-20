@@ -4,14 +4,10 @@
     "rootDir": "./src",
     "target": "esnext",
     "moduleResolution": "node",
-    "allowJs": true,
     "declarationDir": "dist/types",
     "declaration": true,
     "strict": true,
-    "isolatedModules": true,
-    "esModuleInterop": true,
-    "noImplicitThis": false
+    "esModuleInterop": true
   },
   "include": ["src/**/*", "global.d.ts"],
-  "exclude": ["node_modules", "dist"]
 }
