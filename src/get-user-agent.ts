@@ -1,4 +1,4 @@
-import { isNode, getNodeVersion, isReactNative, getWindow } from './utils'
+import { isNode, getNodeVersion, isReactNative, getWindow } from './utils.js'
 
 function getBrowserOS(): string | null {
   const win = getWindow()

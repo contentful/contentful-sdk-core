@@ -1,7 +1,8 @@
 import isString from 'lodash.isstring'
 import pThrottle from 'p-throttle'
-import { AxiosInstance } from './types'
-import { noop } from './utils'
+
+import { AxiosInstance } from './types.js'
+import { noop } from './utils.js'
 
 type ThrottleType = 'auto' | string
 

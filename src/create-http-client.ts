@@ -1,12 +1,12 @@
 import { AxiosRequestHeaders } from 'axios'
 import type { AxiosStatic } from 'axios'
 import copy from 'fast-copy'
-import asyncToken from './async-token'
 import qs from 'qs'
 
-import rateLimitRetry from './rate-limit'
-import rateLimitThrottle from './rate-limit-throttle'
-import type { AxiosInstance, CreateHttpClientParams, DefaultOptions } from './types'
+import asyncToken from './async-token.js'
+import rateLimitRetry from './rate-limit.js'
+import rateLimitThrottle from './rate-limit-throttle.js'
+import type { AxiosInstance, CreateHttpClientParams, DefaultOptions } from './types.js'
 
 // Matches 'sub.host:port' or 'host:port' and extracts hostname and port
 // Also enforces toplevel domain specified, no spaces and no protocol

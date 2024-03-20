@@ -1,5 +1,5 @@
-import { noop } from './utils'
-import type { AxiosInstance } from './types'
+import { noop } from './utils.js'
+import type { AxiosInstance } from './types.js'
 
 const delay = (ms: number): Promise<void> =>
   new Promise((resolve) => {
