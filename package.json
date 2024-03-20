@@ -29,7 +29,8 @@
     "prettier": "prettier --write '**/*.{jsx,js,ts,tsx}'",
     "prettier:check": "prettier --check '**/*.{jsx,js,ts,tsx}'",
     "precommit": "npm run lint",
-    "prepush": "npm run test:unit"
+    "prepush": "npm run test:unit",
+    "prepare": "husky"
   },
   "files": [
     "dist"
@@ -60,11 +61,11 @@
     "eslint-config-prettier": "^9.1.0",
     "eslint-config-standard": "^17.0.0",
     "eslint-plugin-standard": "^5.0.0",
-    "husky": "^8.0.3",
-    "lint-staged": "^13.0.0",
+    "husky": "^9.0.11",
+    "lint-staged": "^14.0.1",
     "opener": "^1.4.1",
     "prettier": "^3.2.5",
-    "rimraf": "^4.2.0",
+    "rimraf": "^5.0.5",
     "semantic-release": "^21.0.5",
     "typescript": "^5.4.2",
     "vitest": "^1.4.0"
