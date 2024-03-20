@@ -28,8 +28,6 @@
     "semantic-release": "semantic-release",
     "prettier": "prettier --write '**/*.{jsx,js,ts,tsx}'",
     "prettier:check": "prettier --check '**/*.{jsx,js,ts,tsx}'",
-    "precommit": "npm run lint",
-    "prepush": "npm run test:unit",
     "prepare": "husky"
   },
   "files": [
