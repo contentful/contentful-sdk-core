@@ -1,4 +1,2 @@
 dist
 coverage
-# Till importing json is supported by eslint, see: https://github.com/eslint/eslint/discussions/15305
-rollup.config.mjs
