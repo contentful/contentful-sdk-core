@@ -1,4 +1,4 @@
-import isString from 'lodash.isstring'
+import { isString } from 'lodash-es'
 import pThrottle from 'p-throttle'
 
 import { AxiosInstance } from './types.js'
