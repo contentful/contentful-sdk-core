@@ -1,4 +1,4 @@
-import { isPlainObject } from 'lodash'
+import isPlainObject from 'lodash/isPlainObject.js'
 import type { ContentfulErrorData } from './types.js'
 
 /**
