@@ -1,5 +1,3 @@
-/* eslint-disable @typescript-eslint/no-explicit-any */
-
 import copy from 'fast-copy'
 
 type Config = {

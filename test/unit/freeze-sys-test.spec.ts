@@ -1,3 +1,5 @@
+import { it, expect } from 'vitest'
+
 import freezeSys from '../../src/freeze-sys'
 
 it('Freezes sys and child objects', () => {
@@ -15,12 +17,12 @@ it('Freezes sys and child objects', () => {
   expect(() => {
     frozen.sys.a = 2
   }).toThrowErrorMatchingInlineSnapshot(
-    `"Cannot assign to read only property 'a' of object '#<Object>'"`
+    `[TypeError: Cannot assign to read only property 'a' of object '#<Object>']`,
   )
 
   expect(() => {
     frozen.sys.b.c = 3
   }).toThrowErrorMatchingInlineSnapshot(
-    `"Cannot assign to read only property 'c' of object '#<Object>'"`
+    `[TypeError: Cannot assign to read only property 'c' of object '#<Object>']`,
   )
 })
