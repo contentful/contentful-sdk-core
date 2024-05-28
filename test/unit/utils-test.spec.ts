@@ -1,5 +1,5 @@
-import { vi, MockedObject, it, expect, describe} from 'vitest'
-import process from "process"
+import { vi, MockedObject, it, expect, describe } from 'vitest'
+import process from 'process'
 
 import { isNode, getNodeVersion } from '../../src/utils'
 
