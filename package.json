@@ -41,7 +41,7 @@
     "lodash": "^4.17.21",
     "p-throttle": "^6.1.0",
     "process": "^0.11.10",
-    "qs": "^6.12.0"
+    "qs": "^6.12.1"
   },
   "devDependencies": {
     "@semantic-release/changelog": "^6.0.3",
@@ -49,12 +49,12 @@
     "@semantic-release/github": "^9.0.3",
     "@semantic-release/npm": "^10.0.4",
     "@semantic-release/release-notes-generator": "^11.0.3",
-    "@types/lodash": "^4.17.0",
-    "@types/qs": "^6.9.13",
-    "@typescript-eslint/eslint-plugin": "^7.3.1",
-    "@typescript-eslint/parser": "^7.3.1",
-    "@vitest/coverage-v8": "^1.4.0",
-    "axios": "^1.6.8",
+    "@types/lodash": "^4.17.4",
+    "@types/qs": "^6.9.15",
+    "@typescript-eslint/eslint-plugin": "^7.11.0",
+    "@typescript-eslint/parser": "^7.11.0",
+    "@vitest/coverage-v8": "^1.6.0",
+    "axios": "^1.7.2",
     "axios-mock-adapter": "^1.20.0",
     "cz-conventional-changelog": "^3.1.0",
     "eslint": "^8.57.0",
@@ -65,10 +65,10 @@
     "lint-staged": "^14.0.1",
     "opener": "^1.4.1",
     "prettier": "^3.2.5",
-    "rimraf": "^5.0.5",
+    "rimraf": "^5.0.7",
     "semantic-release": "^21.0.5",
-    "typescript": "^5.4.2",
-    "vitest": "^1.4.0"
+    "typescript": "^5.4.5",
+    "vitest": "^1.6.0"
   },
   "lint-staged": {
     "*.{js,jsx,ts,tsx}": [
