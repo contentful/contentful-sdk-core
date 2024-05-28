@@ -1,3 +1,5 @@
+import process from 'process'
+
 import { isNode, getNodeVersion, isReactNative, getWindow } from './utils.js'
 
 function getBrowserOS(): string | null {
