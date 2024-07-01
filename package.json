@@ -87,7 +87,12 @@
   "release": {
     "branches": [
       "master",
-      "next"
+      "next",
+      {
+        "name": "9.x-alpha",
+        "channel": "9.x-alpha",
+        "prerelease": true
+      }
     ],
     "plugins": [
       [
