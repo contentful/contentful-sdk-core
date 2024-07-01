@@ -1,5 +1,5 @@
-import isPlainObject from 'lodash.isplainobject'
-import type { ContentfulErrorData } from './types'
+import isPlainObject from 'lodash/isPlainObject.js'
+import type { ContentfulErrorData } from './types.js'
 
 /**
  * Handles errors received from the server. Parses the error into a more useful

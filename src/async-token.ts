@@ -1,4 +1,4 @@
-import type { AxiosInstance } from './types'
+import type { AxiosInstance } from './types.js'
 
 export default function asyncToken(instance: AxiosInstance, getToken: () => Promise<string>): void {
   instance.interceptors.request.use(function (config) {

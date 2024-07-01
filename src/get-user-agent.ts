@@ -1,4 +1,6 @@
-import { isNode, getNodeVersion, isReactNative, getWindow } from './utils'
+import process from 'process'
+
+import { isNode, getNodeVersion, isReactNative, getWindow } from './utils.js'
 
 function getBrowserOS(): string | null {
   const win = getWindow()
@@ -52,7 +54,7 @@ export default function getUserAgentHeader(
   sdk: string,
   application?: string,
   integration?: string,
-  feature?: string
+  feature?: string,
 ): string {
   const headerParts = []
 

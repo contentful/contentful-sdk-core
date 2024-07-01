@@ -25,12 +25,11 @@ This package contains some core modules and utilities used by both the [contentf
 
 ## Support
 
-We support LTS versions of Node.js and all current browsers in their last 3 versions including IE 11.
+This repository is compatible with Node.js version 18 and later. It exclusively provides an ECMAScript Module (ESM) variant, utilizing the `"type": "module"` declaration in `package.json`. Users are responsible for addressing any compatibility issues between ESM and CommonJS (CJS).
 
-### ES2015 modules version
+## Types
 
-For bundlers like webpack2 and rollup we support the `module` &
-`jsnext:main` entry in the package.json
+TypeScript definitions for this repository are available through the `"types"` property in `package.json`.
 
 ## Development
 
@@ -52,22 +51,4 @@ Run unit tests including coverage report:
 
 ```
 npm run test:cover
-```
-
-Run unit tests with coverage report and display the result in your browser:
-
-```
-npm run browser-coverage
-```
-
-Emulate a CI test run:
-
-```
-npm run test:ci-emulate
-```
-
-Enable debug mode for tests:
-
-```
-npm run test:debug
 ```
