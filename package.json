@@ -89,7 +89,7 @@
       "master",
       "next",
       {
-        "name": "9.x-alpha",
+        "name": "refactor/modern-esm-support",
         "channel": "9.x-alpha",
         "prerelease": true
       }
