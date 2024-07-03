@@ -4,6 +4,7 @@ import axios from 'axios'
 import MockAdapter from 'axios-mock-adapter'
 import { AxiosInstance } from '../../src'
 import createHttpClient from '../../src/create-http-client'
+import { calculateLimit } from '../../src/rate-limit-throttle'
 
 const logHandlerStub = jest.fn()
 
@@ -140,4 +141,20 @@ describe('throttle to rate limit axios interceptor', () => {
       expectLogHandlerHasBeenCalled(limit, 2)
     }
   )
+})
+
+describe('a calculate limit function', () => {
+  describe('with type "auto"', () => {
+    it('always returns the given max limit', () => {
+      expect(calculateLimit('auto', 10)).toEqual(10)
+      expect(calculateLimit('auto', 1)).toEqual(1)
+    })
+  })
+  describe('with %', () => {
+    it('always returns % of max limit', () => {
+      expect(calculateLimit('0%', 10)).toEqual(1)
+      expect(calculateLimit('50%', 10)).toEqual(5)
+      expect(calculateLimit('100%', 10)).toEqual(10)
+    })
+  })
 })

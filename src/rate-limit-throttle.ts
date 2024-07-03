@@ -7,7 +7,16 @@ type ThrottleType = 'auto' | string
 
 const PERCENTAGE_REGEX = /(?<value>\d+)(%)/
 
-function calculateLimit(type: ThrottleType, max = 7) {
+const HEADERS = {
+  // @desc The maximum amount of requests which can be made in a second.
+  RATE_LIMIT: 'x-contentful-ratelimit-second-limit',
+  // @desc The number of seconds until the next request can be made.
+  RATE_LIMIT_RESET: 'x-contentful-ratelimit-second-reset',
+  // @desc The remaining amount of requests which can be made until the next secondly reset.
+  RATE_LIMIT_REMAINING: 'x-contentful-ratelimit-second-remaining',
+} as const
+
+export function calculateLimit(type: ThrottleType, max = 7) {
   let limit = max
 
   if (PERCENTAGE_REGEX.test(type)) {
@@ -46,14 +55,15 @@ export default (axiosInstance: AxiosInstance, type: ThrottleType | number = 'aut
 
   const responseInterceptorId = axiosInstance.interceptors.response.use(
     (response) => {
+      // If we haven't yet calculated the limit based on the headers, do so now
       if (
         !isCalculated &&
         isString(type) &&
         (type === 'auto' || PERCENTAGE_REGEX.test(type)) &&
         response.headers &&
-        response.headers['x-contentful-ratelimit-second-limit']
+        response.headers[HEADERS.RATE_LIMIT]
       ) {
-        const rawLimit = parseInt(response.headers['x-contentful-ratelimit-second-limit'])
+        const rawLimit = parseInt(response.headers[HEADERS.RATE_LIMIT])
         const nextLimit = calculateLimit(type, rawLimit)
 
         if (nextLimit !== limit) {
