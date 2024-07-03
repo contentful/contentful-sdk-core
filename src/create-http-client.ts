@@ -2,7 +2,6 @@ import { AxiosRequestHeaders } from 'axios'
 import type { AxiosStatic } from 'axios'
 import copy from 'fast-copy'
 import asyncToken from './async-token'
-import qs from 'qs'
 
 import rateLimitRetry from './rate-limit'
 import rateLimitThrottle from './rate-limit-throttle'
@@ -97,9 +96,10 @@ export default function createHttpClient(
     maxBodyLength: config.maxBodyLength,
     paramsSerializer: {
       serialize: (params) => {
-        return qs.stringify(params)
+        return params ? new URLSearchParams(params).toString() : ''
       },
     },
+
     // Contentful
     logHandler: config.logHandler,
     responseLogger: config.responseLogger,
