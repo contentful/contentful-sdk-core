@@ -51,8 +51,7 @@
     "fast-copy": "^2.1.7",
     "lodash.isplainobject": "^4.0.6",
     "lodash.isstring": "^4.0.1",
-    "p-throttle": "^4.1.1",
-    "qs": "^6.11.2"
+    "p-throttle": "^4.1.1"
   },
   "devDependencies": {
     "@babel/cli": "^7.12.8",
