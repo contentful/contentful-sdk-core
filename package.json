@@ -41,7 +41,7 @@
     "lodash": "^4.17.21",
     "p-throttle": "^6.1.0",
     "process": "^0.11.10",
-    "qs": "^6.12.1"
+    "qs": "^6.12.3"
   },
   "devDependencies": {
     "@semantic-release/changelog": "^6.0.3",
@@ -64,7 +64,7 @@
     "husky": "^9.0.11",
     "lint-staged": "^14.0.1",
     "opener": "^1.4.1",
-    "prettier": "^3.2.5",
+    "prettier": "^3.3.2",
     "rimraf": "^5.0.7",
     "semantic-release": "^21.0.5",
     "typescript": "^5.4.5",
