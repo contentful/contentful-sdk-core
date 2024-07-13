@@ -1,20 +1,19 @@
 module.exports = {
+  parser: '@typescript-eslint/parser',
   overrides: [
     {
-      files: '**/*.js',
-      parser: 'babel-eslint',
-      extends: ['standard', 'prettier'],
-      plugins: ['standard', 'promise'],
-    },
-    {
-      files: '**/*.ts',
+      files: 'src/**/*.ts',
+      parser: '@typescript-eslint/parser',
+      plugins: ['@typescript-eslint'],
       extends: [
         'eslint:recommended',
         'plugin:@typescript-eslint/eslint-recommended',
         'plugin:@typescript-eslint/recommended',
         'prettier',
       ],
-      plugins: ['promise'],
+      rules: {
+        '@typescript-eslint/no-explicit-any': 1,
+      },
     },
   ],
 }

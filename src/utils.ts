@@ -1,3 +1,5 @@
+import process from 'process'
+
 export function isNode(): boolean {
   /**
    * Polyfills of 'process' might set process.browser === true
