@@ -169,3 +169,22 @@ it('Rejects errors with strange status codes', async () => {
     expect(logHandlerStub).toBeCalledTimes(0)
   }
 })
+
+it('Preserves URI query parameters between retries', async () => {
+  const { client } = setup()
+  const uri = '/entries?content_type=B&fields.id=1'
+
+  mock.onGet(uri).replyOnce(429, 'Rate Limit')
+  mock.onGet(uri).replyOnce(429, 'Rate Limit')
+  mock.onGet(uri).replyOnce(200, 'Success')
+
+  expect.assertions(5)
+
+  const response = await client.get(uri)
+  expect(response.status).toEqual(200)
+
+  expect(mock.history.get.length).toBe(3)
+  for (const request of mock.history.get) {
+    expect(request.url).toEqual(uri)
+  }
+});
