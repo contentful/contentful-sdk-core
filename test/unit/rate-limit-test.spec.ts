@@ -187,4 +187,4 @@ it('Preserves URI query parameters between retries', async () => {
   for (const request of mock.history.get) {
     expect(request.url).toEqual(uri)
   }
-});
+})
