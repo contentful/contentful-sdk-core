@@ -81,14 +81,6 @@ export default function rateLimit(instance: AxiosInstance, maxRetry = 5): void {
         delete config.httpAgent
         delete config.httpsAgent
 
-        /**
-         * Hack to mitigate (likely) bug introduced in axios v1.7.0 where `url`,
-         * when using the default `xhr` adapter, is a fully qualified URL (instead of a path),
-         * which somehow causes the request params to be repeatedly appended
-         * to the final request URL upon each retry.
-         */
-        config.url = config.url.split('?')[0]
-
         return delay(wait).then(() => instance(config))
       }
       return Promise.reject(error)
