@@ -1,3 +1,5 @@
+import { it, expect } from 'vitest'
+
 import toPlainObject from '../../src/to-plain-object'
 
 it('toPlainObject', () => {

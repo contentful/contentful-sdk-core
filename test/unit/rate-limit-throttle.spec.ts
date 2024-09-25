@@ -1,11 +1,11 @@
-/* eslint @typescript-eslint/ban-ts-comment: 0 */
+import { vi, beforeEach, afterEach, it, expect, describe } from 'vitest'
 
 import axios from 'axios'
 import MockAdapter from 'axios-mock-adapter'
 import { AxiosInstance } from '../../src'
 import createHttpClient from '../../src/create-http-client'
 
-const logHandlerStub = jest.fn()
+const logHandlerStub = vi.fn()
 
 function wait(ms = 1000) {
   return new Promise((resolve) => {
@@ -14,7 +14,7 @@ function wait(ms = 1000) {
 }
 
 function executeCalls(client: AxiosInstance, callsCount: number) {
-  const requests = []
+  const requests: unknown[] = []
   for (let i = 0; i < callsCount; i++) {
     requests.push(client.get('/throttled-call'))
   }
@@ -37,7 +37,7 @@ describe('throttle to rate limit axios interceptor', () => {
   async function expectCallsExecutedWithin(
     client: AxiosInstance,
     callsCount: number,
-    duration: number
+    duration: number,
   ) {
     // initial call to potentially update throttling settings
     client.get('/throttled-call')
@@ -138,6 +138,6 @@ describe('throttle to rate limit axios interceptor', () => {
       })
       await expectCallsExecutedWithin(client, limit, duration)
       expectLogHandlerHasBeenCalled(limit, 2)
-    }
+    },
   )
 })

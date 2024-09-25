@@ -1,12 +1,12 @@
 import { AxiosRequestHeaders } from 'axios'
 import type { AxiosStatic } from 'axios'
 import copy from 'fast-copy'
-import asyncToken from './async-token'
 import qs from 'qs'
 
-import rateLimitRetry from './rate-limit'
-import rateLimitThrottle from './rate-limit-throttle'
-import type { AxiosInstance, CreateHttpClientParams, DefaultOptions } from './types'
+import asyncToken from './async-token.js'
+import rateLimitRetry from './rate-limit.js'
+import rateLimitThrottle from './rate-limit-throttle.js'
+import type { AxiosInstance, CreateHttpClientParams, DefaultOptions } from './types.js'
 
 // Matches 'sub.host:port' or 'host:port' and extracts hostname and port
 // Also enforces toplevel domain specified, no spaces and no protocol
@@ -21,7 +21,7 @@ const HOST_REGEX = /^(?!\w+:\/\/)([^\s:]+\.?[^\s:]+)(?::(\d+))?(?!:)$/
  */
 export default function createHttpClient(
   axios: AxiosStatic,
-  options: CreateHttpClientParams
+  options: CreateHttpClientParams,
 ): AxiosInstance {
   const defaultConfig = {
     insecure: false as const,
@@ -121,7 +121,7 @@ export default function createHttpClient(
    * @return {AxiosInstance} Initialized axios instance
    */
   instance.cloneWithNewParams = function (
-    newParams: Partial<CreateHttpClientParams>
+    newParams: Partial<CreateHttpClientParams>,
   ): AxiosInstance {
     return createHttpClient(axios, {
       ...copy(options),
