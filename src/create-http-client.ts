@@ -14,7 +14,8 @@ const HOST_REGEX = /^(?!\w+:\/\/)([^\s:]+\.?[^\s:]+)(?::(\d+))?(?!:)$/
 
 function copyHttpClientParams(options: CreateHttpClientParams): CreateHttpClientParams {
   const copiedOptions = copy(options)
-  // httpsAgent cannot be copied because it can contain private fields that are not enumerable
+  // httpAgent and httpsAgent cannot be copied because they can contain private fields
+  copiedOptions.httpAgent = options.httpAgent
   copiedOptions.httpsAgent = options.httpsAgent
   return copiedOptions
 }
