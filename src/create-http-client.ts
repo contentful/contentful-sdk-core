@@ -12,6 +12,14 @@ import type { AxiosInstance, CreateHttpClientParams, DefaultOptions } from './ty
 // Also enforces toplevel domain specified, no spaces and no protocol
 const HOST_REGEX = /^(?!\w+:\/\/)([^\s:]+\.?[^\s:]+)(?::(\d+))?(?!:)$/
 
+function copyHttpClientParams(options: CreateHttpClientParams): CreateHttpClientParams {
+  const copiedOptions = copy(options)
+  // httpAgent and httpsAgent cannot be copied because they can contain private fields
+  copiedOptions.httpAgent = options.httpAgent
+  copiedOptions.httpsAgent = options.httpsAgent
+  return copiedOptions
+}
+
 /**
  * Create pre-configured axios instance
  * @private
@@ -124,7 +132,7 @@ export default function createHttpClient(
     newParams: Partial<CreateHttpClientParams>,
   ): AxiosInstance {
     return createHttpClient(axios, {
-      ...copy(options),
+      ...copyHttpClientParams(options),
       ...newParams,
     })
   }
