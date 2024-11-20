@@ -13,13 +13,10 @@ import type { AxiosInstance, CreateHttpClientParams, DefaultOptions } from './ty
 const HOST_REGEX = /^(?!\w+:\/\/)([^\s:]+\.?[^\s:]+)(?::(\d+))?(?!:)$/
 
 function copyHttpClientParams(options: CreateHttpClientParams): CreateHttpClientParams {
-  // httpsAgent is omitted from the deep copy operation,
-  // because it can contain private fields that are not enumerable
-  const { httpsAgent, ...optionsToCopy } = options
-  return {
-    ...copy(optionsToCopy),
-    httpsAgent,
-  }
+  const copiedOptions = copy(options)
+  // httpsAgent cannot be copied because it can contain private fields that are not enumerable
+  copiedOptions.httpsAgent = options.httpsAgent
+  return copiedOptions
 }
 
 /**
