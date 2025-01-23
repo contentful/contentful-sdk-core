@@ -41,7 +41,7 @@
     "lodash": "^4.17.21",
     "p-throttle": "^6.1.0",
     "process": "^0.11.10",
-    "qs": "^6.12.3"
+    "picoquery": "^1.4.0"
   },
   "devDependencies": {
     "@semantic-release/changelog": "^6.0.3",
@@ -50,7 +50,6 @@
     "@semantic-release/npm": "^12.0.1",
     "@semantic-release/release-notes-generator": "^14.0.0",
     "@types/lodash": "^4.17.6",
-    "@types/qs": "^6.9.10",
     "@typescript-eslint/eslint-plugin": "^5.11.0",
     "@typescript-eslint/parser": "^5.11.0",
     "@vitest/coverage-v8": "^2.0.2",

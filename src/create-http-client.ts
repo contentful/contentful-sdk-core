@@ -1,7 +1,7 @@
 import { AxiosRequestHeaders } from 'axios'
 import type { AxiosStatic } from 'axios'
 import copy from 'fast-copy'
-import qs from 'qs'
+import qs from 'picoquery'
 
 import asyncToken from './async-token.js'
 import rateLimitRetry from './rate-limit.js'
