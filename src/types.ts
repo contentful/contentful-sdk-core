@@ -13,11 +13,13 @@ export type DefaultOptions = AxiosRequestConfig & {
   retryOnError?: boolean
 }
 
-export type AxiosInstance = OriginalAxiosInstance & {
+type BaseAxiosInstance = OriginalAxiosInstance & {
   httpClientParams: CreateHttpClientParams
   cloneWithNewParams: (params: Partial<CreateHttpClientParams>) => AxiosInstance
   defaults: DefaultOptions
 }
+
+export type AxiosInstance = BaseAxiosInstance | undefined
 
 export type CreateHttpClientParams = {
   /** Access Token or an async function that returns Access Token */
