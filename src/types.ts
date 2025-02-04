@@ -4,13 +4,15 @@ import type {
   AxiosInstance as OriginalAxiosInstance,
   AxiosRequestConfig,
   AxiosResponse,
+  HeadersDefaults,
 } from 'axios'
 
-export type DefaultOptions = AxiosRequestConfig & {
+export type DefaultOptions = Omit<AxiosRequestConfig, 'headers'> & {
   logHandler: (level: string, data?: Error | string) => void
   responseLogger?: (response: AxiosResponse<any> | Error) => unknown
   requestLogger?: (request: AxiosRequestConfig | Error) => unknown
   retryOnError?: boolean
+  headers: HeadersDefaults
 }
 
 export type AxiosInstance = OriginalAxiosInstance & {
