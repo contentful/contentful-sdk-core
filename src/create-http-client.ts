@@ -1,16 +1,11 @@
-import { AxiosRequestHeaders } from 'axios'
 import type { AxiosStatic } from 'axios'
 import copy from 'fast-copy'
-import qs from 'qs'
 
 import asyncToken from './async-token.js'
 import rateLimitRetry from './rate-limit.js'
 import rateLimitThrottle from './rate-limit-throttle.js'
-import type { AxiosInstance, CreateHttpClientParams, DefaultOptions } from './types.js'
-
-// Matches 'sub.host:port' or 'host:port' and extracts hostname and port
-// Also enforces toplevel domain specified, no spaces and no protocol
-const HOST_REGEX = /^(?!\w+:\/\/)([^\s:]+\.?[^\s:]+)(?::(\d+))?(?!:)$/
+import type { AxiosInstance, CreateHttpClientParams } from './types.js'
+import createDefaultOptions from './create-default-options.js'
 
 function copyHttpClientParams(options: CreateHttpClientParams): CreateHttpClientParams {
   const copiedOptions = copy(options)
@@ -31,89 +26,7 @@ export default function createHttpClient(
   axios: AxiosStatic,
   options: CreateHttpClientParams,
 ): AxiosInstance {
-  const defaultConfig = {
-    insecure: false as const,
-    retryOnError: true as const,
-    // eslint-disable-next-line @typescript-eslint/no-explicit-any
-    logHandler: (level: string, data: any): void => {
-      if (level === 'error' && data) {
-        const title = [data.name, data.message].filter((a) => a).join(' - ')
-        console.error(`[error] ${title}`)
-        console.error(data)
-        return
-      }
-      console.log(`[${level}] ${data}`)
-    },
-    // Passed to axios
-    headers: {} as AxiosRequestHeaders,
-    httpAgent: false as const,
-    httpsAgent: false as const,
-    timeout: 30000,
-    throttle: 0,
-    basePath: '',
-    adapter: undefined,
-    maxContentLength: 1073741824, // 1GB
-    maxBodyLength: 1073741824, // 1GB
-  }
-  const config = {
-    ...defaultConfig,
-    ...options,
-  }
-
-  if (!config.accessToken) {
-    const missingAccessTokenError = new TypeError('Expected parameter accessToken')
-    config.logHandler('error', missingAccessTokenError)
-    throw missingAccessTokenError
-  }
-
-  // Construct axios baseURL option
-  const protocol = config.insecure ? 'http' : 'https'
-  const space = config.space ? `${config.space}/` : ''
-  let hostname = config.defaultHostname
-  let port: number | string = config.insecure ? 80 : 443
-  if (config.host && HOST_REGEX.test(config.host)) {
-    const parsed = config.host.split(':')
-    if (parsed.length === 2) {
-      ;[hostname, port] = parsed
-    } else {
-      hostname = parsed[0]
-    }
-  }
-
-  // Ensure that basePath does start but not end with a slash
-  if (config.basePath) {
-    config.basePath = `/${config.basePath.split('/').filter(Boolean).join('/')}`
-  }
-
-  const baseURL =
-    options.baseURL || `${protocol}://${hostname}:${port}${config.basePath}/spaces/${space}`
-
-  if (!config.headers.Authorization && typeof config.accessToken !== 'function') {
-    config.headers.Authorization = 'Bearer ' + config.accessToken
-  }
-
-  const axiosOptions: DefaultOptions = {
-    // Axios
-    baseURL,
-    headers: config.headers,
-    httpAgent: config.httpAgent,
-    httpsAgent: config.httpsAgent,
-    proxy: config.proxy,
-    timeout: config.timeout,
-    adapter: config.adapter,
-    maxContentLength: config.maxContentLength,
-    maxBodyLength: config.maxBodyLength,
-    paramsSerializer: {
-      serialize: (params) => {
-        return qs.stringify(params)
-      },
-    },
-    // Contentful
-    logHandler: config.logHandler,
-    responseLogger: config.responseLogger,
-    requestLogger: config.requestLogger,
-    retryOnError: config.retryOnError,
-  }
+  const axiosOptions = createDefaultOptions(options)
 
   const instance = axios.create(axiosOptions) as AxiosInstance
   instance.httpClientParams = options
@@ -142,21 +55,21 @@ export default function createHttpClient(
    * Please note that the order of interceptors is important
    */
 
-  if (config.onBeforeRequest) {
-    instance.interceptors.request.use(config.onBeforeRequest)
+  if (options.onBeforeRequest) {
+    instance.interceptors.request.use(options.onBeforeRequest)
   }
 
-  if (typeof config.accessToken === 'function') {
-    asyncToken(instance, config.accessToken)
+  if (typeof options.accessToken === 'function') {
+    asyncToken(instance, options.accessToken)
   }
 
-  if (config.throttle) {
-    rateLimitThrottle(instance, config.throttle)
+  if (options.throttle) {
+    rateLimitThrottle(instance, options.throttle)
   }
-  rateLimitRetry(instance, config.retryLimit)
+  rateLimitRetry(instance, options.retryLimit)
 
-  if (config.onError) {
-    instance.interceptors.response.use((response) => response, config.onError)
+  if (options.onError) {
+    instance.interceptors.response.use((response) => response, options.onError)
   }
 
   return instance

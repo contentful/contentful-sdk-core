@@ -5,5 +5,6 @@ export { default as freezeSys } from './freeze-sys.js'
 export { default as getUserAgentHeader } from './get-user-agent.js'
 export { default as toPlainObject } from './to-plain-object.js'
 export { default as errorHandler } from './error-handler.js'
+export { default as createDefaultOptions } from './create-default-options.js'
 
-export type { AxiosInstance, CreateHttpClientParams } from './types.js'
+export type { AxiosInstance, CreateHttpClientParams, DefaultOptions } from './types.js'
