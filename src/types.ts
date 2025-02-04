@@ -12,7 +12,7 @@ export type DefaultOptions = Omit<AxiosRequestConfig, 'headers'> & {
   responseLogger?: (response: AxiosResponse<any> | Error) => unknown
   requestLogger?: (request: AxiosRequestConfig | Error) => unknown
   retryOnError?: boolean
-  headers: HeadersDefaults
+  headers: HeadersDefaults & { [key: string]: AxiosHeaderValue }
 }
 
 export type AxiosInstance = OriginalAxiosInstance & {
