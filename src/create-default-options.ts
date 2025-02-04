@@ -1,5 +1,6 @@
 import { CreateHttpClientParams, DefaultOptions } from './types'
 import { AxiosRequestHeaders } from 'axios'
+import qs from 'qs'
 
 // Matches 'sub.host:port' or 'host:port' and extracts hostname and port
 // Also enforces toplevel domain specified, no spaces and no protocol
