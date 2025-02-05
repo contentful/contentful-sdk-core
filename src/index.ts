@@ -7,4 +7,9 @@ export { default as toPlainObject } from './to-plain-object.js'
 export { default as errorHandler } from './error-handler.js'
 export { default as createDefaultOptions } from './create-default-options.js'
 
-export type { AxiosInstance, CreateHttpClientParams, DefaultOptions } from './types.js'
+export type {
+  AxiosInstance,
+  CreateHttpClientParams,
+  DefaultOptions,
+  InstanceDefaults,
+} from './types.js'

@@ -7,18 +7,22 @@ import type {
   HeadersDefaults,
 } from 'axios'
 
-export type DefaultOptions = Omit<AxiosRequestConfig, 'headers'> & {
+export type DefaultOptions = AxiosRequestConfig & {
   logHandler: (level: string, data?: Error | string) => void
   responseLogger?: (response: AxiosResponse<any> | Error) => unknown
   requestLogger?: (request: AxiosRequestConfig | Error) => unknown
   retryOnError?: boolean
-  headers: HeadersDefaults & { [key: string]: AxiosHeaderValue }
 }
 
+export type InstanceDefaults = Omit<DefaultOptions, 'headers'> & {
+  headers: HeadersDefaults & {
+    [key: string]: AxiosHeaderValue
+  }
+}
 export type AxiosInstance = OriginalAxiosInstance & {
   httpClientParams: CreateHttpClientParams
   cloneWithNewParams: (params: Partial<CreateHttpClientParams>) => AxiosInstance
-  defaults: DefaultOptions
+  defaults: InstanceDefaults
 }
 
 export type CreateHttpClientParams = {
