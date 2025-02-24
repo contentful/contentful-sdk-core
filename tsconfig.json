@@ -3,7 +3,8 @@
     "baseUrl": "./",
     "rootDir": "./src",
     "target": "esnext",
-    "moduleResolution": "node",
+    "module": "Preserve",
+    "moduleResolution": "bundler"
     "declarationDir": "dist/types",
     "declaration": true,
     "strict": true,
