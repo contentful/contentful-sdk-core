@@ -26,7 +26,7 @@ export default function errorHandler(errorResponse: any): never {
   const { config, response } = errorResponse
   let errorName
 
-  obscureHeaders(config);
+  obscureHeaders(config)
 
   if (!isPlainObject(response) || !isPlainObject(config)) {
     throw errorResponse
