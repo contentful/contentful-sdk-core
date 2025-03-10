@@ -104,4 +104,40 @@ describe('A errorHandler', () => {
       expect(err.config.headers.Authorization).toBe('Bearer ...token')
     }
   })
+
+  it('Obscures encoded cross-space reference tokens in any error message', async () => {
+    const responseError: any = cloneDeep(errorMock)
+    responseError.config.headers = {
+      'X-Contentful-Resource-Resolution': 'secret-token',
+    }
+
+    try {
+      errorHandler(responseError)
+    } catch (err: any) {
+      const parsedMessage = JSON.parse(err.message)
+      expect(parsedMessage.request.headers['X-Contentful-Resource-Resolution']).toBe('...token')
+    }
+
+    const requestError: any = {
+      config: {
+        url: 'requesturl',
+        headers: {},
+      },
+      data: {},
+      request: {
+        status: 404,
+        statusText: 'Not Found',
+      },
+    }
+
+    requestError.config.headers = {
+      'X-Contentful-Resource-Resolution': 'secret-token',
+    }
+
+    try {
+      errorHandler(requestError)
+    } catch (err: any) {
+      expect(err.config.headers['X-Contentful-Resource-Resolution']).toBe('...token')
+    }
+  })
 })

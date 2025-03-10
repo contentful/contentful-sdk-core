@@ -1,6 +1,19 @@
 import isPlainObject from 'lodash/isPlainObject.js'
 import type { ContentfulErrorData } from './types.js'
 
+function obscureHeaders(config: any) {
+  // Management, Delivery and Preview API tokens
+  if (config?.headers?.['Authorization']) {
+    const token = `...${config.headers['Authorization'].toString().substr(-5)}`
+    config.headers['Authorization'] = `Bearer ${token}`
+  }
+  // Encoded Delivery or Preview token map for Cross-Space References
+  if (config?.headers?.['X-Contentful-Resource-Resolution']) {
+    const token = `...${config.headers['X-Contentful-Resource-Resolution'].toString().substr(-5)}`
+    config.headers['X-Contentful-Resource-Resolution'] = token
+  }
+}
+
 /**
  * Handles errors received from the server. Parses the error into a more useful
  * format, places it in an exception and throws it.
@@ -13,11 +26,7 @@ export default function errorHandler(errorResponse: any): never {
   const { config, response } = errorResponse
   let errorName
 
-  // Obscure the Management token
-  if (config && config.headers && config.headers['Authorization']) {
-    const token = `...${config.headers['Authorization'].toString().substr(-5)}`
-    config.headers['Authorization'] = `Bearer ${token}`
-  }
+  obscureHeaders(config);
 
   if (!isPlainObject(response) || !isPlainObject(config)) {
     throw errorResponse
