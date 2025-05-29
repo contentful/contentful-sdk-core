@@ -4,7 +4,7 @@ const esmConfig = {
     dir: 'dist/esm',
     format: 'esm',
     preserveModules: true,
-  }
+  },
 }
 
 const cjsConfig = {
@@ -14,7 +14,7 @@ const cjsConfig = {
     format: 'cjs',
     preserveModules: true,
     entryFileNames: '[name].cjs',
-  }
+  },
 }
 
 export default [esmConfig, cjsConfig]
