@@ -4,7 +4,14 @@
   "description": "Core modules for the Contentful JS SDKs",
   "homepage": "https://www.contentful.com/developers/docs/javascript/",
   "type": "module",
-  "main": "dist/index.js",
+  "exports": {
+    ".": {
+      "types": "./dist/types/index.d.ts",
+      "import": "./dist/esm/index.js",
+      "require": "./dist/contentful-management.cjs"
+    }
+  },
+  "main": "./dist/esm/index.js",
   "types": "dist/types/index.d.ts",
   "browser": {
     "process": "process/browser"
@@ -20,7 +27,9 @@
   "license": "MIT",
   "scripts": {
     "clean": "rimraf coverage && rimraf dist",
-    "build": "npm run clean && tsc --outDir dist",
+    "build": "npm run clean && npm run build:esm && npm run build:rollup && rm -rf dist/esm-raw",
+    "build:esm": "tsc",
+    "build:rollup": "NODE_ENV=production rollup -c",
     "lint": "eslint src test --ext '.ts'",
     "pretest": "npm run lint",
     "test": "vitest --run",
@@ -66,6 +75,7 @@
     "opener": "^1.4.1",
     "prettier": "^3.3.2",
     "rimraf": "^5.0.7",
+    "rollup": "^4.28.1",
     "semantic-release": "^21.0.5",
     "typescript": "^5.4.5",
     "vitest": "^2.0.2"
