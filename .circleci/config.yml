@@ -34,3 +34,8 @@ workflows:
             - vault
           requires:
             - test
+          filters:
+            branches:
+              only:
+                - master
+                - beta

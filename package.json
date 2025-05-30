@@ -92,6 +92,11 @@
         "name": "refactor/modern-esm-support",
         "channel": "9.x-alpha",
         "prerelease": true
+      },
+      {
+        "name": "beta",
+        "channel": "beta",
+        "prerelease": true
       }
     ],
     "plugins": [
