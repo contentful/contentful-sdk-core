@@ -8,10 +8,10 @@
     ".": {
       "types": "./dist/types/index.d.ts",
       "import": "./dist/esm/index.js",
-      "require": "./dist/contentful-management.cjs"
+      "require": "./dist/cjs/index.cjs"
     }
   },
-  "main": "./dist/esm/index.js",
+  "main": "./dist/cjs/index.cjs",
   "types": "dist/types/index.d.ts",
   "browser": {
     "process": "process/browser"
