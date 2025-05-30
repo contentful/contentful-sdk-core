@@ -46,7 +46,7 @@ export default function rateLimit(instance: AxiosInstance, maxRetry = 5): void {
         return Promise.reject(error)
       }
 
-      let retryErrorType = null
+      let retryErrorType: string | null = null
       let wait = defaultWait(doneAttempts)
 
       // Errors without response did not receive anything from the server

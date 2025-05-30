@@ -1,14 +1,22 @@
 {
   "compilerOptions": {
-    "baseUrl": "./",
+    "outDir": "./dist/esm-raw",
     "rootDir": "./src",
-    "target": "esnext",
-    "module": "Preserve",
-    "moduleResolution": "bundler",
+    "lib": ["dom", "esnext"],
+    "target": "ES2020",
+    "module": "es2020",
+    "moduleResolution": "node",
+    "allowJs": true,
     "declarationDir": "dist/types",
     "declaration": true,
     "strict": true,
-    "esModuleInterop": true
+    "importHelpers": true,
+    "isolatedModules": false,
+    "esModuleInterop": true,
+    "noImplicitThis": false,
+    "typeRoots": ["node_modules/@types"],
+    "noImplicitAny": false,
+    "skipLibCheck": true
   },
   "include": ["src/**/*", "global.d.ts"],
 }
