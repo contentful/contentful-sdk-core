@@ -49,12 +49,10 @@
     "fast-copy": "^3.0.2",
     "lodash": "^4.17.21",
     "p-throttle": "^6.1.0",
-    "process": "^0.11.10",
     "qs": "^6.12.3"
   },
   "devDependencies": {
     "@rollup/plugin-typescript": "^12.1.4",
-    "rollup-plugin-sourcemaps2": "^0.5.4",
     "@semantic-release/changelog": "^6.0.3",
     "@semantic-release/commit-analyzer": "^13.0.0",
     "@semantic-release/github": "^10.0.6",
@@ -77,6 +75,7 @@
     "prettier": "^3.3.2",
     "rimraf": "^5.0.7",
     "rollup": "^4.28.1",
+    "rollup-plugin-sourcemaps2": "^0.5.4",
     "semantic-release": "^21.0.5",
     "typescript": "^5.4.5",
     "vitest": "^2.0.2"
