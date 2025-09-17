@@ -45,6 +45,7 @@
     "dist"
   ],
   "dependencies": {
+    "axios": "^1.7.2",
     "fast-copy": "^3.0.2",
     "lodash": "^4.17.21",
     "p-throttle": "^6.1.0",
@@ -64,7 +65,6 @@
     "@typescript-eslint/eslint-plugin": "^5.11.0",
     "@typescript-eslint/parser": "^5.11.0",
     "@vitest/coverage-v8": "^2.0.2",
-    "axios": "^1.7.2",
     "axios-mock-adapter": "^1.20.0",
     "cz-conventional-changelog": "^3.1.0",
     "eslint": "^8.57.0",
