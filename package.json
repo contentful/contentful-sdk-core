@@ -26,9 +26,8 @@
   "author": "Contentful <opensource@contentful.com>",
   "license": "MIT",
   "scripts": {
-    "clean": "rimraf coverage && rimraf dist",
-    "build": "npm run clean && npm run build:esm && npm run build:rollup && rm -rf dist/esm-raw",
-    "build:esm": "tsc",
+    "clean": "rimraf dist",
+    "build": "npm run clean && npm run build:rollup",
     "build:rollup": "NODE_ENV=production rollup -c",
     "lint": "eslint src test --ext '.ts'",
     "pretest": "npm run lint",
@@ -53,6 +52,8 @@
     "qs": "^6.12.3"
   },
   "devDependencies": {
+    "@rollup/plugin-typescript": "^12.1.4",
+    "rollup-plugin-sourcemaps2": "^0.5.4",
     "@semantic-release/changelog": "^6.0.3",
     "@semantic-release/commit-analyzer": "^13.0.0",
     "@semantic-release/github": "^10.0.6",
