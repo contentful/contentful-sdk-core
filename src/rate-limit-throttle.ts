@@ -26,7 +26,7 @@ function createThrottle(limit: number, logger: (...args: any[]) => void) {
   return pThrottle({
     limit,
     interval: 1000,
-    strict: false
+    strict: false,
   })
 }
 
@@ -42,7 +42,7 @@ export default (axiosInstance: AxiosInstance, type: ThrottleType | number = 'aut
     },
     function (error) {
       return Promise.reject(error)
-    }
+    },
   )
 
   const responseInterceptorId = axiosInstance.interceptors.response.use(
@@ -71,7 +71,7 @@ export default (axiosInstance: AxiosInstance, type: ThrottleType | number = 'aut
             },
             function (error) {
               return Promise.reject(error)
-            }
+            },
           )
         }
 
@@ -82,7 +82,7 @@ export default (axiosInstance: AxiosInstance, type: ThrottleType | number = 'aut
     },
     function (error) {
       return Promise.reject(error)
-    }
+    },
   )
 
   return () => {

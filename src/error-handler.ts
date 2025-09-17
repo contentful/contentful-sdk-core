@@ -38,7 +38,7 @@ export default function errorHandler(errorResponse: any): never {
     status: response?.status,
     statusText: response?.statusText,
     message: '',
-    details: {}
+    details: {},
   }
 
   if (config && isPlainObject(config)) {
@@ -46,7 +46,7 @@ export default function errorHandler(errorResponse: any): never {
       url: config.url,
       headers: config.headers,
       method: config.method,
-      payloadData: config.data
+      payloadData: config.data,
     }
   }
   if (data && typeof data === 'object') {

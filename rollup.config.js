@@ -3,16 +3,10 @@ import sourcemaps from 'rollup-plugin-sourcemaps2'
 
 const tsPlugin = typescript({
   declaration: false,
-  noEmitOnError: true
+  noEmitOnError: true,
 })
 
-const external = [
-  'fast-copy',
-  'process',
-  'lodash',
-  'qs',
-  'p-throttle'
-]
+const external = ['fast-copy', 'process', 'lodash', 'qs', 'p-throttle']
 
 const esmConfig = {
   input: 'src/index.ts',
@@ -20,10 +14,10 @@ const esmConfig = {
     dir: 'dist/esm',
     format: 'esm',
     preserveModules: true,
-    sourcemap: true
+    sourcemap: true,
   },
   plugins: [tsPlugin, sourcemaps()],
-  external
+  external,
 }
 
 const cjsConfig = {
@@ -33,10 +27,10 @@ const cjsConfig = {
     format: 'cjs',
     preserveModules: true,
     entryFileNames: '[name].cjs',
-    sourcemap: true
+    sourcemap: true,
   },
   plugins: [tsPlugin, sourcemaps()],
-  external
+  external,
 }
 
 // Types build in Rollup
@@ -46,7 +40,7 @@ const typesConfig = {
     dir: 'dist/types',
     format: 'esm',
     preserveModules: true,
-    sourcemap: true
+    sourcemap: true,
   },
   plugins: [
     typescript({
@@ -54,10 +48,10 @@ const typesConfig = {
       outDir: 'dist/types',
       declaration: true,
       noEmitOnError: true,
-      emitDeclarationOnly: true
-    })
+      emitDeclarationOnly: true,
+    }),
   ],
-  external
+  external,
 }
 
 export default [esmConfig, cjsConfig, typesConfig]
