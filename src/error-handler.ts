@@ -1,4 +1,4 @@
-import isPlainObject from 'lodash/isPlainObject.js'
+import { isPlainObject } from 'lodash'
 import type { ContentfulErrorData } from './types.js'
 
 function obscureHeaders(config: any) {
