@@ -6,7 +6,7 @@ const tsPlugin = typescript({
   noEmitOnError: true,
 })
 
-const external = ['fast-copy', 'process', 'lodash', 'qs', 'p-throttle']
+const external = ['fast-copy', 'process', 'lodash-es', 'qs', 'p-throttle']
 
 const esmConfig = {
   input: 'src/index.ts',
