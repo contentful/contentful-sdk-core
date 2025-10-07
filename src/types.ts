@@ -45,6 +45,8 @@ export type CreateHttpClientParams = {
   adapter?: AxiosRequestConfig['adapter']
   /** Axios proxy config */
   proxy?: AxiosRequestConfig['proxy']
+  /** Axios fetch options */
+  fetchOptions?: AxiosRequestConfig['fetchOptions']
 
   /** Gets called on every request triggered by the SDK, takes the axios request config as an argument */
   requestLogger?: DefaultOptions['requestLogger']

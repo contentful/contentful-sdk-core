@@ -176,3 +176,20 @@ it('Can change the adapter axios uses', () => {
   expect(logHandlerStub).not.toHaveBeenCalled()
   expect(instance.httpClientParams.adapter).toEqual(testAdapter)
 })
+
+it('Can change to the fetch adapter with fetch options', () => {
+  const instance = createHttpClient(axios, {
+    accessToken: 'clientAccessToken',
+    space: 'clientSpaceId',
+    defaultHostname: 'defaulthost',
+    logHandler: logHandlerStub,
+    adapter: 'fetch',
+    fetchOptions: { cache: 'no-cache' },
+  })
+
+  const [callConfig] = vi.mocked(axios.create).mock.calls[0]
+  expect(callConfig?.baseURL).toEqual('https://defaulthost:443/spaces/clientSpaceId/')
+  expect(logHandlerStub).not.toHaveBeenCalled()
+  expect(instance.httpClientParams.adapter).toEqual('fetch')
+  expect(instance.httpClientParams.fetchOptions).toEqual({ cache: 'no-cache' })
+})
