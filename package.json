@@ -49,6 +49,7 @@
     "fast-copy": "^3.0.2",
     "lodash-es": "^4.17.21",
     "p-throttle": "^8.0.0",
+    "process": "^0.11.10",
     "qs": "^6.12.3"
   },
   "devDependencies": {
