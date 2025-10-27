@@ -20,19 +20,6 @@ const esmConfig = {
   external,
 }
 
-const cjsConfig = {
-  input: 'src/index.ts',
-  output: {
-    dir: 'dist/cjs',
-    format: 'cjs',
-    preserveModules: true,
-    entryFileNames: '[name].cjs',
-    sourcemap: true,
-  },
-  plugins: [tsPlugin, sourcemaps()],
-  external,
-}
-
 // Types build in Rollup
 const typesConfig = {
   input: 'src/index.ts',
@@ -54,4 +41,4 @@ const typesConfig = {
   external,
 }
 
-export default [esmConfig, cjsConfig, typesConfig]
+export default [esmConfig, typesConfig]
