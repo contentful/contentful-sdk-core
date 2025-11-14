@@ -3,11 +3,7 @@ name: "CodeQL Scan for GitHub Actions Workflows"
 
 on:
   push:
-    branches: [master]
-    paths: [".github/workflows/**"]
-  pull_request:
-    branches: [master]
-    paths: [".github/workflows/**"]
+    branches: ['**']
 
 jobs:
   analyze:
@@ -19,14 +15,14 @@ jobs:
       security-events: write
 
     steps:
-      - uses: actions/checkout@v4
+      - uses: actions/checkout@v5
 
       - name: Initialize CodeQL
-        uses: github/codeql-action/init@v3
+        uses: github/codeql-action/init@v4
         with:
           languages: actions
 
       - name: Run CodeQL Analysis
-        uses: github/codeql-action/analyze@v3
+        uses: github/codeql-action/analyze@v4
         with:
           category: actions
