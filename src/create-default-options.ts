@@ -1,4 +1,4 @@
-import { CreateHttpClientParams, DefaultOptions } from './types'
+import { CreateHttpClientParams, DefaultOptions } from './types.js'
 import { AxiosRequestHeaders } from 'axios'
 import qs from 'qs'
 

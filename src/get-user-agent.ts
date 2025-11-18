@@ -56,7 +56,7 @@ export default function getUserAgentHeader(
   integration?: string,
   feature?: string,
 ): string {
-  const headerParts = []
+  const headerParts: string[] = []
 
   if (application) {
     headerParts.push(`app ${application}`)
@@ -72,7 +72,7 @@ export default function getUserAgentHeader(
 
   headerParts.push(`sdk ${sdk}`)
 
-  let platform = null
+  let platform: string | null = null
   try {
     if (isReactNative()) {
       platform = getBrowserOS()

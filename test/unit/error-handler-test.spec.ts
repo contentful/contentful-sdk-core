@@ -2,7 +2,7 @@ import { it, expect, describe } from 'vitest'
 
 import errorHandler from '../../src/error-handler'
 import { errorMock } from './mocks'
-import { cloneDeep } from 'lodash'
+import { cloneDeep } from 'lodash-es'
 
 const error: any = cloneDeep(errorMock)
 

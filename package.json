@@ -4,13 +4,20 @@
   "description": "Core modules for the Contentful JS SDKs",
   "homepage": "https://www.contentful.com/developers/docs/javascript/",
   "type": "module",
-  "main": "dist/index.js",
+  "exports": {
+    ".": {
+      "types": "./dist/types/index.d.ts",
+      "import": "./dist/esm/index.js",
+      "require": "./dist/cjs/index.cjs"
+    }
+  },
+  "main": "./dist/cjs/index.cjs",
   "types": "dist/types/index.d.ts",
   "browser": {
     "process": "process/browser"
   },
   "engines": {
-    "node": ">=18"
+    "node": ">=20"
   },
   "repository": {
     "type": "git",
@@ -19,8 +26,9 @@
   "author": "Contentful <opensource@contentful.com>",
   "license": "MIT",
   "scripts": {
-    "clean": "rimraf coverage && rimraf dist",
-    "build": "npm run clean && tsc --outDir dist",
+    "clean": "rimraf dist",
+    "build": "npm run clean && npm run build:rollup",
+    "build:rollup": "NODE_ENV=production rollup -c",
     "lint": "eslint src test --ext '.ts'",
     "pretest": "npm run lint",
     "test": "vitest --run",
@@ -37,24 +45,25 @@
     "dist"
   ],
   "dependencies": {
+    "axios": "^1.12.2",
     "fast-copy": "^3.0.2",
-    "lodash": "^4.17.21",
-    "p-throttle": "^6.1.0",
+    "lodash-es": "^4.17.21",
+    "p-throttle": "^8.0.0",
     "process": "^0.11.10",
     "qs": "^6.12.3"
   },
   "devDependencies": {
+    "@rollup/plugin-typescript": "^12.1.4",
     "@semantic-release/changelog": "^6.0.3",
     "@semantic-release/commit-analyzer": "^13.0.0",
     "@semantic-release/github": "^10.0.6",
     "@semantic-release/npm": "^12.0.1",
     "@semantic-release/release-notes-generator": "^14.0.0",
-    "@types/lodash": "^4.17.6",
+    "@types/lodash-es": "^4.17.12",
     "@types/qs": "^6.9.10",
     "@typescript-eslint/eslint-plugin": "^5.11.0",
     "@typescript-eslint/parser": "^5.11.0",
     "@vitest/coverage-v8": "^2.0.2",
-    "axios": "^1.12.2",
     "axios-mock-adapter": "^1.20.0",
     "cz-conventional-changelog": "^3.1.0",
     "eslint": "^8.57.0",
@@ -66,6 +75,8 @@
     "opener": "^1.4.1",
     "prettier": "^3.3.2",
     "rimraf": "^5.0.7",
+    "rollup": "^4.52.4",
+    "rollup-plugin-sourcemaps2": "^0.5.4",
     "semantic-release": "^21.0.5",
     "typescript": "^5.4.5",
     "vitest": "^2.0.2"
@@ -124,6 +135,6 @@
     }
   },
   "optionalDependencies": {
-    "@rollup/rollup-linux-x64-gnu": "^4.18.0"
+    "@rollup/rollup-linux-x64-gnu": "^4.52.4"
   }
 }
