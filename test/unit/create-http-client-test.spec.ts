@@ -1,4 +1,4 @@
-import { vi, beforeEach, it, expect } from 'vitest'
+import { vi, beforeEach, afterEach, it, expect } from 'vitest'
 
 import createHttpClient from '../../src/create-http-client'
 
@@ -15,12 +15,13 @@ const logHandlerStub = vi.fn()
 const mock = new MockAdapter(axios)
 
 beforeEach(() => {
+  vi.mocked(axios.create).mockClear()
   // @ts-expect-error No need to instantiate a complete axios instance for the mock.
   vi.spyOn(axios, 'create').mockReturnValue({})
 })
 
 afterEach(() => {
-  vi.mocked(axios).mockReset()
+  vi.mocked(axios.create).mockClear()
   mock.reset()
   logHandlerStub.mockReset()
 })
