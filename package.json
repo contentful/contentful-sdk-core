@@ -22,7 +22,6 @@
     "clean": "rimraf coverage && rimraf dist",
     "build": "npm run clean && tsc --outDir dist",
     "lint": "eslint src test --ext '.ts'",
-    "pretest": "npm run lint",
     "test": "vitest --run",
     "test:watch": "vitest",
     "test:cover": "vitest --run --coverage",
@@ -30,8 +29,7 @@
     "prepublishOnly": "npm run build",
     "semantic-release": "semantic-release",
     "prettier": "prettier --write '**/*.{jsx,js,ts,tsx}'",
-    "prettier:check": "prettier --check '**/*.{jsx,js,ts,tsx}'",
-    "prepare": "husky"
+    "prettier:check": "prettier --check '**/*.{jsx,js,ts,tsx}'"
   },
   "files": [
     "dist"
@@ -45,10 +43,6 @@
   },
   "devDependencies": {
     "@semantic-release/changelog": "^6.0.3",
-    "@semantic-release/commit-analyzer": "^13.0.0",
-    "@semantic-release/github": "^10.0.6",
-    "@semantic-release/npm": "^12.0.1",
-    "@semantic-release/release-notes-generator": "^14.0.0",
     "@types/lodash": "^4.17.6",
     "@types/node": "^24.10.1",
     "@types/qs": "^6.9.10",
@@ -63,7 +57,7 @@
     "eslint-config-standard": "^17.0.0",
     "eslint-plugin-standard": "^5.0.0",
     "husky": "^9.0.11",
-    "lint-staged": "^14.0.1",
+    "lint-staged": "^15.2.5",
     "opener": "^1.4.1",
     "prettier": "^3.3.2",
     "rimraf": "^5.0.7",
@@ -72,18 +66,13 @@
     "vitest": "^2.0.2"
   },
   "lint-staged": {
-    "*.{js,jsx,ts,tsx}": [
+    "*.{js,jsx,ts,tsx,json}": [
       "prettier --write",
       "eslint"
     ],
     "*.md": [
       "prettier --write"
     ]
-  },
-  "husky": {
-    "hooks": {
-      "pre-commit": "lint-staged"
-    }
   },
   "release": {
     "branches": [
@@ -97,6 +86,11 @@
       {
         "name": "beta",
         "channel": "beta",
+        "prerelease": true
+      },
+      {
+        "name": "dev",
+        "channel": "dev",
         "prerelease": true
       }
     ],
@@ -114,8 +108,8 @@
         }
       ],
       "@semantic-release/release-notes-generator",
-      "@semantic-release/npm",
       "@semantic-release/changelog",
+      "@semantic-release/npm",
       "@semantic-release/github"
     ]
   },

@@ -1,0 +1,22 @@
+version: 2
+updates:
+  # Enable version updates for npm
+  - package-ecosystem: 'npm'
+    directory: '/'
+    schedule:
+      interval: 'weekly'
+      day: 'monday'
+    open-pull-requests-limit: 10
+    reviewers:
+      - 'contentful/team-developer-experience'
+    labels:
+      - 'dependencies'
+    commit-message:
+      prefix: 'chore'
+      include: 'scope'
+    ignore:
+    - dependency-name: "fast-copy"
+      versions:
+        - ">=3.0.0"
+    cooldown:
+      default-days: 15

@@ -7,12 +7,14 @@ on:
         required: true
 
 jobs:
-  release:
-    name: Release
+  release:    
+    runs-on: ubuntu-latest
+
     permissions:
       contents: write
       id-token: write # Required for OIDC trusted publishing
-    runs-on: ubuntu-latest
+      actions: read
+
     steps:
       - name: 'Retrieve Secrets from Vault'
         id: vault
@@ -36,6 +38,7 @@ jobs:
         run: |
           git config --global user.name 'contentful-automation[bot]'
           git config --global user.email '${{ steps.get-user-id.outputs.user-id }}+contentful-automation[bot]@users.noreply.github.com'
+      
       - name: Checkout code
         uses: actions/checkout@v5
         with:
@@ -44,8 +47,7 @@ jobs:
       - name: Setup Node.js
         uses: actions/setup-node@v6
         with:
-          node-version: '24'
-          registry-url: 'https://registry.npmjs.org'
+          node-version: '22'
           cache: 'npm'
 
       - name: Install latest npm
@@ -61,7 +63,10 @@ jobs:
             dist
           key: build-cache-${{ github.run_id }}-${{ github.run_attempt }}
 
-      - name: Run semantic release
-        run: npm run semantic-release
+      - name: Run Release
+        run: |
+          echo "Starting Semantic Release Process"
+          echo "npm version: $(npm -v)"
+          npm run semantic-release
         env:
-          GITHUB_TOKEN: ${{ steps.vault.outputs.GITHUB_TOKEN }}
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
