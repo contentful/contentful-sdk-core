@@ -79,11 +79,6 @@
       "prettier --write"
     ]
   },
-  "husky": {
-    "hooks": {
-      "pre-commit": "lint-staged"
-    }
-  },
   "release": {
     "branches": [
       "master",
@@ -123,8 +118,8 @@
         }
       ],
       "@semantic-release/release-notes-generator",
-      "@semantic-release/npm",
       "@semantic-release/changelog",
+      "@semantic-release/npm",
       "@semantic-release/github"
     ]
   },
