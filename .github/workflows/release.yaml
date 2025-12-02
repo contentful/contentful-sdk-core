@@ -12,6 +12,7 @@ jobs:
     permissions:
       contents: write
       id-token: write # Required for OIDC trusted publishing
+      actions: read
     runs-on: ubuntu-latest
     steps:
       - name: 'Retrieve Secrets from Vault'
@@ -36,6 +37,7 @@ jobs:
         run: |
           git config --global user.name 'contentful-automation[bot]'
           git config --global user.email '${{ steps.get-user-id.outputs.user-id }}+contentful-automation[bot]@users.noreply.github.com'
+      
       - name: Checkout code
         uses: actions/checkout@v5
         with:
@@ -64,4 +66,4 @@ jobs:
       - name: Run semantic release
         run: npm run semantic-release
         env:
-          GITHUB_TOKEN: ${{ steps.vault.outputs.GITHUB_TOKEN }}
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
