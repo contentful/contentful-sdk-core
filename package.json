@@ -102,6 +102,11 @@
         "name": "dev",
         "channel": "dev",
         "prerelease": true
+      },
+      {
+        "name": "update-pipeline",
+        "channel": "beta",
+        "prerelease": true
       }
     ],
     "plugins": [
