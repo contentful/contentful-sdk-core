@@ -7,13 +7,14 @@ on:
         required: true
 
 jobs:
-  release:
-    name: Release
+  release:    
+    runs-on: ubuntu-latest
+
     permissions:
       contents: write
       id-token: write # Required for OIDC trusted publishing
       actions: read
-    runs-on: ubuntu-latest
+
     steps:
       - name: 'Retrieve Secrets from Vault'
         id: vault
@@ -47,7 +48,6 @@ jobs:
         uses: actions/setup-node@v6
         with:
           node-version: '22'
-          registry-url: 'https://registry.npmjs.org'
           cache: 'npm'
 
       - name: Install latest npm
@@ -63,7 +63,10 @@ jobs:
             dist
           key: build-cache-${{ github.run_id }}-${{ github.run_attempt }}
 
-      - name: Run semantic release
-        run: npm run semantic-release
+      - name: Run Release
+        run: |
+          echo "Starting Semantic Release Process"
+          echo "npm version: $(npm -v)"
+          npm run semantic-release
         env:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
