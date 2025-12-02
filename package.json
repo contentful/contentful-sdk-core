@@ -29,8 +29,7 @@
     "prepublishOnly": "npm run build",
     "semantic-release": "semantic-release",
     "prettier": "prettier --write '**/*.{jsx,js,ts,tsx}'",
-    "prettier:check": "prettier --check '**/*.{jsx,js,ts,tsx}'",
-    "prepare": "husky"
+    "prettier:check": "prettier --check '**/*.{jsx,js,ts,tsx}'"
   },
   "files": [
     "dist"
