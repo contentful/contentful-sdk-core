@@ -68,5 +68,3 @@ jobs:
           echo "Starting Semantic Release Process"
           echo "npm version: $(npm -v)"
           npm run semantic-release
-        env:
-          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
