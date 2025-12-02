@@ -22,7 +22,6 @@
     "clean": "rimraf coverage && rimraf dist",
     "build": "npm run clean && tsc --outDir dist",
     "lint": "eslint src test --ext '.ts'",
-    "pretest": "npm run lint",
     "test": "vitest --run",
     "test:watch": "vitest",
     "test:cover": "vitest --run --coverage",
@@ -63,7 +62,7 @@
     "eslint-config-standard": "^17.0.0",
     "eslint-plugin-standard": "^5.0.0",
     "husky": "^9.0.11",
-    "lint-staged": "^14.0.1",
+    "lint-staged": "^15.2.5",
     "opener": "^1.4.1",
     "prettier": "^3.3.2",
     "rimraf": "^5.0.7",
@@ -72,7 +71,7 @@
     "vitest": "^2.0.2"
   },
   "lint-staged": {
-    "*.{js,jsx,ts,tsx}": [
+    "*.{js,jsx,ts,tsx,json}": [
       "prettier --write",
       "eslint"
     ],
@@ -96,6 +95,16 @@
       },
       {
         "name": "beta",
+        "channel": "beta",
+        "prerelease": true
+      },
+      {
+        "name": "dev",
+        "channel": "dev",
+        "prerelease": true
+      },
+      {
+        "name": "update-pipeline",
         "channel": "beta",
         "prerelease": true
       }
