@@ -5,10 +5,11 @@
     "target": "esnext",
     "module": "Preserve",
     "moduleResolution": "bundler",
+    "outDir": "./dist",
     "declarationDir": "dist/types",
     "declaration": true,
     "strict": true,
     "esModuleInterop": true
   },
-  "include": ["src/**/*", "global.d.ts"],
+  "include": ["src/**/*", "global.d.ts"]
 }

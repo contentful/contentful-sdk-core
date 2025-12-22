@@ -22,8 +22,8 @@
   "scripts": {
     "clean": "rimraf coverage && rimraf dist",
     "build": "npm run clean && npm run build:esm && npm run build:cjs",
-    "build:esm": "tsc --outDir dist",
-    "build:cjs": "tsc --module commonjs --moduleResolution node10 --outDir dist/cjs",
+    "build:esm": "tsc",
+    "build:cjs": "tsup src/index.ts --format cjs --outDir dist/cjs",
     "lint": "eslint src test --ext '.ts'",
     "test": "vitest --run",
     "test:watch": "vitest",
@@ -64,6 +64,7 @@
     "prettier": "^3.3.2",
     "rimraf": "^5.0.7",
     "semantic-release": "^25.0.2",
+    "tsup": "^8.5.1",
     "typescript": "^5.4.5",
     "vitest": "^2.0.2"
   },
