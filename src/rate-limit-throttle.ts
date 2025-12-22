@@ -1,5 +1,5 @@
 import isString from 'lodash/isString.js'
-import pThrottle from 'p-throttle'
+import pThrottle from './pThrottle.js'
 
 import { AxiosInstance } from './types.js'
 import { noop } from './utils.js'
