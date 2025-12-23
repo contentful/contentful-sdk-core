@@ -53,7 +53,7 @@ it('Parse browser user agent correctly', () => {
 
 it('Fail safely', () => {
   mockedUtils.isNode.mockReturnValue(false)
-  // @ts-expect-error intentionally return broken window object
+  // @ts-expect-error intententionally return broken window object
   mockedUtils.getWindow.mockReturnValue({})
 
   const userAgent = getUserAgent(
