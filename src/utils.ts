@@ -8,7 +8,7 @@ export function isNode(): boolean {
    * https://github.com/webpack/node-libs-browser/blob/master/mock/process.js#L8
    * https://github.com/defunctzombie/node-process/blob/master/browser.js#L156
    **/
-  return typeof process !== 'undefined' && !process.browser
+  return typeof process !== 'undefined' && !(process as any).browser
 }
 
 export function isReactNative(): boolean {
