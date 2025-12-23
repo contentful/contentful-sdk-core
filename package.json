@@ -21,9 +21,7 @@
   "license": "MIT",
   "scripts": {
     "clean": "rimraf coverage && rimraf dist",
-    "build": "npm run clean && npm run build:esm && npm run build:cjs",
-    "build:esm": "tsc",
-    "build:cjs": "tsup src/index.ts --format cjs --outDir dist/cjs",
+    "build": "npm run clean && NODE_ENV=production rollup -c",
     "lint": "eslint src test --ext '.ts'",
     "test": "vitest --run",
     "test:watch": "vitest",
@@ -40,10 +38,13 @@
   "dependencies": {
     "fast-copy": "^3.0.2",
     "lodash": "^4.17.21",
-    "process": "^0.11.10",
     "qs": "^6.12.3"
   },
   "devDependencies": {
+    "@rollup/plugin-json": "^6.1.0",
+    "@rollup/plugin-node-resolve": "^16.0.3",
+    "@rollup/plugin-replace": "^6.0.3",
+    "@rollup/plugin-typescript": "^12.3.0",
     "@semantic-release/changelog": "^6.0.3",
     "@types/lodash": "^4.17.6",
     "@types/node": "^24.10.1",
@@ -63,8 +64,9 @@
     "opener": "^1.4.1",
     "prettier": "^3.3.2",
     "rimraf": "^5.0.7",
+    "rollup": "^4.54.0",
+    "rollup-plugin-sourcemaps2": "^0.5.4",
     "semantic-release": "^25.0.2",
-    "tsup": "^8.5.1",
     "typescript": "^5.4.5",
     "vitest": "^2.0.2"
   },

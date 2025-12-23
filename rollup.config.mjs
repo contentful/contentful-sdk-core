@@ -1,0 +1,69 @@
+import pkg from './package.json' with { type: 'json' }
+import nodeResolve from '@rollup/plugin-node-resolve'
+import json from '@rollup/plugin-json'
+import replace from '@rollup/plugin-replace'
+import typescript from '@rollup/plugin-typescript'
+import sourcemaps from 'rollup-plugin-sourcemaps2'
+
+const baseConfig = {
+  input: 'src/index.ts',
+  plugins: [
+    nodeResolve(),
+    typescript({
+      tsconfig: './tsconfig.json',
+      declaration: false,
+      noEmitOnError: true,
+    }),
+    sourcemaps(),
+    replace({
+      preventAssignment: true,
+      'process.env.NODE_ENV': JSON.stringify(process.env.NODE_ENV),
+      __VERSION__: JSON.stringify(pkg.version),
+    }),
+    json(),
+  ],
+  external: [/node_modules\/(?!tslib.*)/],
+}
+
+const typesConfig = {
+  ...baseConfig,
+  output: {
+    dir: './dist/types',
+    format: 'esm',
+    preserveModules: true,
+    sourcemap: true,
+  },
+  plugins: [
+    ...baseConfig.plugins,
+    typescript({
+      tsconfig: './tsconfig.json',
+      outDir: './dist/types',
+      declaration: true,
+      noEmitOnError: true,
+      emitDeclarationOnly: true,
+    }),
+  ],
+}
+
+const esmConfig = {
+  ...baseConfig,
+  output: {
+    dir: './dist',
+    format: 'esm',
+    preserveModules: true,
+    sourcemap: true,
+    entryFileNames: '[name].js',
+    chunkFileNames: '[name].js',
+  },
+}
+
+const cjsBundleConfig = {
+  ...baseConfig,
+  output: {
+    file: 'dist/cjs/index.cjs',
+    format: 'cjs',
+    sourcemap: true,
+    interop: 'auto',
+  },
+}
+export default [esmConfig, typesConfig, cjsBundleConfig]
