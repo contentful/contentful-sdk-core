@@ -1,5 +1,3 @@
-import process from 'process'
-
 import { isNode, getNodeVersion, isReactNative, getWindow } from './utils.js'
 
 function getBrowserOS(): string | null {
@@ -32,6 +30,10 @@ function getBrowserOS(): string | null {
 type PlatformMap = Record<string, 'Android' | 'Linux' | 'Windows' | 'macOS'>
 
 function getNodeOS(): string | null {
+  if (!isNode()) {
+    return null
+  }
+
   const platform = process.platform || 'linux'
   const version = process.version || '0.0.0'
   const platformMap: PlatformMap = {

@@ -1,14 +1,5 @@
-import process from 'process'
-
 export function isNode(): boolean {
-  /**
-   * Polyfills of 'process' might set process.browser === true
-   *
-   * See:
-   * https://github.com/webpack/node-libs-browser/blob/master/mock/process.js#L8
-   * https://github.com/defunctzombie/node-process/blob/master/browser.js#L156
-   **/
-  return typeof process !== 'undefined' && !process.browser
+  return Boolean(typeof process !== 'undefined' && process.versions?.node)
 }
 
 export function isReactNative(): boolean {
