@@ -98,11 +98,6 @@
         "name": "dev",
         "channel": "dev",
         "prerelease": true
-      },
-      {
-        "name": "add-cjs-build",
-        "channel": "dev",
-        "prerelease": true
       }
     ],
     "plugins": [
