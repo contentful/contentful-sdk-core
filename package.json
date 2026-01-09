@@ -39,7 +39,7 @@
     "fast-copy": "^3.0.2",
     "lodash": "^4.17.21",
     "process": "^0.11.10",
-    "qs": "^6.12.3"
+    "qs": "^6.14.1"
   },
   "devDependencies": {
     "@rollup/plugin-json": "^6.1.0",
