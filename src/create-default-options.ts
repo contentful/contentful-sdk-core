@@ -83,6 +83,7 @@ export default function createDefaultOptions(options: CreateHttpClientParams): D
     proxy: config.proxy,
     timeout: config.timeout,
     adapter: config.adapter,
+    fetchOptions: config.fetchOptions,
     maxContentLength: config.maxContentLength,
     maxBodyLength: config.maxBodyLength,
     paramsSerializer: {
