@@ -23,7 +23,13 @@ function obscureHeaders(config: any) {
  * @private
  */
 export default function errorHandler(errorResponse: any): never {
+  // console.log(`[ CORE ] errorHandler() errorResponse => `, errorResponse)
+
   const { config, response } = errorResponse
+  console.log(`[ CORE ] errorHandler() config => `, config)
+  // console.log(`[ CORE ] errorHandler() response => `, response)
+  console.log(`[ CORE ] errorHandler() response.data => `, response.data)
+
   let errorName
 
   obscureHeaders(config)

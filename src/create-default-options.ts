@@ -13,11 +13,16 @@ const HOST_REGEX = /^(?!\w+:\/\/)([^\s:]+\.?[^\s:]+)(?::(\d+))?(?!:)$/
  * @return {DefaultOptions} options to pass to axios
  */
 export default function createDefaultOptions(options: CreateHttpClientParams): DefaultOptions {
+  // console.log(`2. [ CORE ] createDefaultOptions() options => `, options)
+  // console.log(`2. [ CORE ] createDefaultOptions() options.logHandler => `, options.logHandler)
+
   const defaultConfig = {
     insecure: false as const,
     retryOnError: true as const,
     // eslint-disable-next-line @typescript-eslint/no-explicit-any
     logHandler: (level: string, data: any): void => {
+      console.log(`[ CORE ] logHandler() DEFUALT LOG HANDLER() level and data => `, { level, data })
+
       if (level === 'error' && data) {
         const title = [data.name, data.message].filter((a) => a).join(' - ')
         console.error(`[error] ${title}`)

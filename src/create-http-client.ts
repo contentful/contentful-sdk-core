@@ -26,7 +26,22 @@ export default function createHttpClient(
   axios: AxiosStatic,
   options: CreateHttpClientParams,
 ): AxiosInstance {
+  // console.log(`1. [ CORE ] createHttpClient() B4 options => `, options)
+  // console.log(`1. [ CORE ] createHttpClient() B4 options.logHandler => `, options.logHandler)
+
   const axiosOptions = createDefaultOptions(options)
+
+  // console.log(`3. [ CORE ] createHttpClient() After axiosOptions => `, axiosOptions)
+
+  console.log(`3. [ CORE ] createHttpClient() After options.onError => `, options.onError)
+  console.log(
+    `3. [ CORE ] createHttpClient() After axiosOptions.logHandler => `,
+    axiosOptions.logHandler,
+  )
+  console.log(
+    `3. [ CORE ] createHttpClient() testing logHandler => `,
+    axiosOptions.logHandler('##### test #####', ' <<<<<< This is a test log message >>>>>>>'),
+  )
 
   const instance = axios.create(axiosOptions) as AxiosInstance
   instance.httpClientParams = options
@@ -69,7 +84,10 @@ export default function createHttpClient(
   rateLimitRetry(instance, options.retryLimit)
 
   if (options.onError) {
-    instance.interceptors.response.use((response) => response, options.onError)
+    instance.interceptors.response.use((response) => {
+      console.log(`[ CORE ] createHttpClient().options.onError response => `, response)
+      return response
+    }, options.onError)
   }
 
   return instance
