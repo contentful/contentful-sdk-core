@@ -11,7 +11,7 @@
     "process": "process/browser"
   },
   "engines": {
-    "node": ">=18"
+    "node": ">=22"
   },
   "repository": {
     "type": "git",
@@ -105,6 +105,10 @@
         "@semantic-release/commit-analyzer",
         {
           "releaseRules": [
+            {
+              "breaking": true,
+              "release": "major"
+            },
             {
               "type": "build",
               "scope": "deps",

@@ -25,7 +25,7 @@ This package contains some core modules and utilities used by both the [contentf
 
 ## Support
 
-This repository is compatible with Node.js version 18 and later. It exclusively provides an ECMAScript Module (ESM) variant, utilizing the `"type": "module"` declaration in `package.json`. Users are responsible for addressing any compatibility issues between ESM and CommonJS (CJS).
+This repository is compatible with Node.js version 22 and later. It exclusively provides an ECMAScript Module (ESM) variant, utilizing the `"type": "module"` declaration in `package.json`. Users are responsible for addressing any compatibility issues between ESM and CommonJS (CJS).
 
 ## Types
 
