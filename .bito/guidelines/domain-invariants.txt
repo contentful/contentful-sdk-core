@@ -1,0 +1,35 @@
+Critical invariants for contentful-sdk-core:
+
+1. INTERCEPTOR ORDER IS LOAD-BEARING
+   The interceptor attachment order in create-http-client.ts must remain:
+   onBeforeRequest → asyncToken → rateLimitThrottle → rateLimitRetry → onError
+   Reordering causes: auth failures (token not set before throttle), missed retries, or swallowed errors.
+
+2. AXIOS IS NOT A DEPENDENCY
+   axios is injected via the createHttpClient(axios, params) factory pattern.
+   It must never appear in dependencies — only devDependencies (for testing).
+   Downstream SDKs provide their own axios version.
+
+3. .JS EXTENSIONS IN ALL IMPORTS
+   All TypeScript source file imports must use .js extensions.
+   This is required for ESM module resolution at runtime.
+   Example: import foo from './foo.js' (not './foo' or './foo.ts')
+
+4. httpAgent/httpsAgent ARE NON-COPYABLE
+   These objects contain private fields that break on deep clone (fast-copy).
+   copyHttpClientParams re-assigns them by reference after cloning.
+   The rate-limit retry interceptor deliberately deletes them from retry config
+   to work around an axios serialization bug — this is intentional.
+
+5. AUTH TOKENS MUST BE OBSCURED IN ERRORS
+   error-handler.ts truncates Authorization and X-Contentful-Resource-Resolution
+   headers to their last 5 characters. Never expose full tokens in error output.
+
+6. RATE LIMIT HEADER AWARENESS
+   - x-contentful-ratelimit-reset: seconds to wait (used by retry interceptor)
+   - x-contentful-ratelimit-second-limit: max requests/sec for this tier (used by throttle to auto-calibrate)
+   These headers come from the Contentful API. The throttle adapts dynamically on first response.
+
+7. DUAL BUILD OUTPUT
+   The package ships ESM (dist/*.js, preserveModules) and CJS (dist/cjs/index.cjs, single bundle).
+   The Rollup config must produce both. Breaking one format breaks downstream consumers.
