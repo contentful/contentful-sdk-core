@@ -62,7 +62,7 @@ Tests use `axios-mock-adapter` to mock HTTP responses. Vitest is configured with
 ## Code Style & Conventions
 
 - **Formatting:** Prettier (config in `package.json` → `lint-staged`). Runs automatically on staged files via Husky pre-commit hook.
-- **Linting:** ESLint with `eslint-config-standard` + `eslint-config-prettier` + `@typescript-eslint`. Config: `.eslintrc.cjs`.
+- **Linting:** ESLint with `eslint:recommended` + `@typescript-eslint` + `prettier`. Config: `.eslintrc.cjs`.
 - **TypeScript:** Strict mode, target ESNext, module resolution "bundler". Config: `tsconfig.json`.
 - **Imports:** Use `.js` extensions in TypeScript source files (required for ESM resolution).
 
@@ -105,6 +105,7 @@ A pre-commit hook runs `lint-staged` (Prettier + ESLint) on staged files via Hus
 ## Branch Strategy
 
 - `master` — production; all releases cut from here
+- `next` — pre-release channel (`npm install contentful-sdk-core@next`)
 - `beta` — pre-release channel (`npm install contentful-sdk-core@beta`)
 - `dev` — dev pre-release channel
 - Feature branches — `feat/`, `fix/`, `chore/` prefixes
