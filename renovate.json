@@ -1,5 +1,11 @@
 {
   "$schema": "https://docs.renovatebot.com/renovate-schema.json",
   "extends": ["local>contentful/renovate-config"],
-  "packageRules": []
+  "packageRules": [
+    {
+      "matchPackageNames": ["fast-copy"],
+      "allowedVersions": "< 4",
+      "description": "v4 changed to named export only — requires a usage audit before upgrading"
+    }
+  ]
 }
