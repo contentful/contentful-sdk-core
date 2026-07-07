@@ -1,10 +1,5 @@
 {
   "$schema": "https://docs.renovatebot.com/renovate-schema.json",
   "extends": ["local>contentful/renovate-config"],
-  "packageRules": [
-    {
-      "matchPackageNames": ["fast-copy"],
-      "allowedVersions": "<3.0.0"
-    }
-  ]
+  "packageRules": []
 }
