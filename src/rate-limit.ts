@@ -58,7 +58,7 @@ export default function rateLimit(instance: AxiosInstance, maxRetry = 5): void {
       } else if (response.status === 429) {
         // 429 errors are exceeded rate limit exceptions
         retryErrorType = 'Rate limit'
-        // all headers are lowercased by axios https://github.com/mzabriskie/axios/issues/413
+        // all headers are lower-cased by axios https://github.com/mzabriskie/axios/issues/413
         if (response.headers && error.response.headers['x-contentful-ratelimit-reset']) {
           wait = response.headers['x-contentful-ratelimit-reset']
         }
